@@ -19,3 +19,21 @@ public:
         Z = z;
     }
 };
+
+class Matrix4 //4x4 matrix
+{
+public:
+    float i[4][4];
+
+    Matrix4() {}
+    Matrix4(float v00, float v01, float v02, float v03, //vertices
+             float v10, float v11, float v12, float v13,
+             float v20, float v21, float v22, float v23,
+             float v30, float v31, float v32, float v33)
+    {
+        i[0][0] = v00; i[0][1] = v01; i[0][2] = v02; i[0][3] = v03;
+        i[1][0] = v10; i[1][1] = v11; i[1][2] = v12; i[1][3] = v13;
+        i[2][0] = v20; i[2][1] = v21; i[2][2] = v22; i[2][3] = v23;
+        i[3][0] = v30; i[3][1] = v31; i[3][2] = v32; i[3][3] = v33;
+    }
+};

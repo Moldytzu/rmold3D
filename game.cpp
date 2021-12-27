@@ -2,12 +2,26 @@
 
 uint VBO;
 uint Shader;
+uint TranslationMatrixLocation;
 
 std::map<const char*, uint> ShaderUniforms;
+
+#define Scale 0.5f
 
 void render()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //clear color and depth
+
+    //creating translation matrix
+    Matrix4 translation(
+        1.0f, 0.0f, 0.0f, Scale * 2,
+        0.0f, 1.0f, 0.0f, Scale,
+        0.0f, 0.0f, 1.0f, 0.0f,
+        0.0f, 0.0f, 0.0f, 1.0f        
+    );
+
+    //telling opengl about the translation matrix
+    glUniformMatrix4fv(TranslationMatrixLocation, 1, GL_TRUE, &translation.i[0][0]);
 
     //bind vbo
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
@@ -74,13 +88,12 @@ int main(int argc, char** argv)
     const char* vertexsrc =
     "#version 330 core\n" \
     "layout (location = 0) in vec3 Position;\n" \
-    "uniform float toScale;\n" \
-    "\n" \
+    "uniform mat4 translationMatrix;\n" \
     "void main()\n" \
     "{\n" \
-    " gl_Position = vec4(Position.x * toScale, Position.y * toScale, Position.z * toScale, 1.0);\n" \
+    " gl_Position = translationMatrix * vec4(Position, 1.0);\n" \
     "}\n" \
-    "\n";
+    "\n"; //gl position is the dot product of the translation matrix and the position itself
 
     const char* fragmentsrc =
     "#version 330 core\n" \
@@ -108,12 +121,6 @@ int main(int argc, char** argv)
     }
 
     glUseProgram(Shader);
-
-    //populating shader uniforms
-    ShaderUniforms["toScale"] = glGetUniformLocation(Shader, "toScale");
-
-    //set scale
-    glUniform1f(ShaderUniforms["toScale"],1.0f);
 
     glutMainLoop(); //run app
 
