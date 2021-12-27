@@ -3,15 +3,28 @@
 uint VBO;
 uint IBO;
 uint Shader;
-uint TranslationMatrixLocation;
+uint WorldMatrixLocation;
 
 std::map<const char*, uint> ShaderUniforms;
 
-#define Scale 0.5f
+#define Scale 0.0f
 
 void render()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //clear color and depth
+
+    //bind world matrix
+
+    Matrix4 world;
+
+    world = Matrix4(
+      cosf(Scale),-sinf(Scale),0,0,
+      sinf(Scale),cosf(Scale),0,0,
+      0,0,1,0,
+      0,0,0,1 
+    );
+
+    glUniformMatrix4fv(WorldMatrixLocation, 1, GL_TRUE, &world.i[0][0]);
 
     //bind vbo & ibo
     glBindBuffer(GL_ARRAY_BUFFER, VBO);

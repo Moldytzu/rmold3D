@@ -4,6 +4,7 @@
 #include <cstring>
 #include <map>
 #include <time.h>
+#include <math.h>
 
 class Vector3
 {
