@@ -27,4 +27,4 @@ lib: $(OBJS)
 	ar -crs $(LIB) $(OBJS)
 
 game: lib 
-	$(CPP) game.cpp $(LIB) -lGL -lGLU -lglut -o game $(CFLAGS)
+	$(CPP) game.cpp $(LIB) -lGL -lGLU -lGLEW -lglut -o game $(CFLAGS)
