@@ -50,6 +50,8 @@ int main(int argc, char** argv)
     //init glew
     glewInit();
     glClearColor(0,0,0,0); // black
+    glEnable(GL_DEPTH_TEST);
+    glEnable(GL_CULL_FACE);
 
     //triangle
     Vector3 vertices[3];
