@@ -1,6 +1,7 @@
 #include <rmold3D/mold.h>
 
 uint VBO;
+uint Shader;
 
 void render()
 {
@@ -71,10 +72,11 @@ int main(int argc, char** argv)
     const char* vertexsrc =
     "#version 330 core\n" \
     "layout (location = 0) in vec3 Position;\n" \
+    "uniform float toScale;\n" \
     "\n" \
     "void main()\n" \
     "{\n" \
-    " gl_Position = vec4(Position.x, Position.y, Position.z, 1.0);\n" \
+    " gl_Position = vec4(Position.x * toScale, Position.y * toScale, Position.z * toScale, 1.0);\n" \
     "}\n" \
     "\n";
 
@@ -89,13 +91,13 @@ int main(int argc, char** argv)
     "\n";
 
     //compile & link shader
-    GLuint shader = glCreateProgram();
-    attachShader(shader,vertexsrc,GL_VERTEX_SHADER);
-    attachShader(shader,fragmentsrc,GL_FRAGMENT_SHADER);
-    glLinkProgram(shader);
+    Shader = glCreateProgram();
+    attachShader(Shader,vertexsrc,GL_VERTEX_SHADER);
+    attachShader(Shader,fragmentsrc,GL_FRAGMENT_SHADER);
+    glLinkProgram(Shader);
 
     int status;
-    glGetProgramiv(shader, GL_LINK_STATUS, &status);
+    glGetProgramiv(Shader, GL_LINK_STATUS, &status);
 
     if(!status)
     {
@@ -103,7 +105,10 @@ int main(int argc, char** argv)
         exit(1);
     }
 
-    glUseProgram(shader);
+    glUseProgram(Shader);
+
+    //set scale
+    glUniform1f(glGetUniformLocation(Shader, "toScale"),0.1f);
 
     glutMainLoop(); //run app
 
