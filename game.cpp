@@ -1,6 +1,6 @@
 #include <rmold3D/mold.h>
 
-unsigned int VBO;
+uint VBO;
 
 void render()
 {
@@ -19,6 +19,26 @@ void render()
 
     glutPostRedisplay(); //call again redraw
     glutSwapBuffers(); //do double buffering
+}
+
+void attachShader(uint program, const char* src, uint type)
+{
+    uint obj = glCreateShader(type); //create shader with the type specified
+
+    int len = strlen(src);
+    glShaderSource(obj,1,&src,&len); //define source
+    glCompileShader(obj); //compile shader
+
+    int status;
+    glGetShaderiv(obj, GL_COMPILE_STATUS, &status);
+
+    if(!status)
+    {
+        printf("Error compiling shader!\n");
+        exit(1);
+    }
+
+    glAttachShader(program, obj);
 }
 
 int main(int argc, char** argv)
@@ -46,6 +66,44 @@ int main(int argc, char** argv)
     glGenBuffers(1, &VBO);
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+    //define shaders
+    const char* vertexsrc =
+    "#version 330 core\n" \
+    "layout (location = 0) in vec3 Position;\n" \
+    "\n" \
+    "void main()\n" \
+    "{\n" \
+    " gl_Position = vec4(Position.x, Position.y, Position.z, 1.0);\n" \
+    "}\n" \
+    "\n";
+
+    const char* fragmentsrc =
+    "#version 330 core\n" \
+    "out vec4 FragColor;\n" \
+    " \n" \
+    "void main()\n" \
+    "{\n" \
+    " FragColor = vec4(1.0, 1.0, 0.0, 0.0);\n" \
+    "}\n" \
+    "\n";
+
+    //compile & link shader
+    GLuint shader = glCreateProgram();
+    attachShader(shader,vertexsrc,GL_VERTEX_SHADER);
+    attachShader(shader,fragmentsrc,GL_FRAGMENT_SHADER);
+    glLinkProgram(shader);
+
+    int status;
+    glGetProgramiv(shader, GL_LINK_STATUS, &status);
+
+    if(!status)
+    {
+        printf("Error linking shader!\n");
+        exit(1);
+    }
+
+    glUseProgram(shader);
 
     glutMainLoop(); //run app
 
