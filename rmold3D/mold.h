@@ -38,6 +38,22 @@ public:
         i[2][0] = v20; i[2][1] = v21; i[2][2] = v22; i[2][3] = v23;
         i[3][0] = v30; i[3][1] = v31; i[3][2] = v32; i[3][3] = v33;
     }
+
+    inline Matrix4 operator*(const Matrix4& Right) const
+    {
+        Matrix4 Ret;
+
+        for (unsigned int z = 0 ; z < 4 ; z++) {
+            for (unsigned int j = 0 ; j < 4 ; j++) {
+                Ret.i[z][j] = i[z][0] * Right.i[0][j] +
+                              i[z][1] * Right.i[1][j] +
+                              i[z][2] * Right.i[2][j] +
+                              i[z][3] * Right.i[3][j];
+            }
+        }
+
+        return Ret;
+    }
 };
 
 static float RandomFloat(float a, float b) {
