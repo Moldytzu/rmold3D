@@ -2,6 +2,7 @@
 #include <GL/glut.h>
 #include <stdio.h>
 #include <cstring>
+#include <map>
 
 class Vector3
 {

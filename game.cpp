@@ -3,6 +3,8 @@
 uint VBO;
 uint Shader;
 
+std::map<const char*, uint> ShaderUniforms;
+
 void render()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //clear color and depth
@@ -107,8 +109,11 @@ int main(int argc, char** argv)
 
     glUseProgram(Shader);
 
+    //populating shader uniforms
+    ShaderUniforms["toScale"] = glGetUniformLocation(Shader, "toScale");
+
     //set scale
-    glUniform1f(glGetUniformLocation(Shader, "toScale"),0.1f);
+    glUniform1f(ShaderUniforms["toScale"],1.0f);
 
     glutMainLoop(); //run app
 
