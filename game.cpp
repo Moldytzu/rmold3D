@@ -29,7 +29,7 @@ void render()
     glVertexAttribPointer(0,3,GL_FLOAT,GL_FALSE,0,0); //define what type is our data
 
     //draw vbo
-    glDrawArrays(GL_POINTS,0,1);
+    glDrawArrays(GL_TRIANGLES,0,3);
 
     //disable vbo
     glDisableVertexAttribArray(0);
@@ -51,9 +51,13 @@ int main(int argc, char** argv)
     glewInit();
     glClearColor(0,0,0,0); // black
 
-    //vbo
-    Vector3 vertices[1];
-    vertices[0] = Vector3(0,0,0);
+    //triangle
+    Vector3 vertices[3];
+    vertices[0] = Vector3(0,1,0); //up
+    vertices[1] = Vector3(-1,-1,0); //down left
+    vertices[2] = Vector3(1,-1,0); //down right
+
+    //vbo for triangle
     glGenBuffers(1, &VBO);
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
