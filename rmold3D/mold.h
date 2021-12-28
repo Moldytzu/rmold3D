@@ -98,6 +98,14 @@ namespace mold
             VABO GenerateVABO(float *vertices, size_t len);
         };
 
+        enum CameraDirection
+        {
+            Forward,
+            Backwards,
+            Left,
+            Right
+        };
+
         namespace camera
         {
             inline glm::vec3 Position = glm::vec3(0.0f, 0.0f, 3.0f);
@@ -105,6 +113,9 @@ namespace mold
             inline glm::vec3 Up = glm::vec3(0.0f, 1.0f, 0.0f);
             inline float Yaw = -90.0f; //-90.0f left, 0 front, 90.0f right
             inline float Pitch = 0.0f; //90.0f up, 0 front, -90.0f down
+
+            void Translate(CameraDirection direction,float value);
+            void Rotate(CameraDirection direction,float value);
         };
 
         namespace objects

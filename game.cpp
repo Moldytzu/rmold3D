@@ -8,15 +8,15 @@
 
 void onTick()
 {
-    const float cameraSpeed = 1.0f * mold::time::DeltaTime; // adjust accordingly
+    const float cameraSpeed = 120.0f * mold::time::DeltaTime; // adjust accordingly
     if (mold::input::GetKey('W'))
-        mold::render::camera::Position += cameraSpeed * mold::render::camera::Front;
+        mold::render::camera::Rotate(mold::render::CameraDirection::Forward,cameraSpeed);
     if (mold::input::GetKey('S'))
-        mold::render::camera::Position -= cameraSpeed * mold::render::camera::Front;
+        mold::render::camera::Rotate(mold::render::CameraDirection::Backwards,cameraSpeed);
     if (mold::input::GetKey('A'))
-        mold::render::camera::Position -= glm::normalize(glm::cross(mold::render::camera::Front, mold::render::camera::Up)) * cameraSpeed;
+        mold::render::camera::Rotate(mold::render::CameraDirection::Left,cameraSpeed);
     if (mold::input::GetKey('D'))
-        mold::render::camera::Position += glm::normalize(glm::cross(mold::render::camera::Front, mold::render::camera::Up)) * cameraSpeed;
+        mold::render::camera::Rotate(mold::render::CameraDirection::Right,cameraSpeed);
 }
 
 //draw on the screen
