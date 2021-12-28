@@ -9,13 +9,13 @@
 void onTick()
 {
     const float cameraSpeed = 1.0f * mold::time::DeltaTime; // adjust accordingly
-    if (glfwGetKey(mold::GlobalWindow, GLFW_KEY_W) == GLFW_PRESS)
+    if (mold::input::GetKey('W'))
         mold::render::camera::Position += cameraSpeed * mold::render::camera::Front;
-    if (glfwGetKey(mold::GlobalWindow, GLFW_KEY_S) == GLFW_PRESS)
+    if (mold::input::GetKey('S'))
         mold::render::camera::Position -= cameraSpeed * mold::render::camera::Front;
-    if (glfwGetKey(mold::GlobalWindow, GLFW_KEY_A) == GLFW_PRESS)
+    if (mold::input::GetKey('A'))
         mold::render::camera::Position -= glm::normalize(glm::cross(mold::render::camera::Front, mold::render::camera::Up)) * cameraSpeed;
-    if (glfwGetKey(mold::GlobalWindow, GLFW_KEY_D) == GLFW_PRESS)
+    if (mold::input::GetKey('D'))
         mold::render::camera::Position += glm::normalize(glm::cross(mold::render::camera::Front, mold::render::camera::Up)) * cameraSpeed;
 }
 

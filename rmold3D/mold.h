@@ -165,6 +165,11 @@ namespace mold
         inline float LastFrame;
     };
 
+    namespace input
+    {
+        bool GetKey(int key);
+    };
+
     enum EventType
     {
         Redraw = 1,
