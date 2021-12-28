@@ -49,5 +49,11 @@ namespace mold
 
             Texture LoadRGBBitmap(const char *filename);
         };
+
+        namespace shader
+        {
+            uint CompileShader(const char *source,uint type);
+            uint LinkShader(uint fragment, uint vertex);
+        }
     };
 };

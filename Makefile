@@ -7,7 +7,7 @@ CC = gcc
 SRCDIR := rmold3D
 OBJDIR := obj
 
-CFLAGS = -I $(shell pwd)/ -I $(shell pwd)/rmold3D -I $(shell pwd)/rmold3D/3rd-Party/glm -I $(shell pwd)/rmold3D/3rd-Party/glad/include/glad -Ofast
+CFLAGS = -I $(shell pwd)/ -I $(shell pwd)/rmold3D -I $(shell pwd)/rmold3D/3rd-Party/glm -Ofast
 
 SRC = $(call rwildcard,$(SRCDIR),*.cpp)  
 OBJS = $(patsubst $(SRCDIR)/%.cpp, $(OBJDIR)/%.o, $(SRC))

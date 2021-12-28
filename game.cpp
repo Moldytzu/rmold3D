@@ -118,9 +118,7 @@ int main()
                                        "   FragColor = texture(mainTexture, textureCoord);\n"
                                        "}\n";
 
-    unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER); //create and compile vertex shader
-    glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
-    glCompileShader(vertexShader);
+    unsigned int vertexShader = mold::render::shader::CompileShader(vertexShaderSource, GL_VERTEX_SHADER); //create and compile vertex shader
 
     //check for errors
     int success;
@@ -128,19 +126,14 @@ int main()
     if (!success)
         destroy();
 
-    unsigned int fragmentShader = glCreateShader(GL_FRAGMENT_SHADER); //create and compile fragment shader
-    glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
-    glCompileShader(fragmentShader);
+    unsigned int fragmentShader = mold::render::shader::CompileShader(fragmentShaderSource, GL_FRAGMENT_SHADER); //create and compile fragment shader
 
     //check for errors
     glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
     if (!success)
         destroy();
 
-    shaderProgram = glCreateProgram(); //link the shaders together to form a program
-    glAttachShader(shaderProgram, vertexShader);
-    glAttachShader(shaderProgram, fragmentShader);
-    glLinkProgram(shaderProgram);
+    shaderProgram = mold::render::shader::LinkShader(fragmentShader,vertexShader); //link the shaders together to form a program
 
     //check for errors
     glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
