@@ -93,9 +93,17 @@ namespace mold
 
             VABO GenerateVABO(float *vertices, size_t len);
         };
+
+    };
+
+    namespace settings
+    {
+        inline float FOV = 90.0f;
+        inline float WindowWidth;
+        inline float WindowHeight;
     };
 
     inline GLFWwindow *GlobalWindow;
 
-    bool Init(uint width,uint height);
+    bool Init(uint width, uint height);
 };

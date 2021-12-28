@@ -8,6 +8,9 @@ void onResize(GLFWwindow *window, int width, int height)
 
 bool mold::Init(uint width, uint height)
 {
+    mold::settings::WindowHeight = height;
+    mold::settings::WindowWidth = width;
+
     glfwInit(); // initialize glfw
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);

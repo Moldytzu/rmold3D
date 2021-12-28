@@ -1,19 +1,11 @@
 #include <rmold3D/mold.h>
 
-#define FOV 90.0f
-
 glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
 glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
 glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
 
 float deltaTime = 0.0f;
 float lastFrame = 0.0f;
-
-#define WINDOW_HEIGHT (float)600
-#define WINDOW_WIDTH (float)800
-
-#define SetUniformf(name, value) glUniform1f(glGetUniformLocation(mold::render::shader::GlobalShaderProgram, name), value);
-#define SetUniformi(name, value) glUniform1i(glGetUniformLocation(mold::render::shader::GlobalShaderProgram, name), value);
 
 unsigned int VBO;
 unsigned int VAO;
@@ -41,7 +33,7 @@ void onDraw()
     // create transformations
     glm::mat4 view = glm::mat4(1.0f);
     glm::mat4 projection = glm::mat4(1.0f);
-    projection = glm::perspective(glm::radians(FOV), (float)WINDOW_WIDTH / (float)WINDOW_HEIGHT, 0.1f, 100.0f);
+    projection = glm::perspective(glm::radians(mold::settings::FOV), mold::settings::WindowWidth / mold::settings::WindowHeight, 0.1f, 100.0f);
     view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
 
     // give the shader our view and projection
