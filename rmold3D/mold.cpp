@@ -1,5 +1,7 @@
 #include <rmold3D/mold.h>
 
+void stub() {}
+
 //glfw callbacks
 void onResize(GLFWwindow *window, int width, int height)
 {
@@ -27,6 +29,9 @@ bool mold::Init(uint width, uint height)
 
     // set up callbacks
     glfwSetFramebufferSizeCallback(mold::GlobalWindow, onResize);
+    
+    GlobalEventSystem.AttachCallback(EventType::Redraw,stub);
+    GlobalEventSystem.AttachCallback(EventType::Tick,stub);
 
     // set up gl
     glViewport(0, 0, width, height);
@@ -56,4 +61,43 @@ bool mold::Init(uint width, uint height)
     glUseProgram(mold::render::shader::GlobalShaderProgram);
 
     return true;
+}
+
+void mold::Run()
+{
+    while (!glfwWindowShouldClose(mold::GlobalWindow))
+    {
+        float currentFrame = glfwGetTime();
+        mold::time::DeltaTime = currentFrame - mold::time::LastFrame;
+        mold::time::LastFrame = currentFrame;
+        
+        //tick
+        GlobalEventSystem.GetMap()[EventType::Tick]();
+
+        glClearColor(0, 0, 0, 0);                           //black
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //clear screen
+
+        //update camera front
+        glm::vec3 direction;
+        direction.x = cos(glm::radians(mold::render::camera::Yaw)) * cos(glm::radians(mold::render::camera::Pitch));
+        direction.y = sin(glm::radians(mold::render::camera::Pitch));
+        direction.z = sin(glm::radians(mold::render::camera::Yaw)) * cos(glm::radians(mold::render::camera::Pitch));
+        mold::render::camera::Front = glm::normalize(direction);
+
+        // create transformations
+        glm::mat4 view = glm::mat4(1.0f);
+        glm::mat4 projection = glm::mat4(1.0f);
+        projection = glm::perspective(glm::radians(mold::settings::FOV), mold::settings::WindowWidth / mold::settings::WindowHeight, 0.1f, 100.0f);
+        view = glm::lookAt(mold::render::camera::Position, mold::render::camera::Position + mold::render::camera::Front, mold::render::camera::Up);
+
+        // give the shader our view and projection
+        glUniformMatrix4fv(glGetUniformLocation(mold::render::shader::GlobalShaderProgram, "view"), 1, GL_FALSE, &view[0][0]);
+        glUniformMatrix4fv(glGetUniformLocation(mold::render::shader::GlobalShaderProgram, "projection"), 1, GL_FALSE, &projection[0][0]);
+
+        //draw stuff
+        GlobalEventSystem.GetMap()[EventType::Redraw]();
+
+        glfwSwapBuffers(mold::GlobalWindow);
+        glfwPollEvents();
+    }
 }

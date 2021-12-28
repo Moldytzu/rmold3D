@@ -5,6 +5,7 @@
 #include <GLFW/glfw3.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <map>
 
 namespace mold
 {
@@ -117,7 +118,26 @@ namespace mold
         inline float LastFrame;
     };
 
+    enum EventType
+    {
+        Redraw = 1,
+        Tick = 2,
+    };
+
+    class EventSystem
+    {
+    public:
+        void AttachCallback(EventType type, void (*callback)());
+        void DetachCallback(EventType type);
+        std::map<EventType, void (*)()> GetMap();
+
+    private:
+        std::map<EventType, void (*)()> events; //type, callback
+    };
+
     inline GLFWwindow *GlobalWindow;
+    inline EventSystem GlobalEventSystem;
 
     bool Init(uint width, uint height);
+    void Run();
 };

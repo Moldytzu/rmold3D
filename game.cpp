@@ -4,16 +4,16 @@ unsigned int VBO;
 unsigned int VAO;
 unsigned int texture;
 
-void onTick(GLFWwindow *window)
+void onTick()
 {
     const float cameraSpeed = 1.0f * mold::time::DeltaTime; // adjust accordingly
-    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+    if (glfwGetKey(mold::GlobalWindow, GLFW_KEY_W) == GLFW_PRESS)
         mold::render::camera::Position += cameraSpeed * mold::render::camera::Front;
-    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+    if (glfwGetKey(mold::GlobalWindow, GLFW_KEY_S) == GLFW_PRESS)
         mold::render::camera::Position -= cameraSpeed * mold::render::camera::Front;
-    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+    if (glfwGetKey(mold::GlobalWindow, GLFW_KEY_A) == GLFW_PRESS)
         mold::render::camera::Position -= glm::normalize(glm::cross(mold::render::camera::Front, mold::render::camera::Up)) * cameraSpeed;
-    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+    if (glfwGetKey(mold::GlobalWindow, GLFW_KEY_D) == GLFW_PRESS)
         mold::render::camera::Position += glm::normalize(glm::cross(mold::render::camera::Front, mold::render::camera::Up)) * cameraSpeed;
 }
 
@@ -40,6 +40,10 @@ int main()
 {
     if (!mold::Init(800, 600))
         destroy();
+
+    //Callbacks
+    mold::GlobalEventSystem.AttachCallback(mold::EventType::Redraw,onDraw);
+    mold::GlobalEventSystem.AttachCallback(mold::EventType::Tick,onTick);
 
     //Cube
     float vertices[] = {
@@ -94,40 +98,7 @@ int main()
     texture = mold::render::image::GenerateTextureIndex(mold::render::image::LoadRGBBitmap("texture.bmp"));
 
     //main loop
-    while (!glfwWindowShouldClose(mold::GlobalWindow))
-    {
-        float currentFrame = glfwGetTime();
-        mold::time::DeltaTime = currentFrame - mold::time::LastFrame;
-        mold::time::LastFrame = currentFrame;
-        //tick
-        onTick(mold::GlobalWindow);
-
-        glClearColor(0, 0, 0, 0);                           //black
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //clear screen
-
-        //update camera front
-        glm::vec3 direction;
-        direction.x = cos(glm::radians(mold::render::camera::Yaw)) * cos(glm::radians(mold::render::camera::Pitch));
-        direction.y = sin(glm::radians(mold::render::camera::Pitch));
-        direction.z = sin(glm::radians(mold::render::camera::Yaw)) * cos(glm::radians(mold::render::camera::Pitch));
-        mold::render::camera::Front = glm::normalize(direction);
-
-        // create transformations
-        glm::mat4 view = glm::mat4(1.0f);
-        glm::mat4 projection = glm::mat4(1.0f);
-        projection = glm::perspective(glm::radians(mold::settings::FOV), mold::settings::WindowWidth / mold::settings::WindowHeight, 0.1f, 100.0f);
-        view = glm::lookAt(mold::render::camera::Position, mold::render::camera::Position + mold::render::camera::Front, mold::render::camera::Up);
-
-        // give the shader our view and projection
-        glUniformMatrix4fv(glGetUniformLocation(mold::render::shader::GlobalShaderProgram, "view"), 1, GL_FALSE, &view[0][0]);
-        glUniformMatrix4fv(glGetUniformLocation(mold::render::shader::GlobalShaderProgram, "projection"), 1, GL_FALSE, &projection[0][0]);
-
-        //draw stuff
-        onDraw();
-
-        glfwSwapBuffers(mold::GlobalWindow);
-        glfwPollEvents();
-    }
+    mold::Run();
 
     destroy();
     return 0;
