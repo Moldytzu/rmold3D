@@ -7,6 +7,9 @@
 #include <stdio.h>
 #include <map>
 
+#define Vertex(X, Y, Z) X, Y, Z
+#define TexCoord(X, Y) X, Y
+
 namespace mold
 {
     namespace render
@@ -102,6 +105,32 @@ namespace mold
             inline glm::vec3 Up = glm::vec3(0.0f, 1.0f, 0.0f);
             inline float Yaw = -90.0f; //-90.0f left, 0 front, 90.0f right
             inline float Pitch = 0.0f; //90.0f up, 0 front, -90.0f down
+        };
+
+        namespace objects
+        {
+            class GameObject
+            {
+            public:
+                GameObject();
+                virtual void Init();
+                virtual void Draw();
+                glm::mat4 Position = glm::mat4(1.0f);
+
+            protected:
+                uint Texture = 0;
+                mold::render::vabo::VABO Vabo;
+                float *Vertices;
+            };
+
+            class Cube : public GameObject
+            {
+            public:
+                Cube();
+
+                void Init(mold::render::image::Texture texture);
+                void Draw();
+            };
         };
     };
 
