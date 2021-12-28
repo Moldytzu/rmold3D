@@ -48,6 +48,7 @@ namespace mold
             } __attribute__((packed));
 
             Texture LoadRGBBitmap(const char *filename);
+            uint GenerateTextureIndex(Texture texture);
         };
 
         namespace shader

@@ -48,3 +48,17 @@ mold::render::image::Texture mold::render::image::LoadRGBBitmap(const char *file
 
     return texture;
 }
+
+uint mold::render::image::GenerateTextureIndex(mold::render::image::Texture texture)
+{
+    uint t;
+    glGenTextures(1, &t);
+    glBindTexture(GL_TEXTURE_2D, t);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texture.Width, texture.Height, 0, GL_RGB, GL_UNSIGNED_BYTE, texture.PixelData);
+    glGenerateMipmap(GL_TEXTURE_2D);
+    return t;
+}
