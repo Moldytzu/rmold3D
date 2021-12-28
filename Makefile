@@ -2,20 +2,28 @@ rwildcard=$(foreach d,$(wildcard $(1:=/*)),$(call rwildcard,$d,$2) $(filter $(su
 reverse = $(if $(1),$(call reverse,$(wordlist 2,$(words $(1)),$(1)))) $(firstword $(1))
 
 CPP = g++
+CC = gcc
 
 SRCDIR := rmold3D
 OBJDIR := obj
 
 CFLAGS = -I $(shell pwd)/ -I $(shell pwd)/rmold3D -Ofast
 
-SRC = $(call rwildcard,$(SRCDIR),*.cpp)  
+SRC = $(call rwildcard,$(SRCDIR),*.cpp) 
+SRC += $(call rwildcard,$(SRCDIR),*.c)  
+
 OBJS = $(call reverse,$(patsubst $(SRCDIR)/%.cpp, $(OBJDIR)/%.o, $(SRC)))
+OBJS += $(call reverse,$(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRC)))
 
 LIB = engrmold3D.a
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.cpp
 	@ mkdir -p $(@D)
 	$(CPP) $(CFLAGS) -c $^ -o $@
+
+$(OBJDIR)/%.o: $(SRCDIR)/%.c
+	@ mkdir -p $(@D)
+	$(CC) $(CFLAGS) -c $^ -o $@
 
 .PHONY: build
 build: lib
@@ -27,4 +35,4 @@ lib: $(OBJS)
 	ar -crs $(LIB) $(OBJS)
 
 game: lib 
-	$(CPP) game.cpp $(LIB) -lGL -lGLU -lGLEW -lglut -o game $(CFLAGS)
+	$(CPP) game.cpp $(LIB) -lglfw -lGL -lX11 -lpthread -lXrandr -lXi -ldl -o game $(CFLAGS)
