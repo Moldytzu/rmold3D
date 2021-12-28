@@ -1,8 +1,8 @@
 #include <rmold3D/mold.h>
 
-glm::vec3 cameraPos   = glm::vec3(0.0f, 0.0f,  3.0f);
+glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
 glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
-glm::vec3 cameraUp    = glm::vec3(0.0f, 1.0f,  0.0f);
+glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
 
 #define WINDOW_HEIGHT (float)600
 #define WINDOW_WIDTH (float)800
@@ -126,24 +126,21 @@ void onDraw()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //clear screen
 
     // create transformations
-    glm::mat4 model = glm::mat4(1.0f);
     glm::mat4 view = glm::mat4(1.0f);
     glm::mat4 projection = glm::mat4(1.0f);
-    //model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(0.0f, 0.0f, 0.0f));
-    projection = glm::perspective(glm::radians(45.0f), (float)WINDOW_WIDTH / (float)WINDOW_HEIGHT, 0.1f, 100.0f);
+    projection = glm::perspective(glm::radians(90.0f), (float)WINDOW_WIDTH / (float)WINDOW_HEIGHT, 0.1f, 100.0f);
+    view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
 
-const float radius = 10.0f;
-float camX = sin(glfwGetTime()) * radius;
-float camZ = cos(glfwGetTime()) * radius;
-view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
-
-    glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "model"), 1, GL_FALSE, &model[0][0]);
+    // give the shader our view and projection
     glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "view"), 1, GL_FALSE, &view[0][0]);
     glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "projection"), 1, GL_FALSE, &projection[0][0]);
 
-    glBindTexture(GL_TEXTURE_2D, texture);
-    glBindVertexArray(VAO); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
-    glDrawArrays(GL_TRIANGLES, 0, 36);
+    //draw basic cube
+    glm::mat4 position = glm::mat4(1.0f);                                                           //model's position
+    glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "model"), 1, GL_FALSE, &position[0][0]); // give the shader our position
+    glBindTexture(GL_TEXTURE_2D, texture);                                                          //set the texture
+    glBindVertexArray(VAO);                                                                         // vao of the cube with all the vertices
+    glDrawArrays(GL_TRIANGLES, 0, 36);                                                              //draw 36 triangles
 }
 
 //clean up the mess
