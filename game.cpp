@@ -162,16 +162,9 @@ int main()
         -0.5f, 0.5f, -0.5f, 0.0f, 1.0f};
 
     //set up a vbo & a vao
-    glGenVertexArrays(1, &VAO);
-    glGenBuffers(1, &VBO);
-
-    glBindVertexArray(VAO);
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);                                                              //tell opengl we want to use this vbo
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);                       //set data
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void *)0);                   //position attribute
-    glEnableVertexAttribArray(0);                                                                    //enable
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void *)(3 * sizeof(float))); //texture coord attribute
-    glEnableVertexAttribArray(1);                                                                    //enable
+    mold::render::vabo::VABO vabo = mold::render::vabo::GenerateVABO(vertices,sizeof(vertices));
+    VAO = vabo.VAO;
+    VBO = vabo.VBO;
 
     //load texture
     texture = mold::render::image::GenerateTextureIndex(mold::render::image::LoadRGBBitmap("texture.bmp"));

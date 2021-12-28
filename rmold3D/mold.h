@@ -79,6 +79,17 @@ namespace mold
                                                       "{\n"
                                                       "   FragColor = texture(mainTexture, textureCoord);\n"
                                                       "}\n";
-        }
+        };
+
+        namespace vabo
+        {
+            struct VABO
+            {
+                uint VAO;
+                uint VBO;
+            };
+
+            VABO GenerateVABO(float *vertices, size_t len);
+        };
     };
 };
