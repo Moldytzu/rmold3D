@@ -44,5 +44,6 @@ int main()
         glfwPollEvents();
     }
 
+    destroy();
     return 0;
 }
