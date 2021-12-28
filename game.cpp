@@ -3,18 +3,34 @@
 #define WINDOW_HEIGHT 600
 #define WINDOW_WIDTH 800
 
-//glfw callback for when resizing
+//glfw callbacks
 void onResize(GLFWwindow *window, int width, int height)
 {
     glViewport(0, 0, width, height);
 }
 
+void onKey(GLFWwindow* window, int key, int scancode, int action, int mods)
+{
+
+}
+
+//draw on the screen
+void onDraw()
+{
+    glClearColor(0,1,0,0); //green
+    glClear(GL_COLOR_BUFFER_BIT); //clear screen
+
+
+}
+
+//clean up the mess
 void destroy()
 {
     glfwTerminate();
     exit(-1);
 }
 
+//entry point
 int main()
 {
     glfwInit(); // initialize glfw
@@ -40,6 +56,9 @@ int main()
     //main loop
     while (!glfwWindowShouldClose(window))
     {
+        //draw stuff
+        onDraw();
+
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
