@@ -29,9 +29,9 @@ bool mold::Init(uint width, uint height)
 
     // set up callbacks
     glfwSetFramebufferSizeCallback(mold::GlobalWindow, onResize);
-    
-    GlobalEventSystem.AttachCallback(EventType::Redraw,stub);
-    GlobalEventSystem.AttachCallback(EventType::Tick,stub);
+
+    GlobalEventSystem.AttachCallback(EventType::Redraw, stub);
+    GlobalEventSystem.AttachCallback(EventType::Tick, stub);
 
     // set up gl
     glViewport(0, 0, width, height);
@@ -70,7 +70,7 @@ void mold::Run()
         float currentFrame = glfwGetTime();
         mold::time::DeltaTime = currentFrame - mold::time::LastFrame;
         mold::time::LastFrame = currentFrame;
-        
+
         //tick
         GlobalEventSystem.GetMap()[EventType::Tick]();
 
@@ -93,6 +93,9 @@ void mold::Run()
         // give the shader our view and projection
         glUniformMatrix4fv(glGetUniformLocation(mold::render::shader::GlobalShaderProgram, "view"), 1, GL_FALSE, &view[0][0]);
         glUniformMatrix4fv(glGetUniformLocation(mold::render::shader::GlobalShaderProgram, "projection"), 1, GL_FALSE, &projection[0][0]);
+
+        //use shader
+        glUseProgram(mold::render::shader::GlobalShaderProgram);
 
         //draw stuff
         GlobalEventSystem.GetMap()[EventType::Redraw]();
