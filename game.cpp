@@ -1,7 +1,7 @@
 #include <rmold3D/mold.h>
 
-#define WINDOW_HEIGHT 600
-#define WINDOW_WIDTH 800
+#define WINDOW_HEIGHT (float)600
+#define WINDOW_WIDTH (float)800
 
 #define SetUniformf(name, value) glUniform1f(glGetUniformLocation(shaderProgram, name), value);
 #define SetUniformi(name, value) glUniform1i(glGetUniformLocation(shaderProgram, name), value);
@@ -112,6 +112,17 @@ void onDraw()
     glClearColor(0, 0, 0, 0);     //black
     glClear(GL_COLOR_BUFFER_BIT); //clear screen
 
+    // create transformations
+    glm::mat4 model = glm::mat4(1.0f);
+    glm::mat4 view = glm::mat4(1.0f);
+    glm::mat4 projection = glm::mat4(1.0f);
+    model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+    view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
+    projection = glm::perspective(glm::radians(45.0f), (float)WINDOW_WIDTH / (float)WINDOW_HEIGHT, 0.1f, 100.0f);
+    glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "model"), 1, GL_FALSE, &model[0][0]);
+    glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "view"), 1, GL_FALSE, &view[0][0]);
+    glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "projection"), 1, GL_FALSE, &projection[0][0]);
+
     glBindTexture(GL_TEXTURE_2D, texture);
     glBindVertexArray(VAO); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
@@ -146,6 +157,7 @@ int main()
 
     // set up gl
     glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT);
+    glm::ortho(0.0f, WINDOW_WIDTH, 0.0f, WINDOW_HEIGHT, 0.1f, 100.0f);
 
     //compile shaders
     const char *vertexShaderSource = "#version 330 core\n"
@@ -154,9 +166,12 @@ int main()
                                      "layout (location = 2) in vec2 textureCoordornate;\n"
                                      "out vec3 color;\n"
                                      "out vec2 textureCoord;\n"
+                                     "uniform mat4 model;\n"
+                                     "uniform mat4 view;\n"
+                                     "uniform mat4 projection;\n"
                                      "void main()\n"
                                      "{\n"
-                                     "   gl_Position = vec4(vertexPosition.x, vertexPosition.y, vertexPosition.z, 1.0);\n" //original position
+                                     "   gl_Position = projection * view * model * vec4(vertexPosition, 1.0);\n"
                                      "   color = vertexColor;\n"
                                      "   textureCoord = textureCoordornate;\n"
                                      "}\n";
@@ -216,7 +231,7 @@ int main()
         -0.5f, 0.5f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f   // top left
     };
 
-    unsigned int indices[] = {  
+    unsigned int indices[] = {
         0, 1, 3, // first triangle
         1, 2, 3  // second triangle
     };
@@ -228,8 +243,8 @@ int main()
 
     glBindVertexArray(VAO);
 
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);                                                              //tell opengl we want to use this vbo
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);                       //set data
+    glBindBuffer(GL_ARRAY_BUFFER, VBO);                                        //tell opengl we want to use this vbo
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW); //set data
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void *)0);                   //position attribute
@@ -238,7 +253,6 @@ int main()
     glEnableVertexAttribArray(1);                                                                    //enable color
     glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void *)(6 * sizeof(float))); //texture attribute
     glEnableVertexAttribArray(2);                                                                    //enable texture
-    
 
     //load texture
     glGenTextures(1, &texture);

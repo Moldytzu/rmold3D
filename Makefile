@@ -7,7 +7,7 @@ CC = gcc
 SRCDIR := rmold3D
 OBJDIR := obj
 
-CFLAGS = -I $(shell pwd)/ -I $(shell pwd)/rmold3D -O0 -g
+CFLAGS = -I $(shell pwd)/ -I $(shell pwd)/rmold3D -I $(shell pwd)/rmold3D/3rd-Party/glm/ -O0 -g
 
 SRC = $(call rwildcard,$(SRCDIR),*.cpp) 
 SRC += $(call rwildcard,$(SRCDIR),*.c)  
