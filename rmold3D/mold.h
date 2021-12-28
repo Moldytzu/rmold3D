@@ -94,6 +94,14 @@ namespace mold
             VABO GenerateVABO(float *vertices, size_t len);
         };
 
+        namespace camera
+        {
+            inline glm::vec3 Position = glm::vec3(0.0f, 0.0f, 3.0f);
+            inline glm::vec3 Front = glm::vec3(0.0f, 0.0f, -1.0f);
+            inline glm::vec3 Up = glm::vec3(0.0f, 1.0f, 0.0f);
+            inline float Yaw = -90.0f; //-90.0f left, 0 front, 90.0f right
+            inline float Pitch = 0.0f; //90.0f up, 0 front, -90.0f down
+        };
     };
 
     namespace settings
@@ -101,6 +109,12 @@ namespace mold
         inline float FOV = 90.0f;
         inline float WindowWidth;
         inline float WindowHeight;
+    };
+
+    namespace time
+    {
+        inline float DeltaTime;
+        inline float LastFrame;
     };
 
     inline GLFWwindow *GlobalWindow;
