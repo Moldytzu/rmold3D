@@ -6,7 +6,7 @@ CPP = g++
 SRCDIR := rmold3D
 OBJDIR := obj
 
-CFLAGS = -I $(shell pwd)/ -Ofast
+CFLAGS = -I $(shell pwd)/ -I $(shell pwd)/rmold3D -Ofast
 
 SRC = $(call rwildcard,$(SRCDIR),*.cpp)  
 OBJS = $(call reverse,$(patsubst $(SRCDIR)/%.cpp, $(OBJDIR)/%.o, $(SRC)))
