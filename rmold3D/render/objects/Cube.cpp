@@ -58,7 +58,7 @@ void mold::render::objects::Cube::Init(mold::render::image::Texture texture)
 
 void mold::render::objects::Cube::Draw()
 {
-    glUniformMatrix4fv(glGetUniformLocation(mold::render::shader::GlobalShaderProgram, "model"), 1, GL_FALSE, &Position[0][0]); //give the shader our position
+    glUniformMatrix4fv(glGetUniformLocation(mold::render::shader::GlobalShaderProgram, "model"), 1, GL_FALSE, &PositionMatrix[0][0]); //give the shader our position
     glBindTexture(GL_TEXTURE_2D, Texture);                                                                                      //set the texture
     glBindBuffer(GL_ARRAY_BUFFER, Vabo.VBO);                                                                                    //vbo of the cube
     glBindVertexArray(Vabo.VAO);                                                                                                //vao of the cube

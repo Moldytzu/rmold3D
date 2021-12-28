@@ -6,10 +6,15 @@ void mold::render::objects::GameObject::Draw() {}
 
 void mold::render::objects::GameObject::Translate(glm::vec3 offset)
 {
-    Position = glm::translate(Position,offset);
+    PositionMatrix = glm::translate(PositionMatrix,offset);
 }
 
 void mold::render::objects::GameObject::Move(glm::vec3 position)
 {
-    Position = glm::translate(glm::mat4(1.0f),position);
+    PositionMatrix = glm::translate(glm::mat4(1.0f),position);
+}
+
+glm::vec3 mold::render::objects::GameObject::GetPosition()
+{
+    return PositionMatrix[3];
 }

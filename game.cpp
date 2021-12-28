@@ -43,6 +43,10 @@ int main()
     mold::GlobalGameObjects.Get("Simple Cube")->Move(glm::vec3(0,1.0f,-1.0f));
     mold::GlobalGameObjects.Get("Simple Cube")->Translate(glm::vec3(0,1.0f,-1.0f));
 
+    glm::vec3 CubePosition = mold::GlobalGameObjects.Get("Simple Cube")->GetPosition();
+
+    printf("XYZ:%f %f %f",CubePosition.x,CubePosition.y,CubePosition.z);
+
     //Callbacks
     mold::GlobalEventSystem.AttachCallback(mold::EventType::Redraw, onDraw);
     mold::GlobalEventSystem.AttachCallback(mold::EventType::Tick, onTick);

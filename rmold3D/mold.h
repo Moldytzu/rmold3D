@@ -115,9 +115,10 @@ namespace mold
                 GameObject();
                 void Translate(glm::vec3 offset); //translate position
                 void Move(glm::vec3 position);    //set position
+                glm::vec3 GetPosition(); //get position
                 virtual void Init();
                 virtual void Draw();
-                glm::mat4 Position = glm::mat4(1.0f);
+                glm::mat4 PositionMatrix = glm::mat4(1.0f);
                 bool Initialized = false;
                 bool Enabled = false;
 
