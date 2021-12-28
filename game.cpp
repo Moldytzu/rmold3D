@@ -121,31 +121,23 @@ int main()
     unsigned int vertexShader = mold::render::shader::CompileShader(vertexShaderSource, GL_VERTEX_SHADER); //create and compile vertex shader
 
     //check for errors
-    int success;
-    glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
-    if (!success)
+    if (!mold::render::shader::GetCompilationError(vertexShader))
         destroy();
 
     unsigned int fragmentShader = mold::render::shader::CompileShader(fragmentShaderSource, GL_FRAGMENT_SHADER); //create and compile fragment shader
 
     //check for errors
-    glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
-    if (!success)
+    if (!mold::render::shader::GetCompilationError(fragmentShader))
         destroy();
 
-    shaderProgram = mold::render::shader::LinkShader(fragmentShader,vertexShader); //link the shaders together to form a program
+    shaderProgram = mold::render::shader::LinkShader(fragmentShader, vertexShader); //link the shaders together to form a program
 
     //check for errors
-    glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
-    if (!success)
+    if (!mold::render::shader::GetLinkError(shaderProgram))
         destroy();
 
     //use shader
     glUseProgram(shaderProgram);
-
-    //clean up the objects we don't need so we use less vram
-    glDeleteShader(vertexShader);
-    glDeleteShader(fragmentShader);
 
     //Cube
     float vertices[] = {

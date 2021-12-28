@@ -52,8 +52,10 @@ namespace mold
 
         namespace shader
         {
-            uint CompileShader(const char *source,uint type);
+            uint CompileShader(const char *source, uint type);
             uint LinkShader(uint fragment, uint vertex);
+            bool GetCompilationError(uint shader);
+            bool GetLinkError(uint program);
         }
     };
 };
