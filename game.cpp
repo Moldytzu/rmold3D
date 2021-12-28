@@ -24,6 +24,8 @@ void onDraw()
     glClearColor(0, 0, 0, 0);     //black
     glClear(GL_COLOR_BUFFER_BIT); //clear screen
 
+    glUniform4f(glGetUniformLocation(shaderProgram, "color"), 0.0f, 0.0f, 1.0f, 1.0f); 
+
     glUseProgram(shaderProgram);
     glBindVertexArray(VAO); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
@@ -61,17 +63,18 @@ int main()
 
     //compile shaders
     const char *vertexShaderSource = "#version 330 core\n"
-                                     "layout (location = 0) in vec3 aPos;\n"
+                                     "layout (location = 0) in vec3 vertexPosition;\n"
                                      "void main()\n"
                                      "{\n"
-                                     "   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n" //original position
+                                     "   gl_Position = vec4(vertexPosition.x, vertexPosition.y, vertexPosition.z, 1.0);\n" //original position
                                      "}\n";
 
     const char *fragmentShaderSource = "#version 330 core\n"
                                        "out vec4 FragColor;\n"
+                                       "uniform vec4 color;\n"
                                        "void main()\n"
                                        "{\n"
-                                       "   FragColor = vec4(1.0f, 1.0f, 1.0f, 1.0f);\n" //white
+                                       "   FragColor = color;\n"
                                        "}\n";
 
     unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER); //create and compile vertex shader
