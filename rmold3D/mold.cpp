@@ -5,6 +5,9 @@ void stub() {}
 //glfw callbacks
 void onResize(GLFWwindow *window, int width, int height)
 {
+    mold::GlobalEventSystem.GetMap()[mold::EventType::Resize]();
+    mold::settings::WindowHeight = height;
+    mold::settings::WindowWidth = height;
     glViewport(0, 0, width, height);
 }
 
@@ -30,8 +33,8 @@ bool mold::Init(uint width, uint height)
     // set up callbacks
     glfwSetFramebufferSizeCallback(mold::GlobalWindow, onResize);
 
-    GlobalEventSystem.AttachCallback(EventType::Redraw, stub);
-    GlobalEventSystem.AttachCallback(EventType::Tick, stub);
+    for (int enumInt = EventType::Redraw; enumInt != EventType::LAST; enumInt++) //iterate over each enum item
+        GlobalEventSystem.AttachCallback(static_cast<EventType>(enumInt),stub);
 
     // set up gl
     glViewport(0, 0, width, height);
@@ -101,9 +104,9 @@ void mold::Run()
         GlobalEventSystem.GetMap()[EventType::Redraw]();
 
         //draw game objects
-        for (std::pair<const char*, render::objects::GameObject *> object : GlobalGameObjects.Get())
+        for (std::pair<const char *, render::objects::GameObject *> object : GlobalGameObjects.Get())
         {
-            if(object.second->Enabled)
+            if (object.second->Enabled)
                 object.second->Draw();
         }
 
@@ -112,4 +115,6 @@ void mold::Run()
         glfwSwapBuffers(mold::GlobalWindow);
         glfwPollEvents();
     }
+
+    GlobalEventSystem.GetMap()[EventType::Exit]();
 }

@@ -191,8 +191,11 @@ namespace mold
 
     enum EventType
     {
-        Redraw = 1,
-        Tick = 2,
+        Redraw,
+        Tick,
+        Resize,
+        Exit,
+        LAST,
     };
 
     class EventSystem

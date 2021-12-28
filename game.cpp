@@ -37,6 +37,18 @@ void onDraw()
     
 }
 
+//resize
+void onResize()
+{
+    printf("Window resized!\n");
+}
+
+//exit
+void onExit()
+{
+    printf("Goodbye!\n");
+}
+
 //clean up the mess
 void destroy()
 {
@@ -60,6 +72,8 @@ int main()
     //Callbacks
     mold::GlobalEventSystem.AttachCallback(mold::EventType::Redraw, onDraw);
     mold::GlobalEventSystem.AttachCallback(mold::EventType::Tick, onTick);
+    mold::GlobalEventSystem.AttachCallback(mold::EventType::Resize, onResize);
+    mold::GlobalEventSystem.AttachCallback(mold::EventType::Exit, onExit);
 
     //main loop
     mold::Run();
