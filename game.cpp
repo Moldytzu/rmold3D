@@ -3,9 +3,98 @@
 #define WINDOW_HEIGHT 600
 #define WINDOW_WIDTH 800
 
+#define SetUniformf(name, value) glUniform1f(glGetUniformLocation(shaderProgram, name), value);
+#define SetUniformi(name, value) glUniform1i(glGetUniformLocation(shaderProgram, name), value);
+
 unsigned int VBO;
 unsigned int VAO;
+unsigned int EBO;
 unsigned int shaderProgram;
+unsigned int texture;
+
+struct Texture
+{
+    uint32_t Size;
+    uint32_t Width;
+    uint32_t Height;
+
+    uint8_t *PixelData;
+};
+
+struct BitmapImageHeader //https://en.wikipedia.org/wiki/BMP_file_format
+{
+    //bmp header
+    uint8_t Signature1; //Should be B
+    uint8_t Signature2; //Should be M
+
+    uint32_t Size; //bmp file size
+
+    uint32_t Reserved;
+
+    uint32_t DataOffset; //offset to the image data
+
+    //BITMAPINFOHEADER
+    uint32_t HeaderSize;          //size of BITMAPINFOHEADER, always 0x28 (decimal 40)
+    int32_t BitmapWidth;          //width of the image
+    int32_t BitmapHeight;         //height of the image
+    uint16_t Planes;              //bit planes
+    uint16_t BPP;                 //bits per pixel
+    uint32_t CompressionMethod;   //the method of compression used
+    uint32_t ImageSize;           //size in bytes of the whole image, without headers
+    int32_t HorizontalResolution; //resolution in pixel per metre
+    int32_t VerticalResolution;   //resolution in pixel per metre
+    uint32_t Colors;              //colors in the color palette
+    uint32_t ImportantColors;     //important colors used, generally ignored
+} __attribute__((packed));
+
+Texture LoadRGBBitmap(const char *filename)
+{
+    FILE *file;
+    uint32_t size;
+    uint16_t bitPlanes;
+    uint16_t bpp;
+
+    file = fopen(filename, "rb");
+
+    if ((uint64_t)file == 0)
+    {
+        char buffer[1024];
+        sprintf(buffer, "Couldn't find the bitmap image %s!", filename);
+
+        puts(buffer);
+
+        return {};
+    }
+
+    BitmapImageHeader *header = (BitmapImageHeader *)malloc(sizeof(BitmapImageHeader));
+    if (fread(header, sizeof(BitmapImageHeader), 1, file) != 1)
+        return {};
+
+    if (header->BPP != 24)
+        return {};
+
+    Texture texture;
+
+    texture.Width = header->BitmapWidth;
+    texture.Height = header->BitmapHeight;
+
+    texture.PixelData = (uint8_t *)malloc(header->ImageSize);
+
+    if (fread(texture.PixelData, header->ImageSize, 1, file) != 1)
+        return {};
+
+    for (int i = 0; i < header->ImageSize; i += 3)
+    { // reverse all of the colors. (bgr -> rgb)
+
+        uint8_t temp = texture.PixelData[i];
+
+        texture.PixelData[i] = texture.PixelData[i + 2];
+
+        texture.PixelData[i + 2] = temp;
+    }
+
+    return texture;
+}
 
 //glfw callbacks
 void onResize(GLFWwindow *window, int width, int height)
@@ -23,8 +112,9 @@ void onDraw()
     glClearColor(0, 0, 0, 0);     //black
     glClear(GL_COLOR_BUFFER_BIT); //clear screen
 
+    glBindTexture(GL_TEXTURE_2D, texture);
     glBindVertexArray(VAO); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
-    glDrawArrays(GL_TRIANGLES, 0, 3);
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 }
 
 //clean up the mess
@@ -61,19 +151,24 @@ int main()
     const char *vertexShaderSource = "#version 330 core\n"
                                      "layout (location = 0) in vec3 vertexPosition;\n"
                                      "layout (location = 1) in vec3 vertexColor;\n"
+                                     "layout (location = 2) in vec2 textureCoordornate;\n"
                                      "out vec3 color;\n"
+                                     "out vec2 textureCoord;\n"
                                      "void main()\n"
                                      "{\n"
                                      "   gl_Position = vec4(vertexPosition.x, vertexPosition.y, vertexPosition.z, 1.0);\n" //original position
                                      "   color = vertexColor;\n"
+                                     "   textureCoord = textureCoordornate;\n"
                                      "}\n";
 
     const char *fragmentShaderSource = "#version 330 core\n"
                                        "out vec4 FragColor;\n"
                                        "in vec3 color;\n"
+                                       "in vec2 textureCoord;\n"
+                                       "uniform sampler2D mainTexture;\n"
                                        "void main()\n"
                                        "{\n"
-                                       "   FragColor = vec4(color, 1.0);\n"
+                                       "   FragColor = texture(mainTexture, textureCoord);\n"
                                        "}\n";
 
     unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER); //create and compile vertex shader
@@ -114,25 +209,47 @@ int main()
 
     //triangles
     float vertices[] = {
-        // positions         // colors
-        0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f,  // bottom right
-        -0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, // bottom left
-        0.0f, 0.5f, 0.0f, 0.0f, 0.0f, 1.0f    // top
+        // positions     /      colors      / texture coords
+        0.5f, 0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f,   // top right
+        0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,  // bottom right
+        -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, // bottom left
+        -0.5f, 0.5f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f   // top left
+    };
+
+    unsigned int indices[] = {  
+        0, 1, 3, // first triangle
+        1, 2, 3  // second triangle
     };
 
     //set up a vbo, a vao & an ebo
-    //ok actually ebos are useless for now
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
+    glGenBuffers(1, &EBO);
 
     glBindVertexArray(VAO);
 
     glBindBuffer(GL_ARRAY_BUFFER, VBO);                                                              //tell opengl we want to use this vbo
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);                       //set data
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void *)0);                   //position attribute
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void *)0);                   //position attribute
     glEnableVertexAttribArray(0);                                                                    //enable position
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void *)(3 * sizeof(float))); //color attribute
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void *)(3 * sizeof(float))); //color attribute
     glEnableVertexAttribArray(1);                                                                    //enable color
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void *)(6 * sizeof(float))); //texture attribute
+    glEnableVertexAttribArray(2);                                                                    //enable texture
+    
+
+    //load texture
+    glGenTextures(1, &texture);
+    glBindTexture(GL_TEXTURE_2D, texture);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    Texture t = LoadRGBBitmap("texture.bmp");
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, t.Width, t.Height, 0, GL_RGB, GL_UNSIGNED_BYTE, t.PixelData);
+    glGenerateMipmap(GL_TEXTURE_2D);
 
     //main loop
     while (!glfwWindowShouldClose(window))
