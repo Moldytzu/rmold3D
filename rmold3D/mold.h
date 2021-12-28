@@ -113,6 +113,8 @@ namespace mold
             {
             public:
                 GameObject();
+                void Translate(glm::vec3 offset); //translate position
+                void Move(glm::vec3 position);    //set position
                 virtual void Init();
                 virtual void Draw();
                 glm::mat4 Position = glm::mat4(1.0f);
@@ -142,6 +144,7 @@ namespace mold
                 void Remove(const char *name);
                 GameObject *Get(const char *name);
                 std::map<const char *, GameObject *> Get();
+
             private:
                 std::map<const char *, GameObject *> GameObjects;
             };

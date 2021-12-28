@@ -4,7 +4,6 @@
 - basic logger
 - internal console
 - internal profiler
-- gameobjects
 */
 
 void onTick()
@@ -41,7 +40,8 @@ int main()
 
     mold::GlobalGameObjects.Add("Simple Cube",new mold::render::objects::Cube(mold::render::image::LoadRGBBitmap("texture.bmp")));
 
-    mold::GlobalGameObjects.Get("Simple Cube")->Enabled = false;
+    mold::GlobalGameObjects.Get("Simple Cube")->Move(glm::vec3(0,1.0f,-1.0f));
+    mold::GlobalGameObjects.Get("Simple Cube")->Translate(glm::vec3(0,1.0f,-1.0f));
 
     //Callbacks
     mold::GlobalEventSystem.AttachCallback(mold::EventType::Redraw, onDraw);
