@@ -1,11 +1,12 @@
 #include <rmold3D/mold.h>
 
 mold::render::objects::Cube::Cube() {}
-mold::render::objects::Cube::Cube(mold::render::image::Texture texture) {Init(texture);}
+mold::render::objects::Cube::Cube(mold::render::image::Texture texture) { Init(texture); }
 
 void mold::render::objects::Cube::Init(mold::render::image::Texture texture)
 {
-    if(Initialized) return; 
+    if (Initialized)
+        return;
     Initialized = true;
     Enabled = true;
     Texture = mold::render::image::GenerateTextureIndex(texture);
@@ -59,8 +60,8 @@ void mold::render::objects::Cube::Init(mold::render::image::Texture texture)
 void mold::render::objects::Cube::Draw()
 {
     glUniformMatrix4fv(glGetUniformLocation(mold::render::shader::GlobalShaderProgram, "model"), 1, GL_FALSE, &PositionMatrix[0][0]); //give the shader our position
-    glBindTexture(GL_TEXTURE_2D, Texture);                                                                                      //set the texture
-    glBindBuffer(GL_ARRAY_BUFFER, Vabo.VBO);                                                                                    //vbo of the cube
-    glBindVertexArray(Vabo.VAO);                                                                                                //vao of the cube
+    glBindTexture(GL_TEXTURE_2D, Texture);                                                                                            //set the texture
+    glBindBuffer(GL_ARRAY_BUFFER, Vabo.VBO);                                                                                          //vbo of the cube
+    glBindVertexArray(Vabo.VAO);                                                                                                      //vao of the cube
     glDrawArrays(GL_TRIANGLES, 0, 36);
 }

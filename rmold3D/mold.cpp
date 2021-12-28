@@ -34,7 +34,7 @@ bool mold::Init(uint width, uint height)
     glfwSetFramebufferSizeCallback(mold::GlobalWindow, onResize);
 
     for (int enumInt = EventType::Redraw; enumInt != EventType::LAST; enumInt++) //iterate over each enum item
-        GlobalEventSystem.AttachCallback(static_cast<EventType>(enumInt),stub);
+        GlobalEventSystem.AttachCallback(static_cast<EventType>(enumInt), stub);
 
     // set up gl
     glViewport(0, 0, width, height);

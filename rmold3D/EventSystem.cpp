@@ -4,7 +4,7 @@ using namespace mold;
 
 void stub();
 
-void EventSystem::AttachCallback(EventType type,  void (*callback)())
+void EventSystem::AttachCallback(EventType type, void (*callback)())
 {
     events[type] = callback;
 }
