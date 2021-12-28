@@ -117,6 +117,7 @@ namespace mold
                 virtual void Draw();
                 glm::mat4 Position = glm::mat4(1.0f);
                 bool Initialized = false;
+                bool Enabled = false;
 
             protected:
                 uint Texture = 0;

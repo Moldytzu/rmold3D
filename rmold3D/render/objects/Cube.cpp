@@ -7,6 +7,7 @@ void mold::render::objects::Cube::Init(mold::render::image::Texture texture)
 {
     if(Initialized) return; 
     Initialized = true;
+    Enabled = true;
     Texture = mold::render::image::GenerateTextureIndex(texture);
 
     float vertices[] = {

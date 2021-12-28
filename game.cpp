@@ -41,6 +41,8 @@ int main()
 
     mold::GlobalGameObjects.Add("Simple Cube",new mold::render::objects::Cube(mold::render::image::LoadRGBBitmap("texture.bmp")));
 
+    mold::GlobalGameObjects.Get("Simple Cube")->Enabled = false;
+
     //Callbacks
     mold::GlobalEventSystem.AttachCallback(mold::EventType::Redraw, onDraw);
     mold::GlobalEventSystem.AttachCallback(mold::EventType::Tick, onTick);

@@ -103,7 +103,8 @@ void mold::Run()
         //draw game objects
         for (std::pair<const char*, render::objects::GameObject *> object : GlobalGameObjects.Get())
         {
-            object.second->Draw();
+            if(object.second->Enabled)
+                object.second->Draw();
         }
 
         glFlush();
