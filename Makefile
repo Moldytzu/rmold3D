@@ -7,13 +7,10 @@ CC = gcc
 SRCDIR := rmold3D
 OBJDIR := obj
 
-CFLAGS = -I $(shell pwd)/ -I $(shell pwd)/rmold3D -I $(shell pwd)/rmold3D/3rd-Party/glm/ -O0 -g
+CFLAGS = -I $(shell pwd)/ -I $(shell pwd)/rmold3D -I $(shell pwd)/rmold3D/3rd-Party/glm -I $(shell pwd)/rmold3D/3rd-Party/glad/include/glad -Ofast
 
-SRC = $(call rwildcard,$(SRCDIR),*.cpp) 
-SRC += $(call rwildcard,$(SRCDIR),*.c)  
-
-OBJS = $(call reverse,$(patsubst $(SRCDIR)/%.cpp, $(OBJDIR)/%.o, $(SRC)))
-OBJS += $(call reverse,$(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRC)))
+SRC = $(call rwildcard,$(SRCDIR),*.cpp)  
+OBJS = $(patsubst $(SRCDIR)/%.cpp, $(OBJDIR)/%.o, $(SRC))
 
 LIB = engrmold3D.a
 

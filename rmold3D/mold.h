@@ -46,6 +46,8 @@ namespace mold
                 uint32_t Colors;              //colors in the color palette
                 uint32_t ImportantColors;     //important colors used, generally ignored
             } __attribute__((packed));
+
+            Texture LoadRGBBitmap(const char *filename);
         };
     };
 };
