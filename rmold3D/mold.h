@@ -79,6 +79,8 @@ namespace mold
                                                       "{\n"
                                                       "   FragColor = texture(mainTexture, textureCoord);\n"
                                                       "}\n";
+
+            inline uint GlobalShaderProgram;
         };
 
         namespace vabo
@@ -92,4 +94,8 @@ namespace mold
             VABO GenerateVABO(float *vertices, size_t len);
         };
     };
+
+    inline GLFWwindow *GlobalWindow;
+
+    bool Init(uint width,uint height);
 };
