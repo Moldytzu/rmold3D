@@ -7,6 +7,9 @@
 - gameobjects
 */
 
+#define Vertex(X, Y, Z) X, Y, Z
+#define TexCoord(X, Y) X, Y
+
 class GameObject
 {
 public:
@@ -18,7 +21,7 @@ public:
 protected:
     uint Texture = 0;
     mold::render::vabo::VABO Vabo;
-    float* Vertices;
+    float *Vertices;
 };
 
 class Cube : public GameObject
@@ -29,49 +32,49 @@ public:
     void Init(mold::render::image::Texture texture)
     {
         Texture = mold::render::image::GenerateTextureIndex(texture);
-        
+
         float vertices[] = {
-            -0.5f, -0.5f, -0.5f, 0.0f, 0.0f,
-            0.5f, -0.5f, -0.5f, 1.0f, 0.0f,
-            0.5f, 0.5f, -0.5f, 1.0f, 1.0f,
-            0.5f, 0.5f, -0.5f, 1.0f, 1.0f,
-            -0.5f, 0.5f, -0.5f, 0.0f, 1.0f,
-            -0.5f, -0.5f, -0.5f, 0.0f, 0.0f,
+            Vertex(-0.5f, -0.5f, -0.5f), TexCoord(0.0f, 0.0f),
+            Vertex(0.5f, -0.5f, -0.5f), TexCoord(1.0f, 0.0f),
+            Vertex(0.5f, 0.5f, -0.5f), TexCoord(1.0f, 1.0f),
+            Vertex(0.5f, 0.5f, -0.5f), TexCoord(1.0f, 1.0f),
+            Vertex(-0.5f, 0.5f, -0.5f), TexCoord(0.0f, 1.0f),
+            Vertex(-0.5f, -0.5f, -0.5f), TexCoord(0.0f, 0.0f),
 
-            -0.5f, -0.5f, 0.5f, 0.0f, 0.0f,
-            0.5f, -0.5f, 0.5f, 1.0f, 0.0f,
-            0.5f, 0.5f, 0.5f, 1.0f, 1.0f,
-            0.5f, 0.5f, 0.5f, 1.0f, 1.0f,
-            -0.5f, 0.5f, 0.5f, 0.0f, 1.0f,
-            -0.5f, -0.5f, 0.5f, 0.0f, 0.0f,
+            Vertex(-0.5f, -0.5f, 0.5f), TexCoord(0.0f, 0.0f),
+            Vertex(0.5f, -0.5f, 0.5f), TexCoord(1.0f, 0.0f),
+            Vertex(0.5f, 0.5f, 0.5f), TexCoord(1.0f, 1.0f),
+            Vertex(0.5f, 0.5f, 0.5f), TexCoord(1.0f, 1.0f),
+            Vertex(-0.5f, 0.5f, 0.5f), TexCoord(0.0f, 1.0f),
+            Vertex(-0.5f, -0.5f, 0.5f), TexCoord(0.0f, 0.0f),
 
-            -0.5f, 0.5f, 0.5f, 1.0f, 0.0f,
-            -0.5f, 0.5f, -0.5f, 1.0f, 1.0f,
-            -0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
-            -0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
-            -0.5f, -0.5f, 0.5f, 0.0f, 0.0f,
-            -0.5f, 0.5f, 0.5f, 1.0f, 0.0f,
+            Vertex(-0.5f, 0.5f, 0.5f), TexCoord(1.0f, 0.0f),
+            Vertex(-0.5f, 0.5f, -0.5f), TexCoord(1.0f, 1.0f),
+            Vertex(-0.5f, -0.5f, -0.5f), TexCoord(0.0f, 1.0f),
+            Vertex(-0.5f, -0.5f, -0.5f), TexCoord(0.0f, 1.0f),
+            Vertex(-0.5f, -0.5f, 0.5f), TexCoord(0.0f, 0.0f),
+            Vertex(-0.5f, 0.5f, 0.5f), TexCoord(1.0f, 0.0f),
 
-            0.5f, 0.5f, 0.5f, 1.0f, 0.0f,
-            0.5f, 0.5f, -0.5f, 1.0f, 1.0f,
-            0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
-            0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
-            0.5f, -0.5f, 0.5f, 0.0f, 0.0f,
-            0.5f, 0.5f, 0.5f, 1.0f, 0.0f,
+            Vertex(0.5f, 0.5f, 0.5f), TexCoord(1.0f, 0.0f),
+            Vertex(0.5f, 0.5f, -0.5f), TexCoord(1.0f, 1.0f),
+            Vertex(0.5f, -0.5f, -0.5f), TexCoord(0.0f, 1.0f),
+            Vertex(0.5f, -0.5f, -0.5f), TexCoord(0.0f, 1.0f),
+            Vertex(0.5f, -0.5f, 0.5f), TexCoord(0.0f, 0.0f),
+            Vertex(0.5f, 0.5f, 0.5f), TexCoord(1.0f, 0.0f),
 
-            -0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
-            0.5f, -0.5f, -0.5f, 1.0f, 1.0f,
-            0.5f, -0.5f, 0.5f, 1.0f, 0.0f,
-            0.5f, -0.5f, 0.5f, 1.0f, 0.0f,
-            -0.5f, -0.5f, 0.5f, 0.0f, 0.0f,
-            -0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
+            Vertex(-0.5f, -0.5f, -0.5f), TexCoord(0.0f, 1.0f),
+            Vertex(0.5f, -0.5f, -0.5f), TexCoord(1.0f, 1.0f),
+            Vertex(0.5f, -0.5f, 0.5f), TexCoord(1.0f, 0.0f),
+            Vertex(0.5f, -0.5f, 0.5f), TexCoord(1.0f, 0.0f),
+            Vertex(-0.5f, -0.5f, 0.5f), TexCoord(0.0f, 0.0f),
+            Vertex(-0.5f, -0.5f, -0.5f), TexCoord(0.0f, 1.0f),
 
-            -0.5f, 0.5f, -0.5f, 0.0f, 1.0f,
-            0.5f, 0.5f, -0.5f, 1.0f, 1.0f,
-            0.5f, 0.5f, 0.5f, 1.0f, 0.0f,
-            0.5f, 0.5f, 0.5f, 1.0f, 0.0f,
-            -0.5f, 0.5f, 0.5f, 0.0f, 0.0f,
-            -0.5f, 0.5f, -0.5f, 0.0f, 1.0f};
+            Vertex(-0.5f, 0.5f, -0.5f), TexCoord(0.0f, 1.0f),
+            Vertex(0.5f, 0.5f, -0.5f), TexCoord(1.0f, 1.0f),
+            Vertex(0.5f, 0.5f, 0.5f), TexCoord(1.0f, 0.0f),
+            Vertex(0.5f, 0.5f, 0.5f), TexCoord(1.0f, 0.0f),
+            Vertex(-0.5f, 0.5f, 0.5f), TexCoord(0.0f, 0.0f),
+            Vertex(-0.5f, 0.5f, -0.5f), TexCoord(0.0f, 1.0f)};
 
         Vabo = mold::render::vabo::GenerateVABO(vertices, sizeof(vertices));
     }
