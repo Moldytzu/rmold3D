@@ -26,6 +26,9 @@ void onTick()
         mold::render::camera::Translate(mold::render::CameraDirection::Left,cameraSpeed / 10);
     if (mold::input::GetKey(GLFW_KEY_RIGHT))
         mold::render::camera::Translate(mold::render::CameraDirection::Right,cameraSpeed / 10);
+
+    if (mold::input::GetKey(GLFW_KEY_ESCAPE))
+        mold::input::LockCursor(mold::CursorLockingMode::Normal);
 }
 
 //draw on the screen
@@ -47,14 +50,12 @@ int main()
     if (!mold::Init(800, 600))
         destroy();
 
+    mold::input::LockCursor(mold::CursorLockingMode::Locked);
+
     mold::GlobalGameObjects.Add("Simple Cube",new mold::render::objects::Cube(mold::render::image::LoadRGBBitmap("texture.bmp")));
 
     mold::GlobalGameObjects.Get("Simple Cube")->Move(glm::vec3(0,1.0f,-1.0f));
     mold::GlobalGameObjects.Get("Simple Cube")->Translate(glm::vec3(0,1.0f,-1.0f));
-
-    glm::vec3 CubePosition = mold::GlobalGameObjects.Get("Simple Cube")->GetPosition();
-
-    printf("XYZ:%f %f %f",CubePosition.x,CubePosition.y,CubePosition.z);
 
     //Callbacks
     mold::GlobalEventSystem.AttachCallback(mold::EventType::Redraw, onDraw);

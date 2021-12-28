@@ -114,8 +114,8 @@ namespace mold
             inline float Yaw = -90.0f; //-90.0f left, 0 front, 90.0f right
             inline float Pitch = 0.0f; //90.0f up, 0 front, -90.0f down
 
-            void Translate(CameraDirection direction,float value);
-            void Rotate(CameraDirection direction,float value);
+            void Translate(CameraDirection direction, float value);
+            void Rotate(CameraDirection direction, float value);
         };
 
         namespace objects
@@ -126,7 +126,7 @@ namespace mold
                 GameObject();
                 void Translate(glm::vec3 offset); //translate position
                 void Move(glm::vec3 position);    //set position
-                glm::vec3 GetPosition(); //get position
+                glm::vec3 GetPosition();          //get position
                 virtual void Init();
                 virtual void Draw();
                 glm::mat4 PositionMatrix = glm::mat4(1.0f);
@@ -176,9 +176,17 @@ namespace mold
         inline float LastFrame;
     };
 
+    enum CursorLockingMode
+    {
+        Locked,
+        Hidden,
+        Normal
+    };
+
     namespace input
     {
         bool GetKey(int key);
+        void LockCursor(CursorLockingMode locked);
     };
 
     enum EventType
