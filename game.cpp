@@ -7,8 +7,6 @@
 - gameobjects
 */
 
-mold::render::objects::Cube cube;
-
 void onTick()
 {
     const float cameraSpeed = 1.0f * mold::time::DeltaTime; // adjust accordingly
@@ -25,7 +23,7 @@ void onTick()
 //draw on the screen
 void onDraw()
 {
-    cube.Draw();
+    
 }
 
 //clean up the mess
@@ -41,7 +39,7 @@ int main()
     if (!mold::Init(800, 600))
         destroy();
 
-    cube.Init(mold::render::image::LoadRGBBitmap("texture.bmp"));
+    mold::GlobalGameObjects.Add("Simple Cube",new mold::render::objects::Cube(mold::render::image::LoadRGBBitmap("texture.bmp")));
 
     //Callbacks
     mold::GlobalEventSystem.AttachCallback(mold::EventType::Redraw, onDraw);

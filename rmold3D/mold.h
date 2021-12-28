@@ -116,6 +116,7 @@ namespace mold
                 virtual void Init();
                 virtual void Draw();
                 glm::mat4 Position = glm::mat4(1.0f);
+                bool Initialized = false;
 
             protected:
                 uint Texture = 0;
@@ -127,9 +128,21 @@ namespace mold
             {
             public:
                 Cube();
+                Cube(mold::render::image::Texture texture);
 
                 void Init(mold::render::image::Texture texture);
                 void Draw();
+            };
+
+            class GameObjectsManager
+            {
+            public:
+                void Add(const char *name, GameObject *object);
+                void Remove(const char *name);
+                GameObject *Get(const char *name);
+                std::map<const char *, GameObject *> Get();
+            private:
+                std::map<const char *, GameObject *> GameObjects;
             };
         };
     };
@@ -166,6 +179,7 @@ namespace mold
 
     inline GLFWwindow *GlobalWindow;
     inline EventSystem GlobalEventSystem;
+    inline mold::render::objects::GameObjectsManager GlobalGameObjects;
 
     bool Init(uint width, uint height);
     void Run();

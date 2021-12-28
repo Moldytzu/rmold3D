@@ -1,8 +1,12 @@
 #include <rmold3D/mold.h>
 
 mold::render::objects::Cube::Cube() {}
+mold::render::objects::Cube::Cube(mold::render::image::Texture texture) {Init(texture);}
+
 void mold::render::objects::Cube::Init(mold::render::image::Texture texture)
 {
+    if(Initialized) return; 
+    Initialized = true;
     Texture = mold::render::image::GenerateTextureIndex(texture);
 
     float vertices[] = {

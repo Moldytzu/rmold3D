@@ -100,6 +100,14 @@ void mold::Run()
         //draw stuff
         GlobalEventSystem.GetMap()[EventType::Redraw]();
 
+        //draw game objects
+        for (std::pair<const char*, render::objects::GameObject *> object : GlobalGameObjects.Get())
+        {
+            object.second->Draw();
+        }
+
+        glFlush();
+
         glfwSwapBuffers(mold::GlobalWindow);
         glfwPollEvents();
     }
