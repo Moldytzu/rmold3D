@@ -11,6 +11,19 @@ void onResize(GLFWwindow *window, int width, int height)
     glViewport(0, 0, width, height);
 }
 
+//clean up
+void mold::Destroy()
+{
+    GlobalEventSystem.GetMap()[EventType::Exit]();
+
+    glfwTerminate(); //terminate glfw
+
+    for (std::pair<const char *, render::objects::GameObject *> object : GlobalGameObjects.Get())
+        free(object.second); //free objects
+
+    exit(0); //exit
+}
+
 bool mold::Init(uint width, uint height)
 {
     mold::settings::WindowHeight = height;
@@ -115,6 +128,4 @@ void mold::Run()
         glfwSwapBuffers(mold::GlobalWindow);
         glfwPollEvents();
     }
-
-    GlobalEventSystem.GetMap()[EventType::Exit]();
 }

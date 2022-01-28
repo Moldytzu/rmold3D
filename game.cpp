@@ -48,18 +48,11 @@ void onExit()
     printf("Goodbye!\n");
 }
 
-//clean up the mess
-void destroy()
-{
-    glfwTerminate();
-    exit(-1);
-}
-
 //entry point
 int main()
 {
     if (!mold::Init(800, 600))
-        destroy();
+        mold::Destroy();
 
     mold::input::LockCursor(mold::CursorLockingMode::Locked);
 
@@ -77,6 +70,6 @@ int main()
     //main loop
     mold::Run();
 
-    destroy();
+    mold::Destroy();
     return 0;
 }

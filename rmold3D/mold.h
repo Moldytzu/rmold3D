@@ -215,4 +215,5 @@ namespace mold
 
     bool Init(uint width, uint height);
     void Run();
+    void Destroy();
 };
