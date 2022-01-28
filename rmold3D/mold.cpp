@@ -24,7 +24,6 @@ void mold::Destroy()
     exit(0); //exit
 }
 
-
 bool mold::Init(uint width, uint height)
 {
     mold::settings::WindowHeight = height;
@@ -69,11 +68,11 @@ bool mold::Init(uint width, uint height)
     {
         int errorLen;
         glGetShaderiv(vertexShader, GL_INFO_LOG_LENGTH, &errorLen); //get len of error
-        const char *buffer = (const char*)malloc(errorLen); //allocate memory for buffer
+        const char *buffer = (const char *)malloc(errorLen);        //allocate memory for buffer
         int bufSize;
-        glGetShaderInfoLog(vertexShader,errorLen,(GLsizei*)&bufSize,(GLchar*)buffer); //get info
-        mold::log::Error("Vertex Shader: %s",buffer);
-        free((void*)buffer); //free up
+        glGetShaderInfoLog(vertexShader, errorLen, (GLsizei *)&bufSize, (GLchar *)buffer); //get info
+        mold::log::Error("Vertex Shader: %s", buffer);
+        free((void *)buffer); //free up
         return false;
     }
 
@@ -84,14 +83,14 @@ bool mold::Init(uint width, uint height)
     {
         int errorLen;
         glGetShaderiv(vertexShader, GL_INFO_LOG_LENGTH, &errorLen); //get len of error
-        const char *buffer = (const char*)malloc(errorLen); //allocate memory for buffer
+        const char *buffer = (const char *)malloc(errorLen);        //allocate memory for buffer
         int bufSize;
-        glGetShaderInfoLog(vertexShader,errorLen,(GLsizei*)&bufSize,(GLchar*)buffer); //get info
-        mold::log::Error("Fragment Shader: %s",buffer);
-        free((void*)buffer); //free up
+        glGetShaderInfoLog(vertexShader, errorLen, (GLsizei *)&bufSize, (GLchar *)buffer); //get info
+        mold::log::Error("Fragment Shader: %s", buffer);
+        free((void *)buffer); //free up
         return false;
     }
-        
+
     mold::render::shader::GlobalShaderProgram = mold::render::shader::LinkShader(fragmentShader, vertexShader); //link the shaders together to form a program
 
     //check for errors
