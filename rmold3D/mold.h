@@ -8,6 +8,7 @@
 #include <map>
 #include <stdarg.h>
 #include <chrono>
+#include <vector>
 
 #define Vertex(X, Y, Z) X, Y, Z
 #define TexCoord(X, Y) X, Y

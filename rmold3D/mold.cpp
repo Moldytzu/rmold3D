@@ -24,6 +24,7 @@ void mold::Destroy()
     exit(0); //exit
 }
 
+
 bool mold::Init(uint width, uint height)
 {
     mold::settings::WindowHeight = height;
@@ -36,12 +37,18 @@ bool mold::Init(uint width, uint height)
 
     mold::GlobalWindow = glfwCreateWindow(width, height, "Rewritten mold 3D", NULL, NULL); // create window
     if (mold::GlobalWindow == NULL)                                                        // exit if the window couldn't be created
+    {
+        mold::log::Error("Couldn't create glfw window!");
         return false;
+    }
 
     glfwMakeContextCurrent(mold::GlobalWindow); // create opengl context
 
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) // load glad
+    {
+        mold::log::Error("Couldn't load glad!");
         return false;
+    }
 
     // set up callbacks
     glfwSetFramebufferSizeCallback(mold::GlobalWindow, onResize);
@@ -59,19 +66,40 @@ bool mold::Init(uint width, uint height)
 
     //check for errors
     if (!mold::render::shader::GetCompilationError(vertexShader))
+    {
+        int errorLen;
+        glGetShaderiv(vertexShader, GL_INFO_LOG_LENGTH, &errorLen); //get len of error
+        const char *buffer = (const char*)malloc(errorLen); //allocate memory for buffer
+        int bufSize;
+        glGetShaderInfoLog(vertexShader,errorLen,(GLsizei*)&bufSize,(GLchar*)buffer); //get info
+        mold::log::Error("Vertex Shader: %s",buffer);
+        free((void*)buffer); //free up
         return false;
+    }
 
     unsigned int fragmentShader = mold::render::shader::CompileShader(mold::render::shader::FragmentShaderSource, GL_FRAGMENT_SHADER); //create and compile fragment shader
 
     //check for errors
     if (!mold::render::shader::GetCompilationError(fragmentShader))
+    {
+        int errorLen;
+        glGetShaderiv(vertexShader, GL_INFO_LOG_LENGTH, &errorLen); //get len of error
+        const char *buffer = (const char*)malloc(errorLen); //allocate memory for buffer
+        int bufSize;
+        glGetShaderInfoLog(vertexShader,errorLen,(GLsizei*)&bufSize,(GLchar*)buffer); //get info
+        mold::log::Error("Fragment Shader: %s",buffer);
+        free((void*)buffer); //free up
         return false;
-
+    }
+        
     mold::render::shader::GlobalShaderProgram = mold::render::shader::LinkShader(fragmentShader, vertexShader); //link the shaders together to form a program
 
     //check for errors
     if (!mold::render::shader::GetLinkError(mold::render::shader::GlobalShaderProgram))
+    {
+        mold::log::Error("Failed to link shader program");
         return false;
+    }
 
     //use shader
     glUseProgram(mold::render::shader::GlobalShaderProgram);
