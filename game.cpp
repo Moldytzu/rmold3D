@@ -39,13 +39,13 @@ void onDraw()
 //resize
 void onResize()
 {
-    printf("Window resized!\n");
+    mold::log::Info("Resize!");
 }
 
 //exit
 void onExit()
 {
-    printf("Goodbye!\n");
+    mold::log::Info("Goodbye!");
 }
 
 //entry point

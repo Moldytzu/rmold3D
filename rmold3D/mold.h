@@ -6,6 +6,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <map>
+#include <stdarg.h>
+#include <chrono>
 
 #define Vertex(X, Y, Z) X, Y, Z
 #define TexCoord(X, Y) X, Y
@@ -187,6 +189,13 @@ namespace mold
     {
         bool GetKey(int key);
         void LockCursor(CursorLockingMode locked);
+    };
+
+    namespace log
+    {
+        void Info(const char *fmt, ...);
+        void Warn(const char *fmt, ...);
+        void Error(const char *fmt, ...);
     };
 
     enum EventType
