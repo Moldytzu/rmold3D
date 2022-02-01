@@ -9,6 +9,7 @@
 #include <stdarg.h>
 #include <chrono>
 #include <vector>
+#include <string>
 
 #define Vertex(X, Y, Z) X, Y, Z
 #define TexCoord(X, Y) X, Y
@@ -157,6 +158,7 @@ namespace mold
             public:
                 void Add(const char *name, GameObject *object);
                 void Remove(const char *name);
+                void Instantiate(GameObject *object);
                 GameObject *Get(const char *name);
                 std::map<const char *, GameObject *> Get();
 

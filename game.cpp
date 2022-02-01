@@ -67,6 +67,9 @@ int main()
     mold::GlobalEventSystem.AttachCallback(mold::EventType::Resize, onResize);
     mold::GlobalEventSystem.AttachCallback(mold::EventType::Exit, onExit);
 
+    //Instantiate a cube
+    mold::GlobalGameObjects.Instantiate(new mold::render::objects::Cube(mold::render::image::LoadRGBBitmap("texture.bmp")));
+
     //main loop
     mold::Run();
 
