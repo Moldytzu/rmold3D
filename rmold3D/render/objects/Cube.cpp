@@ -65,3 +65,8 @@ void mold::render::objects::Cube::Draw()
     glBindVertexArray(Vabo.VAO);                                                                                                      //vao of the cube
     glDrawArrays(GL_TRIANGLES, 0, 36);
 }
+
+const char *mold::render::objects::Cube::Type()
+{
+    return "Textured Cube";
+}

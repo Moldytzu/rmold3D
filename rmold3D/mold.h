@@ -133,6 +133,7 @@ namespace mold
                 glm::vec3 GetPosition();          //get position
                 virtual void Init();
                 virtual void Draw();
+                virtual const char *Type();
                 glm::mat4 PositionMatrix = glm::mat4(1.0f);
                 bool Initialized = false;
                 bool Enabled = false;
@@ -151,6 +152,7 @@ namespace mold
 
                 void Init(mold::render::image::Texture texture);
                 void Draw();
+                const char *Type();
             };
 
             class GameObjectsManager

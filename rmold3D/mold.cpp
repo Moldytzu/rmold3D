@@ -146,11 +146,12 @@ void mold::Run()
         //draw game objects
         for (std::pair<const char *, render::objects::GameObject *> object : GlobalGameObjects.Get())
         {
-            if (object.second->Enabled)
+            if (object.second->Enabled && strcmp(object.second->Type(),"Empty")) //don't render empty gameobjects
                 object.second->Draw();
+            glFlush();
         }
 
-        glFlush();
+        
 
         glfwSwapBuffers(mold::GlobalWindow);
         glfwPollEvents();
