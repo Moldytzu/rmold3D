@@ -65,7 +65,7 @@ bool mold::Init(uint width, uint height)
     {
         int errorLen;
         glGetShaderiv(vertexShader, GL_INFO_LOG_LENGTH, &errorLen); //get len of error
-        const char *buffer = (const char *)malloc(errorLen);        //allocate memory for buffer
+        const char *buffer = new char[errorLen];        //allocate memory for buffer
         int bufSize;
         glGetShaderInfoLog(vertexShader, errorLen, (GLsizei *)&bufSize, (GLchar *)buffer); //get info
         mold::log::Error("Vertex Shader: " + std::string(buffer));
@@ -80,7 +80,7 @@ bool mold::Init(uint width, uint height)
     {
         int errorLen;
         glGetShaderiv(vertexShader, GL_INFO_LOG_LENGTH, &errorLen); //get len of error
-        const char *buffer = (const char *)malloc(errorLen);        //allocate memory for buffer
+        const char *buffer = new char[errorLen];        //allocate memory for buffer
         int bufSize;
         glGetShaderInfoLog(vertexShader, errorLen, (GLsizei *)&bufSize, (GLchar *)buffer); //get info
         mold::log::Error("Fragment Shader: " + std::string(buffer));
