@@ -60,7 +60,7 @@ void mold::render::objects::Cube::Draw()
 {
     Vabo.Bind(); // bind vao & vbo
     Texture.Bind(); // bind texture
-    glUniformMatrix4fv(glGetUniformLocation(mold::render::shader::GlobalShaderProgram, "model"), 1, GL_FALSE, &PositionMatrix[0][0]); //give the shader our position
+    mold::render::shader::SetUniform4fv("model",PositionMatrix); //give the shader our position matrix
     glDrawArrays(GL_TRIANGLES, 0, 36); //draw triangles
 }
 

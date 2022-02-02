@@ -27,7 +27,7 @@ namespace mold
                 Texture();
                 Texture(std::string filename);
                 void Bind();
-                
+
                 uint32_t Size;
                 uint32_t Width;
                 uint32_t Height;
@@ -65,6 +65,8 @@ namespace mold
 
         namespace shader
         {
+            void SetUniform4fv(std::string location, glm::mat4 matrix);
+
             uint CompileShader(std::string source, uint type);
             uint LinkShader(uint fragment, uint vertex);
             bool GetCompilationError(uint shader);

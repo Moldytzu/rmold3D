@@ -1,5 +1,11 @@
 #include <rmold3D/mold.h>
 
+void mold::render::shader::SetUniform4fv(std::string location, glm::mat4 matrix)
+{
+    uint loc = glGetUniformLocation(mold::render::shader::GlobalShaderProgram, location.c_str()); //get location
+    glUniformMatrix4fv(loc, 1, GL_FALSE, &matrix[0][0]); //set matrix
+}
+
 uint mold::render::shader::CompileShader(std::string source, uint type)
 {
     const char *cstr = source.c_str();
