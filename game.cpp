@@ -28,6 +28,9 @@ void onTick()
 
     if (mold::input::GetKey(GLFW_KEY_ESCAPE))
         mold::input::LockCursor(mold::CursorLockingMode::Normal);
+
+    if (mold::input::GetKey(GLFW_KEY_F1))
+        mold::input::LockCursor(mold::CursorLockingMode::Locked);
 }
 
 //draw on the screen
