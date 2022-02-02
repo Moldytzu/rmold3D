@@ -1,13 +1,13 @@
 #include <rmold3D/mold.h>
 
-mold::render::image::Texture mold::render::image::LoadRGBBitmap(const char *filename)
+mold::render::image::Texture mold::render::image::LoadRGBBitmap(std::string filename)
 {
     FILE *file;
     uint32_t size;
     uint16_t bitPlanes;
     uint16_t bpp;
 
-    file = fopen(filename, "rb");
+    file = fopen(filename.c_str(), "rb");
 
     if ((uint64_t)file == 0)
     {

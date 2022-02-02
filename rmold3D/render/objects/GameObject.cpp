@@ -16,7 +16,7 @@ void mold::render::objects::GameObject::Move(glm::vec3 position)
     PositionMatrix = glm::translate(glm::mat4(1.0f), position);
 }
 
-const char *mold::render::objects::GameObject::Type()
+std::string mold::render::objects::GameObject::Type()
 {
     return "Empty";
 }

@@ -8,7 +8,7 @@
 
 void onTick()
 {
-    const float cameraSpeed = 60.0f * mold::time::DeltaTime; // adjust accordingly
+    const float cameraSpeed = 20.0f * mold::time::DeltaTime; // adjust accordingly
     if (mold::input::GetKey('W'))
         mold::render::camera::Rotate(mold::render::CameraDirection::Forward, cameraSpeed);
     if (mold::input::GetKey('S'))
@@ -71,8 +71,8 @@ int main()
     mold::GlobalGameObjects.Instantiate(new mold::render::objects::Cube(mold::render::image::LoadRGBBitmap("texture.bmp")));
     mold::GlobalGameObjects.Instantiate(new mold::render::objects::Cube(mold::render::image::LoadRGBBitmap("texture.bmp")));
 
-    mold::GlobalGameObjects.Get("Textured Cube1");
-   
+    mold::GlobalGameObjects.Get("Textured Cube 0");
+
     //main loop
     mold::Run();
 

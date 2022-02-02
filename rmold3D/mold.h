@@ -10,6 +10,7 @@
 #include <chrono>
 #include <vector>
 #include <string>
+#include <memory>
 
 #define Vertex(X, Y, Z) X, Y, Z
 #define TexCoord(X, Y) X, Y
@@ -55,18 +56,18 @@ namespace mold
                 uint32_t ImportantColors;     //important colors used, generally ignored
             } __attribute__((packed));
 
-            Texture LoadRGBBitmap(const char *filename);
+            Texture LoadRGBBitmap(std::string filename);
             uint GenerateTextureIndex(Texture texture);
         };
 
         namespace shader
         {
-            uint CompileShader(const char *source, uint type);
+            uint CompileShader(std::string source, uint type);
             uint LinkShader(uint fragment, uint vertex);
             bool GetCompilationError(uint shader);
             bool GetLinkError(uint program);
 
-            inline const char *VertexShaderSource = "#version 330 core\n"
+            inline std::string VertexShaderSource = "#version 330 core\n"
                                                     "layout (location = 0) in vec3 vertexPosition;\n"
                                                     "layout (location = 1) in vec2 textureCoordornate;\n"
                                                     "out vec2 textureCoord;\n"
@@ -79,7 +80,7 @@ namespace mold
                                                     "   textureCoord = textureCoordornate;\n"
                                                     "}\n";
 
-            inline const char *FragmentShaderSource = "#version 330 core\n"
+            inline std::string FragmentShaderSource = "#version 330 core\n"
                                                       "out vec4 FragColor;\n"
                                                       "in vec2 textureCoord;\n"
                                                       "uniform sampler2D mainTexture;\n"
@@ -133,7 +134,7 @@ namespace mold
                 glm::vec3 GetPosition();          //get position
                 virtual void Init();
                 virtual void Draw();
-                virtual const char *Type();
+                virtual std::string Type();
                 glm::mat4 PositionMatrix = glm::mat4(1.0f);
                 bool Initialized = false;
                 bool Enabled = false;
@@ -152,21 +153,21 @@ namespace mold
 
                 void Init(mold::render::image::Texture texture);
                 void Draw();
-                const char *Type();
+                std::string Type();
             };
 
             class GameObjectsManager
             {
             public:
-                void Add(const char *name, GameObject *object);
-                void Remove(const char *name);
+                void Add(std::string name, GameObject *object);
+                void Remove(std::string name);
                 void Instantiate(GameObject *object);
-                bool Exists(const char *name);
-                GameObject *Get(const char *name);
-                std::map<const char *, GameObject *> Get();
+                bool Exists(std::string name);
+                GameObject *Get(std::string name);
+                std::map<std::string , GameObject*> Get();
 
             private:
-                std::map<const char *, GameObject *> GameObjects;
+                std::map<std::string , GameObject*> GameObjects;
             };
         };
     };
@@ -199,9 +200,9 @@ namespace mold
 
     namespace log
     {
-        void Info(const char *fmt, ...);
-        void Warn(const char *fmt, ...);
-        void Error(const char *fmt, ...);
+        void Info(std::string fmt, ...);
+        void Warn(std::string fmt, ...);
+        void Error(std::string fmt, ...);
     };
 
     enum EventType

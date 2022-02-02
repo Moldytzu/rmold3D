@@ -66,7 +66,7 @@ void mold::render::objects::Cube::Draw()
     glDrawArrays(GL_TRIANGLES, 0, 36);
 }
 
-const char *mold::render::objects::Cube::Type()
+std::string mold::render::objects::Cube::Type()
 {
     return "Textured Cube";
 }

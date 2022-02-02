@@ -1,9 +1,10 @@
 #include <rmold3D/mold.h>
 
-uint mold::render::shader::CompileShader(const char *source, uint type)
+uint mold::render::shader::CompileShader(std::string source, uint type)
 {
+    const char *cstr = source.c_str();
     unsigned int vertexShader = glCreateShader(type); //create and compile shader
-    glShaderSource(vertexShader, 1, &source, NULL);
+    glShaderSource(vertexShader, 1, &cstr, NULL);
     glCompileShader(vertexShader);
     return vertexShader;
 }
