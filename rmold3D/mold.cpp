@@ -131,8 +131,8 @@ void mold::Run()
         view = glm::lookAt(mold::render::camera::Position, mold::render::camera::Position + mold::render::camera::Front, mold::render::camera::Up);
 
         // give the shader our view and projection
-        glUniformMatrix4fv(glGetUniformLocation(mold::render::shader::GlobalShaderProgram, "view"), 1, GL_FALSE, &view[0][0]);
-        glUniformMatrix4fv(glGetUniformLocation(mold::render::shader::GlobalShaderProgram, "projection"), 1, GL_FALSE, &projection[0][0]);
+        mold::render::shader::SetUniform4fv("view",view);
+        mold::render::shader::SetUniform4fv("projection",projection);
 
         //use shader
         glUseProgram(mold::render::shader::GlobalShaderProgram);
