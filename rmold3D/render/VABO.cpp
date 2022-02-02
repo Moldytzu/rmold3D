@@ -1,8 +1,9 @@
 #include <rmold3D/mold.h>
 
-mold::render::vabo::VABO mold::render::vabo::GenerateVABO(float *vertices, size_t len)
+mold::render::VABO::VABO() {}
+
+mold::render::VABO::VABO(float *vertices, size_t len)
 {
-    uint VAO, VBO;
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
 
@@ -13,5 +14,10 @@ mold::render::vabo::VABO mold::render::vabo::GenerateVABO(float *vertices, size_
     glEnableVertexAttribArray(0);                                                                    //enable
     glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void *)(3 * sizeof(float))); //texture coord attribute
     glEnableVertexAttribArray(1);                                                                    //enable
-    return {VAO, VBO};
+}
+
+void mold::render::VABO::Bind()
+{
+    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+    glBindVertexArray(VAO);
 }

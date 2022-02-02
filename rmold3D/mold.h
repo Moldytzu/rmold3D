@@ -92,15 +92,14 @@ namespace mold
             inline uint GlobalShaderProgram;
         };
 
-        namespace vabo
+        class VABO
         {
-            struct VABO
-            {
-                uint VAO;
-                uint VBO;
-            };
-
-            VABO GenerateVABO(float *vertices, size_t len);
+        public:
+            VABO();
+            VABO(float *vertices, size_t len);
+            void Bind();
+        private:
+            uint VAO,VBO;
         };
 
         enum CameraDirection
@@ -141,7 +140,7 @@ namespace mold
 
             protected:
                 uint Texture = 0;
-                mold::render::vabo::VABO Vabo;
+                mold::render::VABO Vabo;
                 float *Vertices;
             };
 
