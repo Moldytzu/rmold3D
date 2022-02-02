@@ -46,6 +46,8 @@ bool mold::Init(uint width, uint height)
         return false;
     }
 
+    mold::log::Info("Rendering OpenGL " + std::string((const char *)glGetString(GL_VERSION)) + " on a " + std::string((const char *)glGetString(GL_VENDOR)) + " " + std::string((const char *)glGetString(GL_RENDERER)));
+
     // set up callbacks
     glfwSetFramebufferSizeCallback(mold::GlobalWindow, onResize);
 
