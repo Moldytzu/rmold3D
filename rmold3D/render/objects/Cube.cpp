@@ -12,42 +12,42 @@ void mold::render::objects::Cube::Init(mold::render::image::Texture texture)
     Texture = mold::render::image::GenerateTextureIndex(texture);
 
     float vertices[] = {
-        Vertex(-0.5f, -0.5f, -0.5f), TexCoord(0.0f, 0.0f),
+        Vertex(-0.5f, -0.5f, -0.5f), TexCoord(0.0f, 0.0f), // back
         Vertex(0.5f, -0.5f, -0.5f), TexCoord(1.0f, 0.0f),
         Vertex(0.5f, 0.5f, -0.5f), TexCoord(1.0f, 1.0f),
         Vertex(0.5f, 0.5f, -0.5f), TexCoord(1.0f, 1.0f),
         Vertex(-0.5f, 0.5f, -0.5f), TexCoord(0.0f, 1.0f),
         Vertex(-0.5f, -0.5f, -0.5f), TexCoord(0.0f, 0.0f),
 
-        Vertex(-0.5f, -0.5f, 0.5f), TexCoord(0.0f, 0.0f),
+        Vertex(-0.5f, -0.5f, 0.5f), TexCoord(0.0f, 0.0f), // front
         Vertex(0.5f, -0.5f, 0.5f), TexCoord(1.0f, 0.0f),
         Vertex(0.5f, 0.5f, 0.5f), TexCoord(1.0f, 1.0f),
         Vertex(0.5f, 0.5f, 0.5f), TexCoord(1.0f, 1.0f),
         Vertex(-0.5f, 0.5f, 0.5f), TexCoord(0.0f, 1.0f),
         Vertex(-0.5f, -0.5f, 0.5f), TexCoord(0.0f, 0.0f),
 
-        Vertex(-0.5f, 0.5f, 0.5f), TexCoord(1.0f, 0.0f),
+        Vertex(-0.5f, 0.5f, 0.5f), TexCoord(1.0f, 0.0f), // left
         Vertex(-0.5f, 0.5f, -0.5f), TexCoord(1.0f, 1.0f),
         Vertex(-0.5f, -0.5f, -0.5f), TexCoord(0.0f, 1.0f),
         Vertex(-0.5f, -0.5f, -0.5f), TexCoord(0.0f, 1.0f),
         Vertex(-0.5f, -0.5f, 0.5f), TexCoord(0.0f, 0.0f),
         Vertex(-0.5f, 0.5f, 0.5f), TexCoord(1.0f, 0.0f),
 
-        Vertex(0.5f, 0.5f, 0.5f), TexCoord(1.0f, 0.0f),
+        Vertex(0.5f, 0.5f, 0.5f), TexCoord(1.0f, 0.0f), // right
         Vertex(0.5f, 0.5f, -0.5f), TexCoord(1.0f, 1.0f),
         Vertex(0.5f, -0.5f, -0.5f), TexCoord(0.0f, 1.0f),
         Vertex(0.5f, -0.5f, -0.5f), TexCoord(0.0f, 1.0f),
         Vertex(0.5f, -0.5f, 0.5f), TexCoord(0.0f, 0.0f),
         Vertex(0.5f, 0.5f, 0.5f), TexCoord(1.0f, 0.0f),
 
-        Vertex(-0.5f, -0.5f, -0.5f), TexCoord(0.0f, 1.0f),
+        Vertex(-0.5f, -0.5f, -0.5f), TexCoord(0.0f, 1.0f), // bottom
         Vertex(0.5f, -0.5f, -0.5f), TexCoord(1.0f, 1.0f),
         Vertex(0.5f, -0.5f, 0.5f), TexCoord(1.0f, 0.0f),
         Vertex(0.5f, -0.5f, 0.5f), TexCoord(1.0f, 0.0f),
         Vertex(-0.5f, -0.5f, 0.5f), TexCoord(0.0f, 0.0f),
         Vertex(-0.5f, -0.5f, -0.5f), TexCoord(0.0f, 1.0f),
 
-        Vertex(-0.5f, 0.5f, -0.5f), TexCoord(0.0f, 1.0f),
+        Vertex(-0.5f, 0.5f, -0.5f), TexCoord(0.0f, 1.0f), // up
         Vertex(0.5f, 0.5f, -0.5f), TexCoord(1.0f, 1.0f),
         Vertex(0.5f, 0.5f, 0.5f), TexCoord(1.0f, 0.0f),
         Vertex(0.5f, 0.5f, 0.5f), TexCoord(1.0f, 0.0f),
