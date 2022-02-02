@@ -46,13 +46,13 @@ void mold::render::objects::Cube::Init(mold::render::image::Texture texture)
         Vertex(-0.5f, -0.5f, 0.5f), TexCoord(0.0f, 0.0f),  // right down
         Vertex(-0.5f, -0.5f, -0.5f), TexCoord(0.0f, 1.0f), // right up
 
-        // up
-        Vertex(-0.5f, 0.5f, -0.5f), TexCoord(0.0f, 1.0f),
-        Vertex(0.5f, 0.5f, -0.5f), TexCoord(1.0f, 1.0f),
-        Vertex(0.5f, 0.5f, 0.5f), TexCoord(1.0f, 0.0f),
-        Vertex(0.5f, 0.5f, 0.5f), TexCoord(1.0f, 0.0f),
-        Vertex(-0.5f, 0.5f, 0.5f), TexCoord(0.0f, 0.0f),
-        Vertex(-0.5f, 0.5f, -0.5f), TexCoord(0.0f, 1.0f)};
+        // up face
+        Vertex(-0.5f, 0.5f, -0.5f), TexCoord(0.0f, 1.0f),  // right up
+        Vertex(0.5f, 0.5f, -0.5f), TexCoord(1.0f, 1.0f),   // left up
+        Vertex(0.5f, 0.5f, 0.5f), TexCoord(1.0f, 0.0f),    // left down
+        Vertex(0.5f, 0.5f, 0.5f), TexCoord(1.0f, 0.0f),    // left down
+        Vertex(-0.5f, 0.5f, 0.5f), TexCoord(0.0f, 0.0f),   // right down
+        Vertex(-0.5f, 0.5f, -0.5f), TexCoord(0.0f, 1.0f)}; // right up
 
     if (Initialized) // if initialized just retun
         return;
