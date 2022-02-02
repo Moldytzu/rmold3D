@@ -7,6 +7,35 @@ void mold::render::image::Texture::Bind()
     glBindTexture(GL_TEXTURE_2D, TextureIndex); // bind texture
 }
 
+void mold::render::image::Texture::CreateIndex()
+{
+    glGenTextures(1, &TextureIndex);
+    glBindTexture(GL_TEXTURE_2D, TextureIndex);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, Width, Height, 0, GL_RGB, GL_UNSIGNED_BYTE, PixelData);
+    glGenerateMipmap(GL_TEXTURE_2D);
+}
+
+mold::render::image::Texture::Texture(mold::render::Colour colour)
+{
+    // generate a solid colour 16x16 texture
+    Width = 16;
+    Height = 16;
+
+    PixelData = new uint8_t[16*16*3]; //16*16 texture with 3 bytes per pixel data
+    for(int it = 0, idx = 0;it < 16*16;it++)
+    {
+        PixelData[idx++] = colour.R;
+        PixelData[idx++] = colour.G;
+        PixelData[idx++] = colour.B;
+    }
+
+    CreateIndex(); // generate index
+}
+
 mold::render::image::Texture::Texture(std::string filename)
 {
     if (!filename.ends_with(".bmp"))
@@ -60,12 +89,5 @@ mold::render::image::Texture::Texture(std::string filename)
         PixelData[i + 2] = temp;
     }
 
-    glGenTextures(1, &TextureIndex);
-    glBindTexture(GL_TEXTURE_2D, TextureIndex);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, Width, Height, 0, GL_RGB, GL_UNSIGNED_BYTE, PixelData);
-    glGenerateMipmap(GL_TEXTURE_2D);
+    CreateIndex(); // create index for opengl
 }

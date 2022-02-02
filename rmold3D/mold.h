@@ -20,6 +20,13 @@ namespace mold
 {
     namespace render
     {
+        class Colour
+        {
+        public:
+            Colour(uint8_t r, uint8_t g, uint8_t b);
+            uint8_t R,G,B;
+        };
+    
         namespace image
         {
             class Texture
@@ -27,6 +34,7 @@ namespace mold
             public:
                 Texture();
                 Texture(std::string filename);
+                Texture(mold::render::Colour colour);
                 void Bind();
 
                 uint32_t Size;
@@ -34,6 +42,7 @@ namespace mold
                 uint32_t Height;
                 uint8_t *PixelData;
             private:
+                void CreateIndex();
                 uint TextureIndex;
             };
 
