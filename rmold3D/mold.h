@@ -11,6 +11,7 @@
 #include <vector>
 #include <string>
 #include <memory>
+#include <fstream>
 
 #define Vertex(X, Y, Z) X, Y, Z
 #define TexCoord(X, Y) X, Y

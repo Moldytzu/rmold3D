@@ -15,12 +15,9 @@ mold::render::image::Texture::Texture(std::string filename)
         mold::Destroy();
     }
 
-    FILE *file = fopen(filename.c_str(), "rb"); // open file
-    uint32_t size;
-    uint16_t bitPlanes;
-    uint16_t bpp;
+    std::ifstream stream(filename);
 
-    if ((uint64_t)file == 0)
+    if (!stream.good())
     {
         mold::log::Error("Failed to load bitmap " + filename);
         mold::Destroy();
@@ -28,7 +25,8 @@ mold::render::image::Texture::Texture(std::string filename)
 
     mold::render::image::BitmapImageHeader *header = new mold::render::image::BitmapImageHeader;
 
-    if (fread(header, sizeof(mold::render::image::BitmapImageHeader), 1, file) != 1)
+    stream.read((char*)header,sizeof(mold::render::image::BitmapImageHeader));
+    if (!stream.good())
     {
         mold::log::Error("Failed to read header of bitmap " + filename);
         mold::Destroy();
@@ -45,7 +43,8 @@ mold::render::image::Texture::Texture(std::string filename)
 
     PixelData = new uint8_t[header->ImageSize];
 
-    if (fread(PixelData, header->ImageSize, 1, file) != 1)
+    stream.read((char*)PixelData,header->ImageSize);
+    if (!stream.good())
     {
         mold::log::Error("Failed to read contents of bitmap " + filename);
         mold::Destroy();
