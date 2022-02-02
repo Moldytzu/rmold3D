@@ -1,7 +1,6 @@
 #include <rmold3D/mold.h>
 
 /*remaining features to add:
-- basic logger
 - internal console
 - internal profiler
 */
@@ -70,8 +69,11 @@ int main()
     //Instantiate a cube
     mold::GlobalGameObjects.Instantiate(new mold::render::objects::Cube(mold::render::image::LoadRGBBitmap("texture.bmp")));
     mold::GlobalGameObjects.Instantiate(new mold::render::objects::Cube(mold::render::image::LoadRGBBitmap("texture.bmp")));
+    mold::GlobalGameObjects.Instantiate(new mold::render::objects::Cube(mold::render::image::LoadRGBBitmap("texture.bmp")));
+    mold::GlobalGameObjects.Instantiate(new mold::render::objects::GameObject());
 
-    mold::GlobalGameObjects.Get("Textured Cube 0");
+    mold::GlobalGameObjects.Get("Textured Cube")->Move(glm::vec3(1.0f,1.0f,2.0f));
+    mold::GlobalGameObjects.Get("Textured Cube 1")->Move(glm::vec3(-1.0f,0.5f,-2.0f));
 
     //main loop
     mold::Run();
