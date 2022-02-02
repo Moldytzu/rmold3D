@@ -9,13 +9,13 @@ void onTick()
 {
     const float cameraSpeed = 20.0f * mold::time::DeltaTime; // adjust accordingly
     if (mold::input::GetKey('W'))
-        mold::render::camera::Rotate(mold::render::CameraDirection::Forward, cameraSpeed);
+        mold::render::camera::Rotate(mold::render::CameraDirection::Forward, cameraSpeed * 2);
     if (mold::input::GetKey('S'))
-        mold::render::camera::Rotate(mold::render::CameraDirection::Backwards, cameraSpeed);
+        mold::render::camera::Rotate(mold::render::CameraDirection::Backwards, cameraSpeed * 2);
     if (mold::input::GetKey('A'))
-        mold::render::camera::Rotate(mold::render::CameraDirection::Left, cameraSpeed);
+        mold::render::camera::Rotate(mold::render::CameraDirection::Left, cameraSpeed * 2);
     if (mold::input::GetKey('D'))
-        mold::render::camera::Rotate(mold::render::CameraDirection::Right, cameraSpeed);
+        mold::render::camera::Rotate(mold::render::CameraDirection::Right, cameraSpeed * 2);
 
     if (mold::input::GetKey(GLFW_KEY_UP))
         mold::render::camera::Translate(mold::render::CameraDirection::Forward, cameraSpeed / 10);
@@ -55,7 +55,7 @@ int main()
 
     mold::input::LockCursor(mold::CursorLockingMode::Locked);
 
-    mold::GlobalGameObjects.Add("Simple Cube", new mold::render::objects::Cube(mold::render::image::LoadRGBBitmap("texture.bmp")));
+    mold::GlobalGameObjects.Instantiate(new mold::render::objects::Cube(mold::render::image::LoadRGBBitmap("texture.bmp")),"Simple Cube");
 
     mold::GlobalGameObjects.Get("Simple Cube")->Move(glm::vec3(0, 1.0f, -1.0f));
     mold::GlobalGameObjects.Get("Simple Cube")->Translate(glm::vec3(0, 1.0f, -1.0f));

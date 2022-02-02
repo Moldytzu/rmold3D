@@ -159,14 +159,15 @@ namespace mold
             class GameObjectsManager
             {
             public:
-                void Add(std::string name, GameObject *object);
-                void Remove(std::string name);
                 void Instantiate(GameObject *object);
+                void Instantiate(GameObject *object, std::string name);
+                void Remove(std::string name);
                 bool Exists(std::string name);
                 GameObject *Get(std::string name);
                 std::map<std::string , GameObject*> Get();
 
             private:
+                void Add(std::string name, GameObject *object);
                 std::map<std::string , GameObject*> GameObjects;
             };
         };

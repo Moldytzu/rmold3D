@@ -9,13 +9,18 @@ void mold::render::objects::GameObjectsManager::Add(std::string name, GameObject
 
 void mold::render::objects::GameObjectsManager::Instantiate(GameObject *object)
 {
-    std::string name = object->Type();                        // create a string based on the object's type
+    Instantiate(object,object->Type());
+}
 
-    if (newObjects[object->Type()] > 0)
-        name += " " + std::to_string(newObjects[object->Type()]); // append the object's no' if there are more then 1 object of that type
-        
-    Add(name, object);                                        // add our new object to our map/database with the other game objects
-    newObjects[object->Type()]++;                             // increment the no' of instantiated objects with that type
+void mold::render::objects::GameObjectsManager::Instantiate(GameObject *object, std::string name)
+{
+    std::string tname = name; // create a string based on the object's type
+
+    if (newObjects[name] > 0)
+        tname += " " + std::to_string(newObjects[name]); // append the object's no' if there are more then 1 object of that type
+
+    Add(tname, object); // add our new object to our map/database with the other game objects
+    newObjects[name]++; // increment the no' of instantiated objects with that type
 }
 
 bool mold::render::objects::GameObjectsManager::Exists(std::string name)
