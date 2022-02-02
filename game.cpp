@@ -70,7 +70,8 @@ int main()
     //Instantiate a cube
     mold::GlobalGameObjects.Instantiate(new mold::render::objects::Cube(mold::render::image::LoadRGBBitmap("texture.bmp")));
     mold::GlobalGameObjects.Instantiate(new mold::render::objects::Cube(mold::render::image::LoadRGBBitmap("texture.bmp")));
-    mold::GlobalGameObjects.Instantiate(new mold::render::objects::GameObject());
+
+    mold::GlobalGameObjects.Get("Textured Cube1");
    
     //main loop
     mold::Run();

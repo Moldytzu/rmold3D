@@ -161,6 +161,7 @@ namespace mold
                 void Add(const char *name, GameObject *object);
                 void Remove(const char *name);
                 void Instantiate(GameObject *object);
+                bool Exists(const char *name);
                 GameObject *Get(const char *name);
                 std::map<const char *, GameObject *> Get();
 
