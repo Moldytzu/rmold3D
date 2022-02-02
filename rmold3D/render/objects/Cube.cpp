@@ -52,15 +52,15 @@ void mold::render::objects::Cube::Init(mold::render::image::Texture texture)
         return;
 
     Initialized = Enabled = true; // enable and initialize
-    Texture = mold::render::image::GenerateTextureIndex(texture); // generate texture index from texture
+    Texture = texture; // set texture
     Vabo = mold::render::VABO(vertices, sizeof(vertices)); // generate VBO & VAO
 }
 
 void mold::render::objects::Cube::Draw()
 {
-    Vabo.Bind();
+    Vabo.Bind(); // bind vao & vbo
+    Texture.Bind(); // bind texture
     glUniformMatrix4fv(glGetUniformLocation(mold::render::shader::GlobalShaderProgram, "model"), 1, GL_FALSE, &PositionMatrix[0][0]); //give the shader our position
-    glBindTexture(GL_TEXTURE_2D, Texture);                                                                                            //set the texture
     glDrawArrays(GL_TRIANGLES, 0, 36); //draw triangles
 }
 

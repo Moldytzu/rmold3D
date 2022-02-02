@@ -21,13 +21,19 @@ namespace mold
     {
         namespace image
         {
-            struct Texture
+            class Texture
             {
+            public:
+                Texture();
+                Texture(std::string filename);
+                void Bind();
+                
                 uint32_t Size;
                 uint32_t Width;
                 uint32_t Height;
-
                 uint8_t *PixelData;
+            private:
+                uint TextureIndex;
             };
 
             struct BitmapImageHeader //https://en.wikipedia.org/wiki/BMP_file_format
@@ -55,9 +61,6 @@ namespace mold
                 uint32_t Colors;              //colors in the color palette
                 uint32_t ImportantColors;     //important colors used, generally ignored
             } __attribute__((packed));
-
-            Texture LoadRGBBitmap(std::string filename);
-            uint GenerateTextureIndex(Texture texture);
         };
 
         namespace shader
@@ -139,7 +142,7 @@ namespace mold
                 bool Enabled = false;
 
             protected:
-                uint Texture = 0;
+                mold::render::image::Texture Texture;
                 mold::render::VABO Vabo;
                 float *Vertices;
             };
