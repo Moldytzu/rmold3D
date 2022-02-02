@@ -68,7 +68,7 @@ bool mold::Init(uint width, uint height)
         const char *buffer = (const char *)malloc(errorLen);        //allocate memory for buffer
         int bufSize;
         glGetShaderInfoLog(vertexShader, errorLen, (GLsizei *)&bufSize, (GLchar *)buffer); //get info
-        mold::log::Error("Vertex Shader: %s", buffer);
+        mold::log::Error("Vertex Shader: " + std::string(buffer));
         free((void *)buffer); //free up
         return false;
     }
@@ -83,7 +83,7 @@ bool mold::Init(uint width, uint height)
         const char *buffer = (const char *)malloc(errorLen);        //allocate memory for buffer
         int bufSize;
         glGetShaderInfoLog(vertexShader, errorLen, (GLsizei *)&bufSize, (GLchar *)buffer); //get info
-        mold::log::Error("Fragment Shader: %s", buffer);
+        mold::log::Error("Fragment Shader: " + std::string(buffer));
         free((void *)buffer); //free up
         return false;
     }

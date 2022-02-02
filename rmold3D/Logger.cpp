@@ -5,32 +5,17 @@
 
 auto engineStartedSince = NOW;
 
-void mold::log::Info(std::string fmt, ...)
+void mold::log::Info(std::string str)
 {
-    va_list list;
-    va_start(list, fmt); //generate va_list from arguments
-    printf("[%.2f/Info] ", DIFFERENCE);
-    vprintf(fmt.c_str(), list); //use user's va_list so we can use printf style formating
-    printf("\n");
-    va_end(list); //end list
+    printf("[%.2f/Info] %s\n", DIFFERENCE, str.c_str());
 }
 
-void mold::log::Warn(std::string fmt, ...)
+void mold::log::Warn(std::string str)
 {
-    va_list list;
-    va_start(list, fmt); //generate va_list from arguments
-    printf("[%.2f/Warn] ", DIFFERENCE);
-    vprintf(fmt.c_str(), list); //use user's va_list so we can use printf style formating
-    printf("\n");
-    va_end(list); //end list
+    printf("[%.2f/Warn] %s\n", DIFFERENCE, str.c_str());
 }
 
-void mold::log::Error(std::string fmt, ...)
+void mold::log::Error(std::string str)
 {
-    va_list list;
-    va_start(list, fmt); //generate va_list from arguments
-    printf("[%.2f/Error] ", DIFFERENCE);
-    vprintf(fmt.c_str(), list); //use user's va_list so we can use printf style formating
-    printf("\n");
-    va_end(list); //end list
+    printf("[%.2f/Error] %s\n", DIFFERENCE, str.c_str());
 }

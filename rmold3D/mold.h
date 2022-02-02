@@ -206,9 +206,9 @@ namespace mold
 
     namespace log
     {
-        void Info(std::string fmt, ...);
-        void Warn(std::string fmt, ...);
-        void Error(std::string fmt, ...);
+        void Info(std::string str);
+        void Warn(std::string str);
+        void Error(std::string str);
     };
 
     enum EventType
