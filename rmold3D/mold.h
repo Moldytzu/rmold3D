@@ -175,6 +175,7 @@ namespace mold
                 std::map<std::string , GameObject*> GameObjects;
             };
         };
+        void DrawTriangles(uint count);
     };
 
     namespace settings

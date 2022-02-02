@@ -61,7 +61,7 @@ void mold::render::objects::Cube::Draw()
     Vabo.Bind(); // bind vao & vbo
     Texture.Bind(); // bind texture
     mold::render::shader::SetUniform4fv("model",PositionMatrix); //give the shader our position matrix
-    glDrawArrays(GL_TRIANGLES, 0, 36); //draw triangles
+    mold::render::DrawTriangles(36); //draw 36 triangles
 }
 
 std::string mold::render::objects::Cube::Type()
