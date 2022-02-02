@@ -190,7 +190,7 @@ namespace mold
     {
         Locked,
         Hidden,
-        Normal
+        Normal,
     };
 
     namespace input
