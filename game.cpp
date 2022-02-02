@@ -60,7 +60,7 @@ int main()
 
     mold::input::LockCursor(mold::CursorLockingMode::Locked);
 
-    mold::GlobalGameObjects.Instantiate(new mold::render::objects::Cube(mold::render::image::Texture(mold::render::Colour(255,255,0))),"Simple Cube");
+    mold::GlobalGameObjects.Instantiate(new mold::render::objects::Cube(mold::render::image::Texture("texture.bmp")),"Simple Cube");
 
     mold::GlobalGameObjects.Get("Simple Cube")->Move(glm::vec3(0, 1.0f, -1.0f));
     mold::GlobalGameObjects.Get("Simple Cube")->Translate(glm::vec3(0, 1.0f, -1.0f));
@@ -72,9 +72,9 @@ int main()
     mold::GlobalEventSystem.AttachCallback(mold::EventType::Exit, onExit);
 
     //Instantiate a cube
-    mold::GlobalGameObjects.Instantiate(new mold::render::objects::Cube(mold::render::image::Texture("texture.bmp")));
-    mold::GlobalGameObjects.Instantiate(new mold::render::objects::Cube(mold::render::image::Texture("texture.bmp")));
-    mold::GlobalGameObjects.Instantiate(new mold::render::objects::Cube(mold::render::image::Texture("texture.bmp")));
+    mold::GlobalGameObjects.Instantiate(new mold::render::objects::Cube(mold::render::image::Texture(mold::render::Colour(255,0,0))));
+    mold::GlobalGameObjects.Instantiate(new mold::render::objects::Cube(mold::render::image::Texture(mold::render::Colour(0,255,0))));
+    mold::GlobalGameObjects.Instantiate(new mold::render::objects::Cube(mold::render::image::Texture(mold::render::Colour(0,0,255))));
     mold::GlobalGameObjects.Instantiate(new mold::render::objects::GameObject());
 
     mold::GlobalGameObjects.Get("Textured Cube")->Move(glm::vec3(1.0f,1.0f,2.0f));
