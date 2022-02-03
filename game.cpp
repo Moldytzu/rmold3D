@@ -65,7 +65,7 @@ int main()
     mold::GlobalGameObjects.Get("Simple Cube")->Move(glm::vec3(0, 1.0f, -1.0f));
     mold::GlobalGameObjects.Get("Simple Cube")->Translate(glm::vec3(0, 1.0f, -1.0f));
 
-    mold::GlobalGameObjects.Get("Simple Cube")->Opacity = 0.25f;
+    mold::GlobalGameObjects.Get("Simple Cube")->Opacity = 0.05f;
 
     //Callbacks
     mold::GlobalEventSystem.AttachCallback(mold::EventType::Redraw, onDraw);

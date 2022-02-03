@@ -72,7 +72,7 @@ bool mold::Init(uint width, uint height)
     {
         int errorLen;
         glGetShaderiv(vertexShader, GL_INFO_LOG_LENGTH, &errorLen); //get len of error
-        const char *buffer = new char[errorLen];        //allocate memory for buffer
+        const char *buffer = new char[errorLen];                    //allocate memory for buffer
         int bufSize;
         glGetShaderInfoLog(vertexShader, errorLen, (GLsizei *)&bufSize, (GLchar *)buffer); //get info
         mold::log::Error("Vertex Shader: " + std::string(buffer));
@@ -87,7 +87,7 @@ bool mold::Init(uint width, uint height)
     {
         int errorLen;
         glGetShaderiv(vertexShader, GL_INFO_LOG_LENGTH, &errorLen); //get len of error
-        const char *buffer = new char[errorLen];        //allocate memory for buffer
+        const char *buffer = new char[errorLen];                    //allocate memory for buffer
         int bufSize;
         glGetShaderInfoLog(vertexShader, errorLen, (GLsizei *)&bufSize, (GLchar *)buffer); //get info
         mold::log::Error("Fragment Shader: " + std::string(buffer));
@@ -138,8 +138,8 @@ void mold::Run()
         view = glm::lookAt(mold::render::camera::Position, mold::render::camera::Position + mold::render::camera::Front, mold::render::camera::Up);
 
         // give the shader our view and projection
-        mold::render::shader::SetUniform4fv("view",view);
-        mold::render::shader::SetUniform4fv("projection",projection);
+        mold::render::shader::SetUniform4fv("view", view);
+        mold::render::shader::SetUniform4fv("projection", projection);
 
         //use shader
         glUseProgram(mold::render::shader::GlobalShaderProgram);
@@ -148,10 +148,13 @@ void mold::Run()
         GlobalEventSystem.GetMap()[EventType::Redraw]();
 
         //draw game objects
-        for (auto const& [name,ptr] : GlobalGameObjects.Get())
+        for (auto const &[name, ptr] : GlobalGameObjects.Get())
         {
             if (ptr->Enabled) //don't render empty gameobjects
-                ptr->Draw();
+            {
+                ptr->Bind(); // bind vabo, texture and matrices
+                ptr->Draw(); // do drawing
+            }
         }
 
         glFlush();

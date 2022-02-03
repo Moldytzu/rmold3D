@@ -153,6 +153,7 @@ namespace mold
                 void Move(glm::vec3 position);    //set position
                 glm::vec3 GetPosition();          //get position
                 void ReplaceTexture(mold::render::image::Texture newTexture); //replace the texture with a new one
+                void Bind(); //bind everything
 
                 virtual void Init();
                 virtual void Draw();
@@ -163,7 +164,7 @@ namespace mold
                 bool Initialized = false;
                 bool Enabled = false;
 
-                float Opacity = 0.0f; 
+                float Opacity = 1.0f; 
 
             protected:
                 mold::render::image::Texture Texture;
