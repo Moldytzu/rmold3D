@@ -61,6 +61,8 @@ bool mold::Init(uint width, uint height)
     glViewport(0, 0, width, height);
     glm::ortho(0.0f, (float)width, 0.0f, (float)height, 0.1f, 100.0f);
     glEnable(GL_DEPTH_TEST);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
     //compile shaders
     unsigned int vertexShader = mold::render::shader::CompileShader(mold::render::shader::VertexShaderSource, GL_VERTEX_SHADER); //create and compile vertex shader

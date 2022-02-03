@@ -77,6 +77,7 @@ namespace mold
         namespace shader
         {
             void SetUniform4fv(std::string location, glm::mat4 matrix);
+            void SetUniform4v(std::string location, glm::vec4 vector);
 
             uint CompileShader(std::string source, uint type);
             uint LinkShader(uint fragment, uint vertex);
@@ -87,22 +88,26 @@ namespace mold
                                                     "layout (location = 0) in vec3 vertexPosition;\n"
                                                     "layout (location = 1) in vec2 textureCoordornate;\n"
                                                     "out vec2 textureCoord;\n"
+                                                    "out vec4 icolour;\n"
                                                     "uniform mat4 model;\n"
                                                     "uniform mat4 view;\n"
                                                     "uniform mat4 projection;\n"
+                                                    "uniform vec4 fcolour;\n"
                                                     "void main()\n"
                                                     "{\n"
                                                     "   gl_Position = projection * view * model * vec4(vertexPosition, 1.0);\n"
                                                     "   textureCoord = textureCoordornate;\n"
+                                                    "   icolour = fcolour;\n"
                                                     "}\n";
 
             inline std::string FragmentShaderSource = "#version 330 core\n"
                                                       "out vec4 FragColor;\n"
                                                       "in vec2 textureCoord;\n"
+                                                      "in vec4 icolour;\n"
                                                       "uniform sampler2D mainTexture;\n"
                                                       "void main()\n"
                                                       "{\n"
-                                                      "   FragColor = texture(mainTexture, textureCoord);\n"
+                                                      "   FragColor = texture(mainTexture, textureCoord) * icolour;\n"
                                                       "}\n";
 
             inline uint GlobalShaderProgram;
@@ -148,12 +153,17 @@ namespace mold
                 void Move(glm::vec3 position);    //set position
                 glm::vec3 GetPosition();          //get position
                 void ReplaceTexture(mold::render::image::Texture newTexture); //replace the texture with a new one
+
                 virtual void Init();
                 virtual void Draw();
                 virtual std::string Type();
+
                 glm::mat4 PositionMatrix = glm::mat4(1.0f);
+
                 bool Initialized = false;
                 bool Enabled = false;
+
+                float Opacity = 0.0f; 
 
             protected:
                 mold::render::image::Texture Texture;

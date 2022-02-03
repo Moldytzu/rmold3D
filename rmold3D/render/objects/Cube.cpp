@@ -64,10 +64,11 @@ void mold::render::objects::Cube::Init(mold::render::image::Texture texture)
 
 void mold::render::objects::Cube::Draw()
 {
-    Vabo.Bind();                                                  // bind vao & vbo
-    Texture.Bind();                                               // bind texture
-    mold::render::shader::SetUniform4fv("model", PositionMatrix); //give the shader our position matrix
-    mold::render::DrawTriangles(36);                              //draw 36 triangles
+    Vabo.Bind();                                                                              // bind vao & vbo
+    Texture.Bind();                                                                           // bind texture
+    mold::render::shader::SetUniform4fv("model", PositionMatrix);                             // give the shader our position matrix
+    mold::render::shader::SetUniform4v("fcolour", glm::vec4(1.0f, 1.0f, 1.0f, Opacity)); // pass colour information needed for transparency
+    mold::render::DrawTriangles(36);                                                          //draw 36 triangles
 }
 
 std::string mold::render::objects::Cube::Type()
