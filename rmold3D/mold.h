@@ -36,6 +36,7 @@ namespace mold
                 Texture(std::string filename);
                 Texture(mold::render::Colour colour);
                 void Bind();
+                void Deallocate();
 
                 uint32_t Size;
                 uint32_t Width;
@@ -146,6 +147,7 @@ namespace mold
                 void Translate(glm::vec3 offset); //translate position
                 void Move(glm::vec3 position);    //set position
                 glm::vec3 GetPosition();          //get position
+                void ReplaceTexture(mold::render::image::Texture newTexture); //replace the texture with a new one
                 virtual void Init();
                 virtual void Draw();
                 virtual std::string Type();

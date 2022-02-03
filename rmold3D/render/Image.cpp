@@ -7,6 +7,11 @@ void mold::render::image::Texture::Bind()
     glBindTexture(GL_TEXTURE_2D, TextureIndex); // bind texture
 }
 
+void mold::render::image::Texture::Deallocate()
+{
+    glDeleteTextures(1, &TextureIndex); // delete texture
+}
+
 void mold::render::image::Texture::CreateIndex()
 {
     glGenTextures(1, &TextureIndex);

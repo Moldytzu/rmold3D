@@ -65,6 +65,8 @@ int main()
     mold::GlobalGameObjects.Get("Simple Cube")->Move(glm::vec3(0, 1.0f, -1.0f));
     mold::GlobalGameObjects.Get("Simple Cube")->Translate(glm::vec3(0, 1.0f, -1.0f));
 
+    mold::GlobalGameObjects.Get("Simple Cube")->ReplaceTexture(mold::render::image::Texture(mold::render::Colour(255,255,255)));
+
     //Callbacks
     mold::GlobalEventSystem.AttachCallback(mold::EventType::Redraw, onDraw);
     mold::GlobalEventSystem.AttachCallback(mold::EventType::Tick, onTick);
