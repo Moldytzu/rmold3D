@@ -107,8 +107,9 @@ int main()
     if (!mold::Init(800, 600))
         mold::Destroy();
 
+if (glfwRawMouseMotionSupported())
+    glfwSetInputMode(mold::GlobalWindow, GLFW_RAW_MOUSE_MOTION, GLFW_TRUE);
 
-    mold::input::LockCursor(mold::CursorLockingMode::Hidden);
     glfwSetCursorPos(mold::GlobalWindow,400,300);
 
     mold::GlobalGameObjects.Instantiate(new mold::render::objects::Cube(mold::render::image::Texture("texture.bmp")),"Simple Cube");
