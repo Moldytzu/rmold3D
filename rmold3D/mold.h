@@ -152,6 +152,7 @@ namespace mold
             {
             public:
                 GameObject();
+                GameObject(mold::render::image::Texture texture);
                 void Translate(glm::vec3 offset);                             //translate position
                 void Move(glm::vec3 position);                                //set position
                 void Scale(glm::vec3 scaleFactor);                            // set scale factor
@@ -159,13 +160,11 @@ namespace mold
                 void Bind();                                                  //bind everything
                 glm::vec3 GetPosition();                                      //get position
 
-                virtual void Init();
                 virtual void Draw();
                 virtual std::string Type();
 
                 glm::mat4 PositionMatrix = glm::mat4(1.0f);
 
-                bool Initialized = false;
                 bool Enabled = false;
 
                 float Opacity = 1.0f;
@@ -182,7 +181,6 @@ namespace mold
                 Cube();
                 Cube(mold::render::image::Texture texture);
 
-                void Init(mold::render::image::Texture texture);
                 void Draw();
                 std::string Type();
             };

@@ -2,7 +2,11 @@
 
 mold::render::objects::GameObject::GameObject() {}
 
-void mold::render::objects::GameObject::Init() {}
+mold::render::objects::GameObject::GameObject(mold::render::image::Texture texture)
+{
+    Texture = texture;
+    Enabled = true;
+}
 
 void mold::render::objects::GameObject::Draw() {}
 
