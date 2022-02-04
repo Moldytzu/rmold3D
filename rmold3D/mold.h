@@ -224,12 +224,14 @@ namespace mold
         Hidden,
         Normal,
         Centred,
+        Wrapped,
     };
 
     namespace input
     {
         bool GetKey(int key);
-        void LockCursor(CursorLockingMode locked);
+
+        inline CursorLockingMode GlobalCursorLockMode;
     };
 
     namespace log

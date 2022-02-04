@@ -19,34 +19,39 @@ void doMouse()
     double xpos, ypos;
     glfwGetCursorPos(mold::GlobalWindow, &xpos, &ypos);
 
-    if (xpos > mold::settings::WindowWidth)
+    // wrap cursor around window borders
+    if (mold::input::GlobalCursorLockMode == mold::CursorLockingMode::Wrapped)
     {
-        glfwSetCursorPos(mold::GlobalWindow, 10, ypos);
-        lastX = 10;
-        return;
+        if (xpos > mold::settings::WindowWidth)
+        {
+            glfwSetCursorPos(mold::GlobalWindow, 10, ypos);
+            lastX = 10;
+            return;
+        }
+
+        if (xpos < 0)
+        {
+            glfwSetCursorPos(mold::GlobalWindow, mold::settings::WindowWidth - 10, ypos);
+            lastX = mold::settings::WindowWidth - 10;
+            return;
+        }
+
+        if (ypos > mold::settings::WindowHeight)
+        {
+            glfwSetCursorPos(mold::GlobalWindow, xpos, 10);
+            lastY = 10;
+            return;
+        }
+
+        if (ypos < 0)
+        {
+            glfwSetCursorPos(mold::GlobalWindow, xpos, mold::settings::WindowHeight - 10);
+            lastY = mold::settings::WindowHeight - 10;
+            return;
+        }
     }
 
-    if (xpos < 0)
-    {
-        glfwSetCursorPos(mold::GlobalWindow, mold::settings::WindowWidth - 10, ypos);
-        lastX = mold::settings::WindowWidth - 10;
-        return;
-    }
-
-    if (ypos > mold::settings::WindowHeight)
-    {
-        glfwSetCursorPos(mold::GlobalWindow, xpos, 10);
-        lastY = 10;
-        return;
-    }
-
-    if (ypos < 0)
-    {
-        glfwSetCursorPos(mold::GlobalWindow, xpos, mold::settings::WindowHeight - 10);
-        lastY = mold::settings::WindowHeight - 10;
-        return;
-    }
-
+    // update yaw and pitch if the mouse moved in their axis
     if (lastX != xpos)
     {
         double offsetX = xpos - lastX;
@@ -89,10 +94,10 @@ void onTick()
         mold::render::camera::Translate(mold::render::CameraDirection::Right, cameraSpeed / 10);
 
     if (mold::input::GetKey(GLFW_KEY_ESCAPE))
-        mold::input::LockCursor(mold::CursorLockingMode::Normal);
+        mold::input::GlobalCursorLockMode = mold::CursorLockingMode::Normal;
 
     if (mold::input::GetKey(GLFW_KEY_F1))
-        mold::input::LockCursor(mold::CursorLockingMode::Centred);
+        mold::input::GlobalCursorLockMode = mold::CursorLockingMode::Wrapped;
 }
 
 //draw on the screen
@@ -133,7 +138,7 @@ int main()
     if (glfwRawMouseMotionSupported())
         glfwSetInputMode(mold::GlobalWindow, GLFW_RAW_MOUSE_MOTION, GLFW_TRUE);
 
-    glfwSetCursorPos(mold::GlobalWindow, 400, 300);
+    mold::input::GlobalCursorLockMode = mold::CursorLockingMode::Wrapped;
 
     mold::GlobalGameObjects.Instantiate(new mold::render::objects::Cube(mold::render::image::Texture("texture.bmp")), "Simple Cube");
 
