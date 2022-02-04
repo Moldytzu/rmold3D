@@ -31,12 +31,12 @@ mold::render::image::Texture::Texture(mold::render::Colour colour)
     Height = 16;
 
     PixelData = new uint8_t[16*16*3]; //16*16 texture with 3 bytes per pixel data
-    for(int it = 0, idx = 0;it < 16*16;it++)
-    {
-        PixelData[idx++] = colour.R;
-        PixelData[idx++] = colour.G;
-        PixelData[idx++] = colour.B;
-    }
+    for(int it = 0, idx = 0; it < 16*16; it++)
+        {
+            PixelData[idx++] = colour.R;
+            PixelData[idx++] = colour.G;
+            PixelData[idx++] = colour.B;
+        }
 
     CreateIndex(); // generate index
 }
@@ -44,33 +44,33 @@ mold::render::image::Texture::Texture(mold::render::Colour colour)
 mold::render::image::Texture::Texture(std::string filename)
 {
     if (!filename.ends_with(".bmp"))
-    {
-        mold::log::Error("Unsupported texture format. Please use the 24-bit uncompressed bitmap.");
-        mold::Destroy();
-    }
+        {
+            mold::log::Error("Unsupported texture format. Please use the 24-bit uncompressed bitmap.");
+            mold::Destroy();
+        }
 
     std::ifstream stream(filename);
 
     if (!stream.good())
-    {
-        mold::log::Error("Failed to load bitmap " + filename);
-        mold::Destroy();
-    }
+        {
+            mold::log::Error("Failed to load bitmap " + filename);
+            mold::Destroy();
+        }
 
     mold::render::image::BitmapImageHeader *header = new mold::render::image::BitmapImageHeader;
 
     stream.read((char*)header,sizeof(mold::render::image::BitmapImageHeader));
     if (!stream.good())
-    {
-        mold::log::Error("Failed to read header of bitmap " + filename);
-        mold::Destroy();
-    }
+        {
+            mold::log::Error("Failed to read header of bitmap " + filename);
+            mold::Destroy();
+        }
 
     if (header->BPP != 24)
-    {
-        mold::log::Error("Unexpected " + std::to_string(header->BPP) + " bpp. Expected 24.");
-        mold::Destroy();
-    }
+        {
+            mold::log::Error("Unexpected " + std::to_string(header->BPP) + " bpp. Expected 24.");
+            mold::Destroy();
+        }
 
     Width = header->BitmapWidth;
     Height = header->BitmapHeight;
@@ -79,20 +79,21 @@ mold::render::image::Texture::Texture(std::string filename)
 
     stream.read((char*)PixelData,header->ImageSize);
     if (!stream.good())
-    {
-        mold::log::Error("Failed to read contents of bitmap " + filename);
-        mold::Destroy();
-    }
+        {
+            mold::log::Error("Failed to read contents of bitmap " + filename);
+            mold::Destroy();
+        }
 
     for (int i = 0; i < header->ImageSize; i += 3)
-    { // reverse all of the colors. (bgr -> rgb)
+        {
+            // reverse all of the colors. (bgr -> rgb)
 
-        uint8_t temp = PixelData[i];
+            uint8_t temp = PixelData[i];
 
-        PixelData[i] = PixelData[i + 2];
+            PixelData[i] = PixelData[i + 2];
 
-        PixelData[i + 2] = temp;
-    }
+            PixelData[i + 2] = temp;
+        }
 
     CreateIndex(); // create index for opengl
 }

@@ -1,11 +1,15 @@
 #include <rmold3D/mold.h>
 
 mold::render::objects::Cube::Cube() {}
-mold::render::objects::Cube::Cube(mold::render::image::Texture texture) { Init(texture); }
+mold::render::objects::Cube::Cube(mold::render::image::Texture texture)
+{
+    Init(texture);
+}
 
 void mold::render::objects::Cube::Init(mold::render::image::Texture texture)
 {
-    float vertices[] = {
+    float vertices[] =
+    {
         // back face
         Vertex(-0.5f, -0.5f, -0.5f), TexCoord(0.0f, 0.0f), // right up
         Vertex(0.5f, -0.5f, -0.5f), TexCoord(1.0f, 0.0f),  // left up
@@ -52,7 +56,8 @@ void mold::render::objects::Cube::Init(mold::render::image::Texture texture)
         Vertex(0.5f, 0.5f, 0.5f), TexCoord(1.0f, 0.0f),    // left down
         Vertex(0.5f, 0.5f, 0.5f), TexCoord(1.0f, 0.0f),    // left down
         Vertex(-0.5f, 0.5f, 0.5f), TexCoord(0.0f, 0.0f),   // right down
-        Vertex(-0.5f, 0.5f, -0.5f), TexCoord(0.0f, 1.0f)}; // right up
+        Vertex(-0.5f, 0.5f, -0.5f), TexCoord(0.0f, 1.0f)
+    }; // right up
 
     if (Initialized) // if initialized just retun
         return;

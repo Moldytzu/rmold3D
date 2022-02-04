@@ -31,10 +31,10 @@ bool mold::render::objects::GameObjectsManager::Exists(std::string name)
 void mold::render::objects::GameObjectsManager::Remove(std::string name)
 {
     if (!Exists(name))
-    {
-        mold::log::Warn("Can't remove inexistent game object " + name);
-        return;
-    }
+        {
+            mold::log::Warn("Can't remove inexistent game object " + name);
+            return;
+        }
 
     GameObjects.erase(name);
 }
@@ -42,10 +42,10 @@ void mold::render::objects::GameObjectsManager::Remove(std::string name)
 mold::render::objects::GameObject *mold::render::objects::GameObjectsManager::Get(std::string name)
 {
     if (!Exists(name))
-    {
-        mold::log::Warn("Can't get inexistent game object " + name);
-        return nullptr;
-    }
+        {
+            mold::log::Warn("Can't get inexistent game object " + name);
+            return nullptr;
+        }
 
     return GameObjects[name];
 }

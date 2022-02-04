@@ -10,15 +10,15 @@ bool mold::input::GetKey(int key)
 void mold::input::LockCursor(CursorLockingMode locked)
 {
     switch(locked)
-    {
-    case CursorLockingMode::Normal:
-        glfwSetInputMode(mold::GlobalWindow, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
-        break;
-    case CursorLockingMode::Locked:
-        glfwSetInputMode(mold::GlobalWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-        break;
-    default:
-        glfwSetInputMode(mold::GlobalWindow, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
-        break;
-    }   
+        {
+        case CursorLockingMode::Normal:
+            glfwSetInputMode(mold::GlobalWindow, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+            break;
+        case CursorLockingMode::Locked:
+            glfwSetInputMode(mold::GlobalWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+            break;
+        default:
+            glfwSetInputMode(mold::GlobalWindow, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+            break;
+        }
 }
