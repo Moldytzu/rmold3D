@@ -24,9 +24,9 @@ namespace mold
         {
         public:
             Colour(uint8_t r, uint8_t g, uint8_t b);
-            uint8_t R,G,B;
+            uint8_t R, G, B;
         };
-    
+
         namespace image
         {
             class Texture
@@ -42,6 +42,7 @@ namespace mold
                 uint32_t Width;
                 uint32_t Height;
                 uint8_t *PixelData;
+
             private:
                 void CreateIndex();
                 uint TextureIndex;
@@ -119,8 +120,9 @@ namespace mold
             VABO();
             VABO(float *vertices, size_t len);
             void Bind();
+
         private:
-            uint VAO,VBO;
+            uint VAO, VBO;
         };
 
         enum CameraDirection
@@ -149,11 +151,12 @@ namespace mold
             {
             public:
                 GameObject();
-                void Translate(glm::vec3 offset); //translate position
-                void Move(glm::vec3 position);    //set position
-                glm::vec3 GetPosition();          //get position
+                void Translate(glm::vec3 offset);                             //translate position
+                void Move(glm::vec3 position);                                //set position
+                void Scale(glm::vec3 scaleFactor);                                // set scale factor
                 void ReplaceTexture(mold::render::image::Texture newTexture); //replace the texture with a new one
-                void Bind(); //bind everything
+                void Bind();                                                  //bind everything
+                glm::vec3 GetPosition();                                      //get position
 
                 virtual void Init();
                 virtual void Draw();
@@ -164,7 +167,7 @@ namespace mold
                 bool Initialized = false;
                 bool Enabled = false;
 
-                float Opacity = 1.0f; 
+                float Opacity = 1.0f;
 
             protected:
                 mold::render::image::Texture Texture;
@@ -191,11 +194,11 @@ namespace mold
                 void Remove(std::string name);
                 bool Exists(std::string name);
                 GameObject *Get(std::string name);
-                std::map<std::string , GameObject*> Get();
+                std::map<std::string, GameObject *> Get();
 
             private:
                 void Add(std::string name, GameObject *object);
-                std::map<std::string , GameObject*> GameObjects;
+                std::map<std::string, GameObject *> GameObjects;
             };
         };
         void DrawTriangles(uint count);

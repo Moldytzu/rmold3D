@@ -16,6 +16,11 @@ void mold::render::objects::GameObject::Move(glm::vec3 position)
     PositionMatrix = glm::translate(glm::mat4(1.0f), position);
 }
 
+void mold::render::objects::GameObject::Scale(glm::vec3 scaleFactor)
+{
+    PositionMatrix = glm::scale(PositionMatrix,scaleFactor);
+}
+
 void mold::render::objects::GameObject::ReplaceTexture(mold::render::image::Texture newTexture)
 {
     Texture.Deallocate(); // deallocate so we don't create memory leaks or smth
