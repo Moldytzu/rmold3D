@@ -124,6 +124,12 @@ void mold::Run()
         glClearColor(0, 0, 0, 0);                           //black
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //clear screen
 
+        //update window title
+        std::string wtitle = "Rewritten mold3D @ ";
+        wtitle += std::to_string((int)std::round((float)1/mold::time::DeltaTime));
+        wtitle += " FPS";
+        glfwSetWindowTitle(mold::GlobalWindow,wtitle.c_str());
+
         //update camera front
         glm::vec3 direction;
         direction.x = cos(glm::radians(mold::render::camera::Yaw)) * cos(glm::radians(mold::render::camera::Pitch));
