@@ -17,6 +17,10 @@ void mold::input::LockCursor(CursorLockingMode locked)
         case CursorLockingMode::Locked:
             glfwSetInputMode(mold::GlobalWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
             break;
+        case CursorLockingMode::Centred:
+            glfwSetCursorPos(mold::GlobalWindow,mold::settings::WindowWidth/2,mold::settings::WindowHeight/2);
+            glfwSetInputMode(mold::GlobalWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+            break;
         default:
             glfwSetInputMode(mold::GlobalWindow, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
             break;

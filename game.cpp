@@ -58,22 +58,30 @@ double lastY;
 
 double mouseSens = 0.5f;
 
+bool first = true;
 void onMouse(GLFWwindow* window, double xpos, double ypos)
 {
+    if(first)
+    {
+        lastX = xpos;
+        lastY = ypos;
+        first = false;
+        return;
+    }
     if(lastX != xpos)
     {
         double offsetX = xpos-lastX;
         
-        mold::render::camera::Yaw += offsetX * mouseSens;
+        mold::render::camera::Yaw += offsetX * mouseSens * 0.01f;
 
         lastX = xpos;
     }
 
     if(lastY != ypos)
     {
-        double offsetY = ypos-lastY;
+        double offsetY = lastY-ypos;
 
-        mold::render::camera::Pitch -= offsetY * mouseSens;
+        mold::render::camera::Pitch += offsetY * mouseSens * 0.01f;
 
         lastY = ypos;
     }
@@ -87,7 +95,7 @@ int main()
 
     glfwSetCursorPosCallback(mold::GlobalWindow,onMouse);
 
-    //mold::input::LockCursor(mold::CursorLockingMode::Locked);
+    mold::input::LockCursor(mold::CursorLockingMode::Centred);
 
     mold::GlobalGameObjects.Instantiate(new mold::render::objects::Cube(mold::render::image::Texture("texture.bmp")),"Simple Cube");
 

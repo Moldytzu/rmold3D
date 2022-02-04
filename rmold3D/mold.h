@@ -223,6 +223,7 @@ namespace mold
         Locked,
         Hidden,
         Normal,
+        Centred,
     };
 
     namespace input
