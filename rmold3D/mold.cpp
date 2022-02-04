@@ -136,6 +136,9 @@ void mold::Run()
             //update camera front
             if(mold::render::camera::Yaw != oldYaw || mold::render::camera::Pitch != oldPitch) // update only when the values change so we don't do cos and sin on every tick
                 {
+                    //clamp the value of pitch
+                    mold::render::camera::Pitch = std::clamp(mold::render::camera::Pitch,-89.0f,89.0f);
+
                     oldDirection.x = cos(glm::radians(mold::render::camera::Yaw)) * cos(glm::radians(mold::render::camera::Pitch));
                     oldDirection.y = sin(glm::radians(mold::render::camera::Pitch));
                     oldDirection.z = sin(glm::radians(mold::render::camera::Yaw)) * cos(glm::radians(mold::render::camera::Pitch));

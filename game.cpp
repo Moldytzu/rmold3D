@@ -52,22 +52,49 @@ void onExit()
     mold::log::Info("Goodbye!");
 }
 
+//mouse movement
+double lastX;
+double lastY;
+
+double mouseSens = 0.5f;
+
+void onMouse(GLFWwindow* window, double xpos, double ypos)
+{
+    if(lastX != xpos)
+    {
+        double offsetX = xpos-lastX;
+        
+        mold::render::camera::Yaw += offsetX * mouseSens;
+
+        lastX = xpos;
+    }
+
+    if(lastY != ypos)
+    {
+        double offsetY = ypos-lastY;
+
+        mold::render::camera::Pitch -= offsetY * mouseSens;
+
+        lastY = ypos;
+    }
+}
+
 //entry point
 int main()
 {
     if (!mold::Init(800, 600))
         mold::Destroy();
 
-    mold::input::LockCursor(mold::CursorLockingMode::Locked);
+    glfwSetCursorPosCallback(mold::GlobalWindow,onMouse);
+
+    //mold::input::LockCursor(mold::CursorLockingMode::Locked);
 
     mold::GlobalGameObjects.Instantiate(new mold::render::objects::Cube(mold::render::image::Texture("texture.bmp")),"Simple Cube");
 
     mold::GlobalGameObjects.Get("Simple Cube")->Move(glm::vec3(0, 1.0f, -1.0f));
     mold::GlobalGameObjects.Get("Simple Cube")->Translate(glm::vec3(0, 1.0f, -1.0f));
-
     mold::GlobalGameObjects.Get("Simple Cube")->Scale(glm::vec3(2.0f,1.0f,1.0f));
-
-    mold::GlobalGameObjects.Get("Simple Cube")->Opacity = 1.0f;
+    mold::GlobalGameObjects.Get("Simple Cube")->Opacity = 0.5f;
 
     //Callbacks
     mold::GlobalEventSystem.AttachCallback(mold::EventType::Redraw, onDraw);
