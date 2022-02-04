@@ -145,13 +145,11 @@ void mold::Run()
             oldPitch = mold::render::camera::Pitch;
         }
 
-        // create transformations
-        glm::mat4 view = glm::mat4(1.0f);
-        glm::mat4 projection = glm::mat4(1.0f);
-        projection = glm::perspective(glm::radians(mold::settings::FOV), mold::settings::WindowWidth / mold::settings::WindowHeight, 0.1f, 100.0f);
-        view = glm::lookAt(mold::render::camera::Position, mold::render::camera::Position + mold::render::camera::Front, mold::render::camera::Up);
-
         // give the shader our view and projection
+
+#define view glm::lookAt(mold::render::camera::Position, mold::render::camera::Position + mold::render::camera::Front, mold::render::camera::Up)
+#define projection glm::perspective(glm::radians(mold::settings::FOV), mold::settings::WindowWidth / mold::settings::WindowHeight, 0.1f, 100.0f)
+
         mold::render::shader::SetUniform4fv("view", view);
         mold::render::shader::SetUniform4fv("projection", projection);
 
