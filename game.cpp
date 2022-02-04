@@ -11,7 +11,11 @@
 double lastX;
 double lastY;
 
-double mouseSens = 0.05f;
+void mstub(float axisX, float axisY)
+{
+    mold::render::camera::Yaw += axisX * mold::settings::MouseSensibility;
+    mold::render::camera::Pitch += axisY * mold::settings::MouseSensibility;
+}
 
 void doMouse()
 {
@@ -51,24 +55,14 @@ void doMouse()
         }
     }
 
-    // update yaw and pitch if the mouse moved in their axis
-    if (lastX != xpos)
-    {
-        double offsetX = xpos - lastX;
+    double offsetX = xpos - lastX;
+    double offsetY = lastY - ypos;
 
-        mold::render::camera::Yaw += offsetX * mouseSens;
+    mstub(offsetX,offsetY);
 
-        lastX = xpos;
-    }
-
-    if (lastY != ypos)
-    {
-        double offsetY = lastY - ypos;
-
-        mold::render::camera::Pitch += offsetY * mouseSens;
-
-        lastY = ypos;
-    }
+    // update last values
+    lastX = xpos;
+    lastY = ypos;
 }
 
 void onTick()

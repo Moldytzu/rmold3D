@@ -210,6 +210,7 @@ namespace mold
         inline float FOV = 90.0f;
         inline float WindowWidth;
         inline float WindowHeight;
+        inline float MouseSensibility = 0.05f;
     };
 
     namespace time
