@@ -233,6 +233,8 @@ namespace mold
         bool GetKey(int key);
 
         inline CursorLockingMode GlobalCursorLockMode;
+        inline float GlobalCursorAxisX;
+        inline float GlobalCursorAxisY;
     };
 
     namespace log
@@ -248,6 +250,7 @@ namespace mold
         Tick,
         Resize,
         Exit,
+        Mouse,
         LAST,
     };
 

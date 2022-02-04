@@ -1,90 +1,38 @@
 #include <rmold3D/mold.h>
 
 /*remaining features to add:
-- mouse input
 - lighting
 - internal console
 - internal profiler
 */
 
-//mouse movement
-double lastX;
-double lastY;
-
-void mstub(float axisX, float axisY)
+// mouse update event
+void onMouse()
 {
-    mold::render::camera::Yaw += axisX * mold::settings::MouseSensibility;
-    mold::render::camera::Pitch += axisY * mold::settings::MouseSensibility;
+    mold::render::camera::Yaw += mold::input::GlobalCursorAxisX * mold::settings::MouseSensibility;
+    mold::render::camera::Pitch += mold::input::GlobalCursorAxisY * mold::settings::MouseSensibility;
 }
 
-void doMouse()
-{
-    // handle mouse input for camera
-    double xpos, ypos;
-    glfwGetCursorPos(mold::GlobalWindow, &xpos, &ypos);
-
-    // wrap cursor around window borders
-    if (mold::input::GlobalCursorLockMode == mold::CursorLockingMode::Wrapped)
-    {
-        if (xpos > mold::settings::WindowWidth)
-        {
-            glfwSetCursorPos(mold::GlobalWindow, 10, ypos);
-            lastX = 10;
-            return;
-        }
-
-        if (xpos < 0)
-        {
-            glfwSetCursorPos(mold::GlobalWindow, mold::settings::WindowWidth - 10, ypos);
-            lastX = mold::settings::WindowWidth - 10;
-            return;
-        }
-
-        if (ypos > mold::settings::WindowHeight)
-        {
-            glfwSetCursorPos(mold::GlobalWindow, xpos, 10);
-            lastY = 10;
-            return;
-        }
-
-        if (ypos < 0)
-        {
-            glfwSetCursorPos(mold::GlobalWindow, xpos, mold::settings::WindowHeight - 10);
-            lastY = mold::settings::WindowHeight - 10;
-            return;
-        }
-    }
-
-    double offsetX = xpos - lastX;
-    double offsetY = lastY - ypos;
-
-    mstub(offsetX,offsetY);
-
-    // update last values
-    lastX = xpos;
-    lastY = ypos;
-}
-
+// tick update
 void onTick()
 {
-    doMouse();
     const float cameraSpeed = 20.0f * mold::time::DeltaTime; // adjust accordingly
-    if (mold::input::GetKey('W'))
+    if (mold::input::GetKey(GLFW_KEY_UP))
         mold::render::camera::Rotate(mold::render::CameraDirection::Forward, cameraSpeed * 2);
-    if (mold::input::GetKey('S'))
+    if (mold::input::GetKey(GLFW_KEY_DOWN))
         mold::render::camera::Rotate(mold::render::CameraDirection::Backwards, cameraSpeed * 2);
-    if (mold::input::GetKey('A'))
+    if (mold::input::GetKey(GLFW_KEY_LEFT))
         mold::render::camera::Rotate(mold::render::CameraDirection::Left, cameraSpeed * 2);
-    if (mold::input::GetKey('D'))
+    if (mold::input::GetKey(GLFW_KEY_RIGHT))
         mold::render::camera::Rotate(mold::render::CameraDirection::Right, cameraSpeed * 2);
 
-    if (mold::input::GetKey(GLFW_KEY_UP))
+    if (mold::input::GetKey('W'))
         mold::render::camera::Translate(mold::render::CameraDirection::Forward, cameraSpeed / 10);
-    if (mold::input::GetKey(GLFW_KEY_DOWN))
+    if (mold::input::GetKey('S'))
         mold::render::camera::Translate(mold::render::CameraDirection::Backwards, cameraSpeed / 10);
-    if (mold::input::GetKey(GLFW_KEY_LEFT))
+    if (mold::input::GetKey('A'))
         mold::render::camera::Translate(mold::render::CameraDirection::Left, cameraSpeed / 10);
-    if (mold::input::GetKey(GLFW_KEY_RIGHT))
+    if (mold::input::GetKey('D'))
         mold::render::camera::Translate(mold::render::CameraDirection::Right, cameraSpeed / 10);
 
     if (mold::input::GetKey(GLFW_KEY_ESCAPE))
@@ -111,26 +59,11 @@ void onExit()
     mold::log::Info("Goodbye!");
 }
 
-bool first = true;
-void onMouse(GLFWwindow *window, double xpos, double ypos)
-{
-    if (first)
-    {
-        lastX = xpos;
-        lastY = ypos;
-        first = false;
-        return;
-    }
-}
-
 //entry point
 int main()
 {
-    if (!mold::Init(800, 600))
+    if (!mold::Init(1024, 768))
         mold::Destroy();
-
-    if (glfwRawMouseMotionSupported())
-        glfwSetInputMode(mold::GlobalWindow, GLFW_RAW_MOUSE_MOTION, GLFW_TRUE);
 
     mold::input::GlobalCursorLockMode = mold::CursorLockingMode::Wrapped;
 
@@ -146,6 +79,7 @@ int main()
     mold::GlobalEventSystem.AttachCallback(mold::EventType::Tick, onTick);
     mold::GlobalEventSystem.AttachCallback(mold::EventType::Resize, onResize);
     mold::GlobalEventSystem.AttachCallback(mold::EventType::Exit, onExit);
+    mold::GlobalEventSystem.AttachCallback(mold::EventType::Mouse, onMouse);
 
     //Instantiate a cube
     mold::GlobalGameObjects.Instantiate(new mold::render::objects::Cube(mold::render::image::Texture(mold::render::Colour(255, 0, 0))));

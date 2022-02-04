@@ -26,6 +26,8 @@ bool mold::Init(uint width, uint height)
     mold::settings::WindowHeight = height;
     mold::settings::WindowWidth = width;
 
+    mold::log::Info("Starting Rewritten mold 3D");
+
     glfwInit(); // initialize glfw
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -40,6 +42,9 @@ bool mold::Init(uint width, uint height)
         mold::log::Error("Couldn't create glfw window!");
         return false;
     }
+
+    if (glfwRawMouseMotionSupported()) // enable raw mouse motion if supported
+        glfwSetInputMode(mold::GlobalWindow, GLFW_RAW_MOUSE_MOTION, GLFW_TRUE);
 
     glfwMakeContextCurrent(mold::GlobalWindow); // create opengl context
 
@@ -110,11 +115,64 @@ bool mold::Init(uint width, uint height)
     return true;
 }
 
+// mouse handling
+double lastX;
+double lastY;
+
+void handleMouse()
+{
+    // handle mouse input for camera
+    double xpos, ypos;
+    glfwGetCursorPos(mold::GlobalWindow, &xpos, &ypos);
+
+    // wrap cursor around window borders
+    if (mold::input::GlobalCursorLockMode == mold::CursorLockingMode::Wrapped)
+    {
+        if (xpos > mold::settings::WindowWidth)
+        {
+            glfwSetCursorPos(mold::GlobalWindow, 10, ypos);
+            lastX = 10;
+            return;
+        }
+
+        if (xpos < 0)
+        {
+            glfwSetCursorPos(mold::GlobalWindow, mold::settings::WindowWidth - 10, ypos);
+            lastX = mold::settings::WindowWidth - 10;
+            return;
+        }
+
+        if (ypos > mold::settings::WindowHeight)
+        {
+            glfwSetCursorPos(mold::GlobalWindow, xpos, 10);
+            lastY = 10;
+            return;
+        }
+
+        if (ypos < 0)
+        {
+            glfwSetCursorPos(mold::GlobalWindow, xpos, mold::settings::WindowHeight - 10);
+            lastY = mold::settings::WindowHeight - 10;
+            return;
+        }
+    }
+
+    mold::input::GlobalCursorAxisX = xpos - lastX;
+    mold::input::GlobalCursorAxisY = lastY - ypos;
+
+    mold::GlobalEventSystem.GetMap()[mold::EventType::Mouse]();
+
+    // update last values
+    lastX = xpos;
+    lastY = ypos;
+}
+
 float oldYaw, oldPitch;
 glm::vec3 oldDirection;
 
 void mold::Run()
 {
+    mold::log::Info("Running the game");
     while (!glfwWindowShouldClose(mold::GlobalWindow))
     {
         float currentFrame = glfwGetTime();
@@ -150,6 +208,9 @@ void mold::Run()
             glfwSetInputMode(mold::GlobalWindow, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
             break;
         }
+
+        //do mouse handling
+        handleMouse();
 
         //update camera front
         if (mold::render::camera::Yaw != oldYaw || mold::render::camera::Pitch != oldPitch) // update only when the values change so we don't do cos and sin on every tick
