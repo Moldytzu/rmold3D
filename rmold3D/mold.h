@@ -23,6 +23,7 @@ namespace mold
         class Colour
         {
         public:
+            Colour(uint8_t rgb);
             Colour(uint8_t r, uint8_t g, uint8_t b);
             uint8_t R, G, B;
         };
@@ -153,7 +154,7 @@ namespace mold
                 GameObject();
                 void Translate(glm::vec3 offset);                             //translate position
                 void Move(glm::vec3 position);                                //set position
-                void Scale(glm::vec3 scaleFactor);                                // set scale factor
+                void Scale(glm::vec3 scaleFactor);                            // set scale factor
                 void ReplaceTexture(mold::render::image::Texture newTexture); //replace the texture with a new one
                 void Bind();                                                  //bind everything
                 glm::vec3 GetPosition();                                      //get position

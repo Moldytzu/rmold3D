@@ -79,10 +79,12 @@ int main()
     mold::GlobalGameObjects.Instantiate(new mold::render::objects::Cube(mold::render::image::Texture(mold::render::Colour(255,0,0))));
     mold::GlobalGameObjects.Instantiate(new mold::render::objects::Cube(mold::render::image::Texture(mold::render::Colour(0,255,0))));
     mold::GlobalGameObjects.Instantiate(new mold::render::objects::Cube(mold::render::image::Texture(mold::render::Colour(0,0,255))));
+    mold::GlobalGameObjects.Instantiate(new mold::render::objects::Cube(mold::render::image::Texture(mold::render::Colour(255))));
     mold::GlobalGameObjects.Instantiate(new mold::render::objects::GameObject());
 
     mold::GlobalGameObjects.Get("Textured Cube")->Move(glm::vec3(1.0f,1.0f,2.0f));
     mold::GlobalGameObjects.Get("Textured Cube 1")->Move(glm::vec3(-1.0f,0.5f,-2.0f));
+    mold::GlobalGameObjects.Get("Textured Cube 2")->Move(glm::vec3(1.0f,0.0f,2.0f));
 
     //main loop
     mold::Run();
