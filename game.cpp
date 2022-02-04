@@ -20,16 +20,31 @@ double xpos, ypos;
 glfwGetCursorPos(mold::GlobalWindow,&xpos, &ypos);
 
 if(xpos > mold::settings::WindowWidth)
+{
     glfwSetCursorPos(mold::GlobalWindow,10,ypos);
+    lastX = 10;
+}
 
 if(xpos < 0)
+{
     glfwSetCursorPos(mold::GlobalWindow,mold::settings::WindowWidth-10,ypos);
+    lastX = mold::settings::WindowWidth-10;
+}
+
 
 if(ypos > mold::settings::WindowHeight)
+{
     glfwSetCursorPos(mold::GlobalWindow,xpos,10);
+    lastY = 10;
+}
+
 
 if(ypos < 0)
+{
     glfwSetCursorPos(mold::GlobalWindow,xpos,mold::settings::WindowHeight-10);
+    lastY = mold::settings::WindowHeight-10;
+}
+
 
     if(lastX != xpos)
     {
