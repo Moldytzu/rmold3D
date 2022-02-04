@@ -110,6 +110,9 @@ bool mold::Init(uint width, uint height)
     return true;
 }
 
+float oldYaw,oldPitch;
+glm::vec3 oldDirection;
+
 void mold::Run()
 {
     while (!glfwWindowShouldClose(mold::GlobalWindow))
@@ -131,11 +134,16 @@ void mold::Run()
         glfwSetWindowTitle(mold::GlobalWindow,wtitle.c_str());
 
         //update camera front
-        glm::vec3 direction;
-        direction.x = cos(glm::radians(mold::render::camera::Yaw)) * cos(glm::radians(mold::render::camera::Pitch));
-        direction.y = sin(glm::radians(mold::render::camera::Pitch));
-        direction.z = sin(glm::radians(mold::render::camera::Yaw)) * cos(glm::radians(mold::render::camera::Pitch));
-        mold::render::camera::Front = glm::normalize(direction);
+        if(mold::render::camera::Yaw != oldYaw || mold::render::camera::Pitch != oldPitch) // update only when the values change so we don't do cos and sin on every tick
+        {
+            oldDirection.x = cos(glm::radians(mold::render::camera::Yaw)) * cos(glm::radians(mold::render::camera::Pitch));
+            oldDirection.y = sin(glm::radians(mold::render::camera::Pitch));
+            oldDirection.z = sin(glm::radians(mold::render::camera::Yaw)) * cos(glm::radians(mold::render::camera::Pitch));
+            mold::render::camera::Front = glm::normalize(oldDirection);
+        
+            oldYaw = mold::render::camera::Yaw; // save the values
+            oldPitch = mold::render::camera::Pitch;
+        }
 
         // create transformations
         glm::mat4 view = glm::mat4(1.0f);
