@@ -21,3 +21,9 @@ void mold::render::VABO::Bind()
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBindVertexArray(VAO);
 }
+
+void mold::render::VABO::Deallocate()
+{
+    glDeleteBuffers(1,&VBO);
+    glDeleteVertexArrays(1,&VAO);
+}

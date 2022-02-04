@@ -2,13 +2,19 @@
 
 mold::render::objects::GameObject::GameObject() {}
 
+void mold::render::objects::GameObject::Draw() {}
+
+mold::render::objects::GameObject::~GameObject()
+{
+    Texture.Deallocate();
+    Vabo.Deallocate();
+}
+
 mold::render::objects::GameObject::GameObject(mold::render::image::Texture texture)
 {
     Texture = texture;
     Enabled = true;
 }
-
-void mold::render::objects::GameObject::Draw() {}
 
 void mold::render::objects::GameObject::Translate(glm::vec3 offset)
 {

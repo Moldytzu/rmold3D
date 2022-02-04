@@ -120,7 +120,9 @@ namespace mold
         public:
             VABO();
             VABO(float *vertices, size_t len);
+
             void Bind();
+            void Deallocate();
 
         private:
             uint VAO, VBO;
@@ -151,8 +153,11 @@ namespace mold
             class GameObject
             {
             public:
+                ~GameObject();
+
                 GameObject();
                 GameObject(mold::render::image::Texture texture);
+
                 void Translate(glm::vec3 offset);                             //translate position
                 void Move(glm::vec3 position);                                //set position
                 void Scale(glm::vec3 scaleFactor);                            // set scale factor
