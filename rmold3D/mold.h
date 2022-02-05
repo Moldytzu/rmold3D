@@ -204,7 +204,6 @@ namespace mold
             protected:
                 mold::render::image::Texture Texture;
                 mold::render::VABO Vabo;
-                std::map<std::string, Component *> Components;
                 float *Vertices;
             };
 

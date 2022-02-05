@@ -10,11 +10,28 @@
 class Player : public mold::render::objects::Component
 {
 public:
+    float Speed = 5.0f; // adjust accordingly
     void Tick()
     {
+        if (mold::input::GetKey(GLFW_KEY_UP))
+            mold::render::camera::Rotate(mold::render::CameraDirection::Forward, Speed * 2 * mold::time::DeltaTime);
+        if (mold::input::GetKey(GLFW_KEY_DOWN))
+            mold::render::camera::Rotate(mold::render::CameraDirection::Backwards, Speed * 2 * mold::time::DeltaTime);
+        if (mold::input::GetKey(GLFW_KEY_LEFT))
+            mold::render::camera::Rotate(mold::render::CameraDirection::Left, Speed * 2 * mold::time::DeltaTime);
+        if (mold::input::GetKey(GLFW_KEY_RIGHT))
+            mold::render::camera::Rotate(mold::render::CameraDirection::Right, Speed * 2 * mold::time::DeltaTime);
 
+        if (mold::input::GetKey('W'))
+            mold::render::camera::Translate(mold::render::CameraDirection::Forward, Speed * mold::time::DeltaTime / 10);
+        if (mold::input::GetKey('S'))
+            mold::render::camera::Translate(mold::render::CameraDirection::Backwards, Speed * mold::time::DeltaTime / 10);
+        if (mold::input::GetKey('A'))
+            mold::render::camera::Translate(mold::render::CameraDirection::Left, Speed * mold::time::DeltaTime / 10);
+        if (mold::input::GetKey('D'))
+            mold::render::camera::Translate(mold::render::CameraDirection::Right, Speed * mold::time::DeltaTime / 10);
     }
-    
+
     void Start()
     {
         mold::input::GlobalCursorLockMode = mold::CursorLockingMode::Wrapped; // set proper cursor locking mode
@@ -22,7 +39,7 @@ public:
 
     void Handle(mold::EventType event)
     {
-        if(event == mold::EventType::Mouse) // update mouse
+        if (event == mold::EventType::Mouse) // update mouse
         {
             mold::render::camera::Yaw += mold::input::GlobalCursorAxis.x * mold::settings::MouseSensibility;
             mold::render::camera::Pitch += mold::input::GlobalCursorAxis.y * mold::settings::MouseSensibility;
@@ -39,25 +56,6 @@ void onMouse()
 // tick update
 void onTick()
 {
-    const float cameraSpeed = 20.0f * mold::time::DeltaTime; // adjust accordingly
-    if (mold::input::GetKey(GLFW_KEY_UP))
-        mold::render::camera::Rotate(mold::render::CameraDirection::Forward, cameraSpeed * 2);
-    if (mold::input::GetKey(GLFW_KEY_DOWN))
-        mold::render::camera::Rotate(mold::render::CameraDirection::Backwards, cameraSpeed * 2);
-    if (mold::input::GetKey(GLFW_KEY_LEFT))
-        mold::render::camera::Rotate(mold::render::CameraDirection::Left, cameraSpeed * 2);
-    if (mold::input::GetKey(GLFW_KEY_RIGHT))
-        mold::render::camera::Rotate(mold::render::CameraDirection::Right, cameraSpeed * 2);
-
-    if (mold::input::GetKey('W'))
-        mold::render::camera::Translate(mold::render::CameraDirection::Forward, cameraSpeed / 10);
-    if (mold::input::GetKey('S'))
-        mold::render::camera::Translate(mold::render::CameraDirection::Backwards, cameraSpeed / 10);
-    if (mold::input::GetKey('A'))
-        mold::render::camera::Translate(mold::render::CameraDirection::Left, cameraSpeed / 10);
-    if (mold::input::GetKey('D'))
-        mold::render::camera::Translate(mold::render::CameraDirection::Right, cameraSpeed / 10);
-
     if (mold::input::GetKey(GLFW_KEY_ESCAPE))
         mold::input::GlobalCursorLockMode = mold::CursorLockingMode::Normal;
 
@@ -108,7 +106,7 @@ int main()
 
     //Instantiate an empty gameobject as player
     mold::GlobalGameObjects.Instantiate(new mold::render::objects::GameObject(), "Player");
-    mold::GlobalGameObjects.Get("Player")->AttachComponent("PlayerController",new Player);
+    mold::GlobalGameObjects.Get("Player")->AttachComponent("PlayerController", new Player);
 
     //main loop
     mold::Run();

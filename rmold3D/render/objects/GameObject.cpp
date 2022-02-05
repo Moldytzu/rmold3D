@@ -1,5 +1,7 @@
 #include <rmold3D/mold.h>
 
+std::map<std::string, mold::render::objects::Component *> Components;
+
 mold::render::objects::GameObject::GameObject() {}
 
 void mold::render::objects::GameObject::Draw() {}
@@ -47,7 +49,7 @@ void mold::render::objects::GameObject::Bind()
 
 void mold::render::objects::GameObject::AttachComponent(std::string name, Component *component)
 {
-    Components.insert_or_assign(name, component);
+    Components.emplace(std::move(name), std::move(component));
     component->Start(); // reset component
 }
 
@@ -75,7 +77,6 @@ void mold::render::objects::GameObject::TickComponents()
 
 void mold::render::objects::GameObject::HandleComponents(mold::EventType event)
 {
-    mold::log::Info(std::to_string(this->Components.size()));
     for (auto const &[name, ptr] : Components)
     {
         if (ptr->Enabled) // don't pass events to disabled components
