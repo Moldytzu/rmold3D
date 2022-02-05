@@ -18,6 +18,16 @@
 
 namespace mold
 {
+    enum EventType
+    {
+        Redraw,
+        Tick,
+        Resize,
+        Exit,
+        Mouse,
+        LAST,
+    };
+
     namespace render
     {
         class Colour
@@ -150,6 +160,16 @@ namespace mold
 
         namespace objects
         {
+            class Component
+            {
+            public:
+                virtual void Tick();
+                virtual void Start();
+                virtual void Handle(mold::EventType event);
+
+                bool Enabled = true;
+            };
+
             class GameObject
             {
             public:
@@ -158,12 +178,19 @@ namespace mold
                 GameObject();
                 GameObject(mold::render::image::Texture texture);
 
-                void Translate(glm::vec3 offset);                             //translate position
-                void Move(glm::vec3 position);                                //set position
+                void Translate(glm::vec3 offset);                             // translate position
+                void Move(glm::vec3 position);                                // set position
                 void Scale(glm::vec3 scaleFactor);                            // set scale factor
-                void ReplaceTexture(mold::render::image::Texture newTexture); //replace the texture with a new one
-                void Bind();                                                  //bind everything
-                glm::vec3 GetPosition();                                      //get position
+                void ReplaceTexture(mold::render::image::Texture newTexture); // replace the texture with a new one
+                void Bind();                                                  // bind everything
+                glm::vec3 GetPosition();                                      // get position
+
+                void AttachComponent(std::string name, Component *component); // attach component
+                void DettachComponent(std::string name);                      // dettach component
+                bool ExistsComponent(std::string name);                       // check if component exists
+
+                void TickComponents();                        // tick every component
+                void HandleComponents(mold::EventType event); // forward events to every component
 
                 virtual void Draw();
                 virtual std::string Type();
@@ -177,6 +204,7 @@ namespace mold
             protected:
                 mold::render::image::Texture Texture;
                 mold::render::VABO Vabo;
+                std::map<std::string, Component *> Components;
                 float *Vertices;
             };
 
@@ -246,16 +274,6 @@ namespace mold
         void Info(std::string str);
         void Warn(std::string str);
         void Error(std::string str);
-    };
-
-    enum EventType
-    {
-        Redraw,
-        Tick,
-        Resize,
-        Exit,
-        Mouse,
-        LAST,
     };
 
     class EventSystem

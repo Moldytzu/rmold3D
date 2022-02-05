@@ -6,7 +6,7 @@ void handleScroll(GLFWwindow *, double, double);
 void onResize(GLFWwindow *window, int width, int height)
 {
     mold::GlobalEventSystem.CallEvent(mold::EventType::Resize); // call resize event
-    mold::settings::WindowHeight = height;                       // set new window height and width
+    mold::settings::WindowHeight = height;                      // set new window height and width
     mold::settings::WindowWidth = height;
     glViewport(0, 0, width, height); // set new viewport
 }
@@ -258,8 +258,9 @@ void mold::Run()
         {
             if (ptr->Enabled) // don't render disabled gameobjects
             {
-                ptr->Bind(); // bind vabo, texture and matrices
-                ptr->Draw(); // do drawing
+                ptr->Bind();           // bind vabo, texture and matrices
+                ptr->Draw();           // do drawing
+                ptr->TickComponents(); // tick it's components
             }
         }
 

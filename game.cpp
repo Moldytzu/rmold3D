@@ -6,12 +6,34 @@
 - internal profiler
 */
 
+// Player component
+class Player : public mold::render::objects::Component
+{
+public:
+    void Tick()
+    {
+
+    }
+    
+    void Start()
+    {
+        mold::input::GlobalCursorLockMode = mold::CursorLockingMode::Wrapped; // set proper cursor locking mode
+    }
+
+    void Handle(mold::EventType event)
+    {
+        if(event == mold::EventType::Mouse) // update mouse
+        {
+            mold::render::camera::Yaw += mold::input::GlobalCursorAxis.x * mold::settings::MouseSensibility;
+            mold::render::camera::Pitch += mold::input::GlobalCursorAxis.y * mold::settings::MouseSensibility;
+        }
+    }
+};
+
 // mouse update event
 void onMouse()
 {
     mold::settings::FOV -= mold::input::GlobalScrollAxis;
-    mold::render::camera::Yaw += mold::input::GlobalCursorAxis.x * mold::settings::MouseSensibility;
-    mold::render::camera::Pitch += mold::input::GlobalCursorAxis.y * mold::settings::MouseSensibility;
 }
 
 // tick update
@@ -61,8 +83,6 @@ int main()
     if (!mold::Init(1024, 768))
         mold::Destroy();
 
-    mold::input::GlobalCursorLockMode = mold::CursorLockingMode::Wrapped;
-
     mold::GlobalGameObjects.Instantiate(new mold::render::objects::Cube(mold::render::image::Texture("texture.bmp")), "Simple Cube");
 
     mold::GlobalGameObjects.Get("Simple Cube")->Move(glm::vec3(0, 1.0f, -1.0f));
@@ -76,16 +96,19 @@ int main()
     mold::GlobalEventSystem.AttachCallback(mold::EventType::Exit, onExit);
     mold::GlobalEventSystem.AttachCallback(mold::EventType::Mouse, onMouse);
 
-    //Instantiate a cube
+    //Instantiate some cubes
     mold::GlobalGameObjects.Instantiate(new mold::render::objects::Cube(mold::render::image::Texture(mold::render::Colour(255, 0, 0))));
     mold::GlobalGameObjects.Instantiate(new mold::render::objects::Cube(mold::render::image::Texture(mold::render::Colour(0, 255, 0))));
     mold::GlobalGameObjects.Instantiate(new mold::render::objects::Cube(mold::render::image::Texture(mold::render::Colour(0, 0, 255))));
     mold::GlobalGameObjects.Instantiate(new mold::render::objects::Cube(mold::render::image::Texture(mold::render::Colour(255))));
-    mold::GlobalGameObjects.Instantiate(new mold::render::objects::GameObject());
 
     mold::GlobalGameObjects.Get("Textured Cube")->Move(glm::vec3(1.0f, 1.0f, 2.0f));
     mold::GlobalGameObjects.Get("Textured Cube 1")->Move(glm::vec3(-1.0f, 0.5f, -2.0f));
     mold::GlobalGameObjects.Get("Textured Cube 2")->Move(glm::vec3(1.0f, 0.0f, 2.0f));
+
+    //Instantiate an empty gameobject as player
+    mold::GlobalGameObjects.Instantiate(new mold::render::objects::GameObject(), "Player");
+    mold::GlobalGameObjects.Get("Player")->AttachComponent("PlayerController",new Player);
 
     //main loop
     mold::Run();

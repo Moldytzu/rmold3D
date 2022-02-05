@@ -45,6 +45,51 @@ void mold::render::objects::GameObject::Bind()
     mold::render::shader::SetUniform4v("fcolour", glm::vec4(1.0f, 1.0f, 1.0f, Opacity)); // pass colour information needed for transparency
 }
 
+void mold::render::objects::GameObject::AttachComponent(std::string name, Component *component)
+{
+    Components.insert_or_assign(name, component);
+    component->Start(); // reset component
+}
+
+void mold::render::objects::GameObject::DettachComponent(std::string name)
+{
+    if (!ExistsComponent(name))
+    {
+        mold::log::Error("Failed to dettach non-existent component");
+        return;
+    }
+
+    Components.erase(name); // erase component from the map
+}
+
+void mold::render::objects::GameObject::TickComponents()
+{
+    for (auto const &[name, ptr] : Components)
+    {
+        if (ptr->Enabled) // don't tick disabled components
+        {
+            ptr->Tick(); // tick it
+        }
+    }
+}
+
+void mold::render::objects::GameObject::HandleComponents(mold::EventType event)
+{
+    mold::log::Info(std::to_string(this->Components.size()));
+    for (auto const &[name, ptr] : Components)
+    {
+        if (ptr->Enabled) // don't pass events to disabled components
+        {
+            ptr->Handle(event); // pass event
+        }
+    }
+}
+
+bool mold::render::objects::GameObject::ExistsComponent(std::string name)
+{
+    return Components.contains(name);
+}
+
 std::string mold::render::objects::GameObject::Type()
 {
     return "Empty"; // empty game object

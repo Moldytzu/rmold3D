@@ -24,7 +24,16 @@ std::map<EventType, void (*)()> EventSystem::GetMap()
 
 void EventSystem::CallEvent(EventType type)
 {
-    if(!ExistsCallback(type)) return; // return if the callback doesn't exist
+    if (!ExistsCallback(type))
+        return; // return if the callback doesn't exist
+
+    for (auto const &[name, ptr] : GlobalGameObjects.Get())
+    {
+        if (ptr->Enabled) // don't handle events on disabled gameobjects
+        {
+            ptr->HandleComponents(type); // handle events
+        }
+    }
 
     events[type](); // call event
 }
