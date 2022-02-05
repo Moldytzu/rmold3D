@@ -87,6 +87,7 @@ int main()
     mold::GlobalGameObjects.Get("Simple Cube")->Move(glm::vec3(0, 1.0f, -1.0f));
     mold::GlobalGameObjects.Get("Simple Cube")->Translate(glm::vec3(0, 1.0f, -1.0f));
     mold::GlobalGameObjects.Get("Simple Cube")->Scale(glm::vec3(2.0f, 1.0f, 1.0f));
+    mold::GlobalGameObjects.Get("Simple Cube")->Rotate(glm::vec3(1), 75);
     mold::GlobalGameObjects.Get("Simple Cube")->Opacity = 0.5f;
 
     //Callbacks

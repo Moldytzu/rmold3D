@@ -33,6 +33,11 @@ void mold::render::objects::GameObject::Scale(glm::vec3 scaleFactor)
     PositionMatrix = glm::scale(PositionMatrix, scaleFactor); // scale matrix
 }
 
+void mold::render::objects::GameObject::Rotate(glm::vec3 axis, float angle)
+{
+    PositionMatrix = glm::rotate(PositionMatrix, glm::radians(angle), glm::normalize(axis)); // rotate matrix
+}
+
 void mold::render::objects::GameObject::ReplaceTexture(mold::render::image::Texture newTexture)
 {
     Texture.Deallocate(); // deallocate so we don't create memory leaks or smth

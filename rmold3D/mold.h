@@ -170,6 +170,7 @@ namespace mold
                 virtual void Handle(mold::EventType event);
 
                 bool Enabled = true;
+
             protected:
                 GameObject *Parent = NULL;
             };
@@ -185,6 +186,7 @@ namespace mold
                 void Translate(glm::vec3 offset);                             // translate position
                 void Move(glm::vec3 position);                                // set position
                 void Scale(glm::vec3 scaleFactor);                            // set scale factor
+                void Rotate(glm::vec3 axis, float angle);                              // set rotation
                 void ReplaceTexture(mold::render::image::Texture newTexture); // replace the texture with a new one
                 void Bind();                                                  // bind everything
                 glm::vec3 GetPosition();                                      // get position
@@ -192,9 +194,8 @@ namespace mold
                 void AttachComponent(std::string name, Component *component); // attach component
                 void DettachComponent(std::string name);                      // dettach component
                 bool ExistsComponent(std::string name);                       // check if component exists
-
-                void TickComponents();                        // tick every component
-                void HandleComponents(mold::EventType event); // forward events to every component
+                void TickComponents();                                        // tick every component
+                void HandleComponents(mold::EventType event);                 // forward events to every component
 
                 virtual void Draw();
                 virtual std::string Type();
