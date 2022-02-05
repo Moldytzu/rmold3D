@@ -1,8 +1,8 @@
 #include <rmold3D/mold.h>
 
-std::map<std::string, mold::render::objects::Component *> Components;
+std::unordered_map<std::string, mold::render::objects::Component *> Components;
 
-std::map<std::string, mold::render::objects::Component *> mold::render::objects::GameObject::GetComponents()
+std::unordered_map<std::string, mold::render::objects::Component *> mold::render::objects::GameObject::GetComponents()
 {
     return Components;
 }

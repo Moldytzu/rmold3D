@@ -17,7 +17,7 @@ bool EventSystem::ExistsCallback(EventType type)
     return events.contains(type);
 }
 
-std::map<EventType, void (*)()> EventSystem::GetMap()
+std::unordered_map<EventType, void (*)()> EventSystem::GetMap()
 {
     return events; // return map
 }

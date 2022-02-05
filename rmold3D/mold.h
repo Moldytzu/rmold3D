@@ -5,7 +5,7 @@
 #include <GLFW/glfw3.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include <map>
+#include <unordered_map>
 #include <stdarg.h>
 #include <chrono>
 #include <vector>
@@ -196,7 +196,7 @@ namespace mold
                 bool ExistsComponent(std::string name);                                    // check if component exists
                 void TickComponents();                                                     // tick every component
                 void HandleComponents(mold::EventType event);                              // forward events to every component
-                std::map<std::string, mold::render::objects::Component *> GetComponents(); // get components attached
+                std::unordered_map<std::string, mold::render::objects::Component *> GetComponents(); // get components attached
 
                 virtual void Draw();
                 virtual std::string Type();
@@ -231,11 +231,11 @@ namespace mold
                 void Remove(std::string name);
                 bool Exists(std::string name);
                 GameObject *Get(std::string name);
-                std::map<std::string, GameObject *> Get();
+                std::unordered_map<std::string, GameObject *> Get();
 
             private:
                 void Add(std::string name, GameObject *object);
-                std::map<std::string, GameObject *> GameObjects;
+                std::unordered_map<std::string, GameObject *> GameObjects;
             };
         };
         void DrawTriangles(uint count);
@@ -291,9 +291,9 @@ namespace mold
 
         void CallEvent(EventType type);
 
-        std::map<EventType, void (*)()> GetMap();
+        std::unordered_map<EventType, void (*)()> GetMap();
     private:
-        std::map<EventType, void (*)()> events; // type, callback
+        std::unordered_map<EventType, void (*)()> events; // type, callback
     };
 
     inline GLFWwindow *GlobalWindow;

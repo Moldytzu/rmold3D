@@ -1,6 +1,6 @@
 #include <rmold3D/mold.h>
 
-std::map<std::string, uint32_t> newObjects;
+std::unordered_map<std::string, uint32_t> newObjects;
 
 void mold::render::objects::GameObjectsManager::Add(std::string name, GameObject *object)
 {
@@ -50,7 +50,7 @@ mold::render::objects::GameObject *mold::render::objects::GameObjectsManager::Ge
     return GameObjects[name]; // get if exists
 }
 
-std::map<std::string, mold::render::objects::GameObject *> mold::render::objects::GameObjectsManager::Get()
+std::unordered_map<std::string, mold::render::objects::GameObject *> mold::render::objects::GameObjectsManager::Get()
 {
     return GameObjects; // return map
 }
