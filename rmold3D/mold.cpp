@@ -168,8 +168,9 @@ void handleMouse()
     mold::input::GlobalCursorPos.x = xpos;
     mold::input::GlobalCursorPos.y = ypos;
 
-    // call event
-    mold::GlobalEventSystem.CallEvent(mold::EventType::Mouse);
+    // call event if we've got changes
+    if(mold::input::GlobalCursorAxis.x != 0 && mold::input::GlobalCursorAxis.y != 0)
+        mold::GlobalEventSystem.CallEvent(mold::EventType::Mouse);
 
     // update last values
     lastX = xpos;
