@@ -164,8 +164,11 @@ void handleMouse()
         }
     }
 
-    mold::input::GlobalCursorAxisX = xpos - lastX;
-    mold::input::GlobalCursorAxisY = lastY - ypos;
+    mold::input::GlobalCursorAxis.x = xpos - lastX;
+    mold::input::GlobalCursorAxis.y = lastY - ypos;
+
+    mold::input::GlobalCursorPos.x = xpos;
+    mold::input::GlobalCursorPos.y = ypos;
 
     mold::GlobalEventSystem.GetMap()[mold::EventType::Mouse]();
 

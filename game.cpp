@@ -10,8 +10,8 @@
 void onMouse()
 {
     mold::settings::FOV -= mold::input::GlobalScrollAxis;
-    mold::render::camera::Yaw += mold::input::GlobalCursorAxisX * mold::settings::MouseSensibility;
-    mold::render::camera::Pitch += mold::input::GlobalCursorAxisY * mold::settings::MouseSensibility;
+    mold::render::camera::Yaw += mold::input::GlobalCursorAxis.x * mold::settings::MouseSensibility;
+    mold::render::camera::Pitch += mold::input::GlobalCursorAxis.y * mold::settings::MouseSensibility;
 }
 
 // tick update

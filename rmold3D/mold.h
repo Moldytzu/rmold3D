@@ -236,8 +236,8 @@ namespace mold
         bool GetKey(int key);
 
         inline CursorLockingMode GlobalCursorLockMode;
-        inline float GlobalCursorAxisX;
-        inline float GlobalCursorAxisY;
+        inline glm::vec2 GlobalCursorAxis;
+        inline glm::vec2 GlobalCursorPos;
         inline float GlobalScrollAxis;
     };
 
