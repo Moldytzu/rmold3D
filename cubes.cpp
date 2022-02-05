@@ -1,9 +1,16 @@
 #include <rmold3D/mold.h>
 
-/*remaining features to add:
-- lighting
-- internal console
-- internal profiler
+/*
+Cubes stress test for rmold3D
+
+Started with: 
+- 2000 cubes: 20 FPS with stutters; 20 seconds to start up
+- 200 cubes: 55-60 FPS; 1.5 seconds to start up
+- 20 cubes: 55-60 FPS; 0.4 seconds to start up
+- 2 cubes: 55-60 FPS; 0.25 seconds to start up
+
+Right now we have:
+
 */
 
 // Player component
@@ -76,20 +83,13 @@ void onExit()
     mold::log::Info("Goodbye!");
 }
 
+#define CUBES 2
+
 //entry point
 int main()
 {
     if (!mold::Init(1024, 768))
         mold::Destroy();
-
-    mold::GlobalGameObjects.Instantiate(new mold::render::objects::Cube(mold::render::image::Texture("texture.bmp")), "Simple Cube");
-
-    mold::GlobalGameObjects.Get("Simple Cube")->Move(glm::vec3(0, 1.0f, -1.0f));
-    mold::GlobalGameObjects.Get("Simple Cube")->Translate(glm::vec3(0, 1.0f, -1.0f));
-    mold::GlobalGameObjects.Get("Simple Cube")->Scale(glm::vec3(2.0f, 1.0f, 1.0f));
-    
-    //mold::GlobalGameObjects.Get("Simple Cube")->Rotate(glm::vec3(1), 75);
-    //mold::GlobalGameObjects.Get("Simple Cube")->Opacity = 0.5f;
 
     //Callbacks
     mold::GlobalEventSystem.AttachCallback(mold::EventType::Tick, onTick);
@@ -97,15 +97,15 @@ int main()
     mold::GlobalEventSystem.AttachCallback(mold::EventType::Exit, onExit);
     mold::GlobalEventSystem.AttachCallback(mold::EventType::Mouse, onMouse);
 
-    //Instantiate some cubes
-    mold::GlobalGameObjects.Instantiate(new mold::render::objects::Cube(mold::render::image::Texture(mold::render::Colour(255, 0, 0))));
-    mold::GlobalGameObjects.Instantiate(new mold::render::objects::Cube(mold::render::image::Texture(mold::render::Colour(0, 255, 0))));
-    mold::GlobalGameObjects.Instantiate(new mold::render::objects::Cube(mold::render::image::Texture(mold::render::Colour(0, 0, 255))));
-    mold::GlobalGameObjects.Instantiate(new mold::render::objects::Cube(mold::render::image::Texture(mold::render::Colour(255))));
+    mold::GlobalGameObjects.Instantiate(new mold::render::objects::Cube(mold::render::image::Texture("texture.bmp")));
 
-    mold::GlobalGameObjects.Get("Textured Cube")->Move(glm::vec3(1.0f, 1.0f, 2.0f));
-    mold::GlobalGameObjects.Get("Textured Cube 1")->Move(glm::vec3(-1.0f, 0.5f, -2.0f));
-    mold::GlobalGameObjects.Get("Textured Cube 2")->Move(glm::vec3(1.0f, 0.0f, 2.0f));
+    //Instantiate many cubes
+    int offset = 0;
+    for(int i = 1;i<CUBES;i++)
+    {
+        mold::GlobalGameObjects.Instantiate(new mold::render::objects::Cube(mold::render::image::Texture("texture.bmp")));
+        mold::GlobalGameObjects.Get("Textured Cube " + std::to_string(i))->Translate(glm::vec3(offset++));
+    }
 
     //Instantiate an empty gameobject as player
     mold::GlobalGameObjects.Instantiate(new mold::render::objects::GameObject(), "Player");

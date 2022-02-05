@@ -33,3 +33,6 @@ lib: $(OBJS)
 
 game: lib 
 	$(CPP) game.cpp $(LIB) -lglfw -lGL -lX11 -lpthread -lXrandr -lXi -ldl -o game $(CFLAGS)
+
+cubes: lib 
+	$(CPP) cubes.cpp $(LIB) -lglfw -lGL -lX11 -lpthread -lXrandr -lXi -ldl -o game $(CFLAGS)
