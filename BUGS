@@ -1,1 +1,1 @@
-- for some reason if the cube count if larger the camera goes too fast in cubes.cpp
+- for some reason if the gameobjects count is big, the camera rotates and moves too fast as seen in cubes.cpp
