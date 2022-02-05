@@ -83,7 +83,7 @@ void onExit()
     mold::log::Info("Goodbye!");
 }
 
-#define CUBES 500
+#define CUBES 5000
 
 //entry point
 int main()

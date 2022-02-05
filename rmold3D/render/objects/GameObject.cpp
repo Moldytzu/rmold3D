@@ -2,6 +2,11 @@
 
 std::map<std::string, mold::render::objects::Component *> Components;
 
+std::map<std::string, mold::render::objects::Component *> mold::render::objects::GameObject::GetComponents()
+{
+    return Components;
+}
+
 mold::render::objects::GameObject::GameObject() {}
 
 void mold::render::objects::GameObject::Draw() {}
@@ -71,6 +76,7 @@ void mold::render::objects::GameObject::DettachComponent(std::string name)
 
 void mold::render::objects::GameObject::TickComponents()
 {
+    if(Components.size() == 0) return; // no components to tick
     for (auto const &[name, ptr] : Components)
     {
         if (ptr->Enabled) // don't tick disabled components
@@ -82,6 +88,7 @@ void mold::render::objects::GameObject::TickComponents()
 
 void mold::render::objects::GameObject::HandleComponents(mold::EventType event)
 {
+    if(Components.size() == 0) return; // no components to handle
     for (auto const &[name, ptr] : Components)
     {
         if (ptr->Enabled) // don't pass events to disabled components

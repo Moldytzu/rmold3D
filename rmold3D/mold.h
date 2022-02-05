@@ -59,30 +59,30 @@ namespace mold
                 uint TextureIndex;
             };
 
-            struct BitmapImageHeader //https://en.wikipedia.org/wiki/BMP_file_format
+            struct BitmapImageHeader // https://en.wikipedia.org/wiki/BMP_file_format
             {
-                //bmp header
-                uint8_t Signature1; //Should be B
-                uint8_t Signature2; //Should be M
+                // bmp header
+                uint8_t Signature1; // Should be B
+                uint8_t Signature2; // Should be M
 
-                uint32_t Size; //bmp file size
+                uint32_t Size; // bmp file size
 
                 uint32_t Reserved;
 
-                uint32_t DataOffset; //offset to the image data
+                uint32_t DataOffset; // offset to the image data
 
-                //BITMAPINFOHEADER
-                uint32_t HeaderSize;          //size of BITMAPINFOHEADER, always 0x28 (decimal 40)
-                int32_t BitmapWidth;          //width of the image
-                int32_t BitmapHeight;         //height of the image
-                uint16_t Planes;              //bit planes
-                uint16_t BPP;                 //bits per pixel
-                uint32_t CompressionMethod;   //the method of compression used
-                uint32_t ImageSize;           //size in bytes of the whole image, without headers
-                int32_t HorizontalResolution; //resolution in pixel per metre
-                int32_t VerticalResolution;   //resolution in pixel per metre
-                uint32_t Colors;              //colors in the color palette
-                uint32_t ImportantColors;     //important colors used, generally ignored
+                // BITMAPINFOHEADER
+                uint32_t HeaderSize;          // size of BITMAPINFOHEADER, always 0x28 (decimal 40)
+                int32_t BitmapWidth;          // width of the image
+                int32_t BitmapHeight;         // height of the image
+                uint16_t Planes;              // bit planes
+                uint16_t BPP;                 // bits per pixel
+                uint32_t CompressionMethod;   // the method of compression used
+                uint32_t ImageSize;           // size in bytes of the whole image, without headers
+                int32_t HorizontalResolution; // resolution in pixel per metre
+                int32_t VerticalResolution;   // resolution in pixel per metre
+                uint32_t Colors;              // colors in the color palette
+                uint32_t ImportantColors;     // important colors used, generally ignored
             } __attribute__((packed));
         };
 
@@ -152,7 +152,7 @@ namespace mold
             inline glm::vec3 Front = glm::vec3(0.0f, 0.0f, -1.0f);
             inline glm::vec3 Up = glm::vec3(0.0f, 1.0f, 0.0f);
             inline float Yaw = -90.0f; //-90.0f left, 0 front, 90.0f right
-            inline float Pitch = 0.0f; //90.0f up, 0 front, -90.0f down
+            inline float Pitch = 0.0f; // 90.0f up, 0 front, -90.0f down
 
             void Translate(CameraDirection direction, float value);
             void Rotate(CameraDirection direction, float value);
@@ -186,16 +186,17 @@ namespace mold
                 void Translate(glm::vec3 offset);                             // translate position
                 void Move(glm::vec3 position);                                // set position
                 void Scale(glm::vec3 scaleFactor);                            // set scale factor
-                void Rotate(glm::vec3 axis, float angle);                              // set rotation
+                void Rotate(glm::vec3 axis, float angle);                     // set rotation
                 void ReplaceTexture(mold::render::image::Texture newTexture); // replace the texture with a new one
                 void Bind();                                                  // bind everything
                 glm::vec3 GetPosition();                                      // get position
 
-                void AttachComponent(std::string name, Component *component); // attach component
-                void DettachComponent(std::string name);                      // dettach component
-                bool ExistsComponent(std::string name);                       // check if component exists
-                void TickComponents();                                        // tick every component
-                void HandleComponents(mold::EventType event);                 // forward events to every component
+                void AttachComponent(std::string name, Component *component);              // attach component
+                void DettachComponent(std::string name);                                   // dettach component
+                bool ExistsComponent(std::string name);                                    // check if component exists
+                void TickComponents();                                                     // tick every component
+                void HandleComponents(mold::EventType event);                              // forward events to every component
+                std::map<std::string, mold::render::objects::Component *> GetComponents(); // get components attached
 
                 virtual void Draw();
                 virtual std::string Type();
@@ -293,7 +294,7 @@ namespace mold
         std::map<EventType, void (*)()> GetMap();
 
     private:
-        std::map<EventType, void (*)()> events; //type, callback
+        std::map<EventType, void (*)()> events; // type, callback
     };
 
     inline GLFWwindow *GlobalWindow;
