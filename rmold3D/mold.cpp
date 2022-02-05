@@ -8,7 +8,8 @@ void onResize(GLFWwindow *window, int width, int height)
     mold::GlobalEventSystem.CallEvent(mold::EventType::Resize); // call resize event
     mold::settings::WindowHeight = height;                      // set new window height and width
     mold::settings::WindowWidth = height;
-    glViewport(0, 0, width, height); // set new viewport
+    glViewport(0, 0, width, height);                                   // set new viewport
+    glm::ortho(0.0f, (float)width, 0.0f, (float)height, 0.1f, 100.0f); // reset orthography
 }
 
 //clean up
