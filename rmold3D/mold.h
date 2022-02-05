@@ -238,6 +238,7 @@ namespace mold
         inline CursorLockingMode GlobalCursorLockMode;
         inline float GlobalCursorAxisX;
         inline float GlobalCursorAxisY;
+        inline float GlobalScrollAxis;
     };
 
     namespace log

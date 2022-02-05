@@ -9,6 +9,7 @@
 // mouse update event
 void onMouse()
 {
+    mold::settings::FOV -= mold::input::GlobalScrollAxis;
     mold::render::camera::Yaw += mold::input::GlobalCursorAxisX * mold::settings::MouseSensibility;
     mold::render::camera::Pitch += mold::input::GlobalCursorAxisY * mold::settings::MouseSensibility;
 }

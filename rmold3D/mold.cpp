@@ -1,6 +1,7 @@
 #include <rmold3D/mold.h>
 
 void stub() {}
+void handleScroll(GLFWwindow*,double,double);
 
 //glfw callbacks
 void onResize(GLFWwindow *window, int width, int height)
@@ -58,6 +59,7 @@ bool mold::Init(uint width, uint height)
 
     // set up callbacks
     glfwSetFramebufferSizeCallback(mold::GlobalWindow, onResize);
+    glfwSetScrollCallback(mold::GlobalWindow, handleScroll);
 
     for (int enumInt = EventType::Redraw; enumInt != EventType::LAST; enumInt++) //iterate over each enum item
         GlobalEventSystem.AttachCallback(static_cast<EventType>(enumInt), stub);
@@ -119,6 +121,11 @@ bool mold::Init(uint width, uint height)
 double lastX;
 double lastY;
 
+void handleScroll(GLFWwindow* window, double xoffset, double yoffset)
+{
+    mold::input::GlobalScrollAxis = yoffset;
+}
+
 void handleMouse()
 {
     // handle mouse input for camera
@@ -165,6 +172,7 @@ void handleMouse()
     // update last values
     lastX = xpos;
     lastY = ypos;
+    mold::input::GlobalScrollAxis = 0; // reset scroll
 }
 
 float oldYaw, oldPitch;
