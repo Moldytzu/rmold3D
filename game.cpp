@@ -43,11 +43,6 @@ void onTick()
         mold::input::GlobalCursorLockMode = mold::CursorLockingMode::Wrapped;
 }
 
-//draw on the screen
-void onDraw()
-{
-}
-
 //resize
 void onResize()
 {
@@ -76,7 +71,6 @@ int main()
     mold::GlobalGameObjects.Get("Simple Cube")->Opacity = 0.5f;
 
     //Callbacks
-    mold::GlobalEventSystem.AttachCallback(mold::EventType::Redraw, onDraw);
     mold::GlobalEventSystem.AttachCallback(mold::EventType::Tick, onTick);
     mold::GlobalEventSystem.AttachCallback(mold::EventType::Resize, onResize);
     mold::GlobalEventSystem.AttachCallback(mold::EventType::Exit, onExit);

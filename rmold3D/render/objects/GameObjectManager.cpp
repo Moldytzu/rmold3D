@@ -4,7 +4,7 @@ std::map<std::string, uint32_t> newObjects;
 
 void mold::render::objects::GameObjectsManager::Add(std::string name, GameObject *object)
 {
-    GameObjects.emplace(std::move(name), std::move(object)); //build std::pair and insert it in the map
+    GameObjects.emplace(std::move(name), std::move(object)); // build std::pair and insert it in the map
 }
 
 void mold::render::objects::GameObjectsManager::Instantiate(GameObject *object)

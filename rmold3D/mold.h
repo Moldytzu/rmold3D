@@ -263,6 +263,11 @@ namespace mold
     public:
         void AttachCallback(EventType type, void (*callback)());
         void DetachCallback(EventType type);
+
+        bool ExistsCallback(EventType type);
+
+        void CallEvent(EventType type);
+
         std::map<EventType, void (*)()> GetMap();
 
     private:

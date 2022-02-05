@@ -1,12 +1,11 @@
 #include <rmold3D/mold.h>
 
-void stub() {}
 void handleScroll(GLFWwindow *, double, double);
 
 //glfw callbacks
 void onResize(GLFWwindow *window, int width, int height)
 {
-    mold::GlobalEventSystem.GetMap()[mold::EventType::Resize](); // call resize event
+    mold::GlobalEventSystem.CallEvent(mold::EventType::Resize); // call resize event
     mold::settings::WindowHeight = height;                       // set new window height and width
     mold::settings::WindowWidth = height;
     glViewport(0, 0, width, height); // set new viewport
@@ -15,7 +14,7 @@ void onResize(GLFWwindow *window, int width, int height)
 //clean up
 void mold::Destroy()
 {
-    GlobalEventSystem.GetMap()[EventType::Exit](); // call exit event
+    mold::GlobalEventSystem.CallEvent(mold::EventType::Exit); // call exit event
 
     glfwTerminate(); // terminate glfw
 
@@ -60,9 +59,6 @@ bool mold::Init(uint width, uint height)
     // set up glfw callbacks
     glfwSetFramebufferSizeCallback(mold::GlobalWindow, onResize);
     glfwSetScrollCallback(mold::GlobalWindow, handleScroll);
-
-    for (int enumInt = EventType::Redraw; enumInt != EventType::LAST; enumInt++) // set the stub as the callback for each event
-        GlobalEventSystem.AttachCallback(static_cast<EventType>(enumInt), stub);
 
     // set up gl
     glViewport(0, 0, width, height); // set viewport
@@ -172,7 +168,7 @@ void handleMouse()
     mold::input::GlobalCursorPos.y = ypos;
 
     // call event
-    mold::GlobalEventSystem.GetMap()[mold::EventType::Mouse]();
+    mold::GlobalEventSystem.CallEvent(mold::EventType::Mouse);
 
     // update last values
     lastX = xpos;
@@ -196,7 +192,7 @@ void mold::Run()
         mold::time::LastFrame = currentFrame;
 
         // call tick
-        GlobalEventSystem.GetMap()[EventType::Tick]();
+        mold::GlobalEventSystem.CallEvent(EventType::Tick);
 
         glClearColor(0, 0, 0, 0);                           // black
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear screen and the depth buffer
@@ -255,7 +251,7 @@ void mold::Run()
         glUseProgram(mold::render::shader::GlobalShaderProgram);
 
         // draw stuff
-        GlobalEventSystem.GetMap()[EventType::Redraw]();
+        mold::GlobalEventSystem.CallEvent(EventType::Redraw);
 
         // draw game objects
         for (auto const &[name, ptr] : GlobalGameObjects.Get())
