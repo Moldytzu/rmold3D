@@ -31,8 +31,12 @@ clean:
 lib: $(OBJS)
 	ar -crs $(LIB) $(OBJS)
 
+define buildGame
+	$(CPP) $(1) $(LIB) -lglfw -lGL -lX11 -lpthread -lXrandr -lXi -ldl -o game $(CFLAGS)
+endef
+
 game: lib 
-	$(CPP) game.cpp $(LIB) -lglfw -lGL -lX11 -lpthread -lXrandr -lXi -ldl -o game $(CFLAGS)
+	$(call buildGame,game.cpp)
 
 cubes: lib 
-	$(CPP) cubes.cpp $(LIB) -lglfw -lGL -lX11 -lpthread -lXrandr -lXi -ldl -o game $(CFLAGS)
+	$(call buildGame,cubes.cpp)

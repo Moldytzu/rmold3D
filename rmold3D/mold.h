@@ -292,7 +292,6 @@ namespace mold
         void CallEvent(EventType type);
 
         std::map<EventType, void (*)()> GetMap();
-
     private:
         std::map<EventType, void (*)()> events; // type, callback
     };
