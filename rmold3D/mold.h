@@ -161,7 +161,7 @@ namespace mold
         namespace objects
         {
             class GameObject;
-            
+
             class Component
             {
             public:
@@ -170,7 +170,7 @@ namespace mold
                 virtual void Handle(mold::EventType event);
 
                 bool Enabled = true;
-            private:
+            protected:
                 GameObject *Parent = NULL;
             };
 
