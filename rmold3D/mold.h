@@ -160,14 +160,18 @@ namespace mold
 
         namespace objects
         {
+            class GameObject;
+            
             class Component
             {
             public:
                 virtual void Tick();
-                virtual void Start();
+                virtual void Start(GameObject *parent);
                 virtual void Handle(mold::EventType event);
 
                 bool Enabled = true;
+            private:
+                GameObject *Parent = NULL;
             };
 
             class GameObject

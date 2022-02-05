@@ -32,8 +32,9 @@ public:
             mold::render::camera::Translate(mold::render::CameraDirection::Right, Speed * mold::time::DeltaTime / 10);
     }
 
-    void Start()
+    void Start(mold::render::objects::GameObject *parent)
     {
+        mold::render::objects::Component::Start(parent); // call super
         mold::input::GlobalCursorLockMode = mold::CursorLockingMode::Wrapped; // set proper cursor locking mode
     }
 

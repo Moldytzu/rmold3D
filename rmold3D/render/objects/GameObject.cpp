@@ -50,7 +50,7 @@ void mold::render::objects::GameObject::Bind()
 void mold::render::objects::GameObject::AttachComponent(std::string name, Component *component)
 {
     Components.emplace(std::move(name), std::move(component));
-    component->Start(); // reset component
+    component->Start(this); // reset component
 }
 
 void mold::render::objects::GameObject::DettachComponent(std::string name)
