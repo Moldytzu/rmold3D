@@ -6,29 +6,29 @@ void mold::render::objects::GameObject::Draw() {}
 
 mold::render::objects::GameObject::~GameObject()
 {
-    Texture.Deallocate();
+    Texture.Deallocate(); // deallocate texture and vabo
     Vabo.Deallocate();
 }
 
 mold::render::objects::GameObject::GameObject(mold::render::image::Texture texture)
 {
-    Texture = texture;
+    Texture = texture; // set texture and enable the object
     Enabled = true;
 }
 
 void mold::render::objects::GameObject::Translate(glm::vec3 offset)
 {
-    PositionMatrix = glm::translate(PositionMatrix, offset);
+    PositionMatrix = glm::translate(PositionMatrix, offset); // translate matrix
 }
 
 void mold::render::objects::GameObject::Move(glm::vec3 position)
 {
-    PositionMatrix = glm::translate(glm::mat4(1.0f), position);
+    PositionMatrix = glm::translate(glm::mat4(1.0f), position); // move matrix by translating a new one to the desired position
 }
 
 void mold::render::objects::GameObject::Scale(glm::vec3 scaleFactor)
 {
-    PositionMatrix = glm::scale(PositionMatrix,scaleFactor);
+    PositionMatrix = glm::scale(PositionMatrix, scaleFactor); // scale matrix
 }
 
 void mold::render::objects::GameObject::ReplaceTexture(mold::render::image::Texture newTexture)
@@ -47,10 +47,10 @@ void mold::render::objects::GameObject::Bind()
 
 std::string mold::render::objects::GameObject::Type()
 {
-    return "Empty";
+    return "Empty"; // empty game object
 }
 
 glm::vec3 mold::render::objects::GameObject::GetPosition()
 {
-    return PositionMatrix[3];
+    return PositionMatrix[3]; // position is stored on the 3rd axis (is this the correct term?)
 }

@@ -1,25 +1,25 @@
 #include <rmold3D/mold.h>
 
 void stub() {}
-void handleScroll(GLFWwindow*,double,double);
+void handleScroll(GLFWwindow *, double, double);
 
 //glfw callbacks
 void onResize(GLFWwindow *window, int width, int height)
 {
-    mold::GlobalEventSystem.GetMap()[mold::EventType::Resize]();
-    mold::settings::WindowHeight = height;
+    mold::GlobalEventSystem.GetMap()[mold::EventType::Resize](); // call resize event
+    mold::settings::WindowHeight = height;                       // set new window height and width
     mold::settings::WindowWidth = height;
-    glViewport(0, 0, width, height);
+    glViewport(0, 0, width, height); // set new viewport
 }
 
 //clean up
 void mold::Destroy()
 {
-    GlobalEventSystem.GetMap()[EventType::Exit]();
+    GlobalEventSystem.GetMap()[EventType::Exit](); // call exit event
 
-    glfwTerminate(); //terminate glfw
+    glfwTerminate(); // terminate glfw
 
-    exit(0); //exit
+    exit(0); // exit
 }
 
 bool mold::Init(uint width, uint height)
@@ -55,63 +55,63 @@ bool mold::Init(uint width, uint height)
         return false;
     }
 
-    mold::log::Info("Rendering OpenGL " + std::string((const char *)glGetString(GL_VERSION)) + " on a " + std::string((const char *)glGetString(GL_VENDOR)) + " " + std::string((const char *)glGetString(GL_RENDERER)));
+    mold::log::Info("Rendering OpenGL " + std::string((const char *)glGetString(GL_VERSION)) + " on a " + std::string((const char *)glGetString(GL_VENDOR)) + " " + std::string((const char *)glGetString(GL_RENDERER))); // display opengl information
 
-    // set up callbacks
+    // set up glfw callbacks
     glfwSetFramebufferSizeCallback(mold::GlobalWindow, onResize);
     glfwSetScrollCallback(mold::GlobalWindow, handleScroll);
 
-    for (int enumInt = EventType::Redraw; enumInt != EventType::LAST; enumInt++) //iterate over each enum item
+    for (int enumInt = EventType::Redraw; enumInt != EventType::LAST; enumInt++) // set the stub as the callback for each event
         GlobalEventSystem.AttachCallback(static_cast<EventType>(enumInt), stub);
 
     // set up gl
-    glViewport(0, 0, width, height);
+    glViewport(0, 0, width, height); // set viewport
     glm::ortho(0.0f, (float)width, 0.0f, (float)height, 0.1f, 100.0f);
-    glEnable(GL_DEPTH_TEST);
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glEnable(GL_DEPTH_TEST);                           // depth testing
+    glEnable(GL_BLEND);                                // blending
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); // substract alpha channel for transparency
 
-    //compile shaders
-    uint vertexShader = mold::render::shader::CompileShader(mold::render::shader::VertexShaderSource, GL_VERTEX_SHADER); //create and compile vertex shader
+    // compile shaders
+    uint vertexShader = mold::render::shader::CompileShader(mold::render::shader::VertexShaderSource, GL_VERTEX_SHADER); // create and compile vertex shader
 
-    //check for errors
+    // check for errors
     if (!mold::render::shader::GetCompilationError(vertexShader))
     {
         int errorLen;
-        glGetShaderiv(vertexShader, GL_INFO_LOG_LENGTH, &errorLen); //get len of error
-        const char *buffer = new char[errorLen];                    //allocate memory for buffer
+        glGetShaderiv(vertexShader, GL_INFO_LOG_LENGTH, &errorLen); // get len of error
+        const char *buffer = new char[errorLen];                    // allocate memory for error buffer
         int bufSize;
-        glGetShaderInfoLog(vertexShader, errorLen, (GLsizei *)&bufSize, (GLchar *)buffer); //get info
+        glGetShaderInfoLog(vertexShader, errorLen, (GLsizei *)&bufSize, (GLchar *)buffer); // get log info
         mold::log::Error("Vertex Shader: " + std::string(buffer));
-        free((void *)buffer); //free up
+        free((void *)buffer); // free up the buffer after we display it
         return false;
     }
 
-    uint fragmentShader = mold::render::shader::CompileShader(mold::render::shader::FragmentShaderSource, GL_FRAGMENT_SHADER); //create and compile fragment shader
+    uint fragmentShader = mold::render::shader::CompileShader(mold::render::shader::FragmentShaderSource, GL_FRAGMENT_SHADER); // create and compile fragment shader
 
-    //check for errors
+    // check for errors
     if (!mold::render::shader::GetCompilationError(fragmentShader))
     {
         int errorLen;
-        glGetShaderiv(vertexShader, GL_INFO_LOG_LENGTH, &errorLen); //get len of error
-        const char *buffer = new char[errorLen];                    //allocate memory for buffer
+        glGetShaderiv(vertexShader, GL_INFO_LOG_LENGTH, &errorLen); // get len of error
+        const char *buffer = new char[errorLen];                    // allocate memory for error buffer
         int bufSize;
-        glGetShaderInfoLog(vertexShader, errorLen, (GLsizei *)&bufSize, (GLchar *)buffer); //get info
+        glGetShaderInfoLog(vertexShader, errorLen, (GLsizei *)&bufSize, (GLchar *)buffer); // get log info
         mold::log::Error("Fragment Shader: " + std::string(buffer));
-        free((void *)buffer); //free up
+        free((void *)buffer); // free up the buffer after we display it
         return false;
     }
 
-    mold::render::shader::GlobalShaderProgram = mold::render::shader::LinkShader(fragmentShader, vertexShader); //link the shaders together to form a program
+    mold::render::shader::GlobalShaderProgram = mold::render::shader::LinkShader(fragmentShader, vertexShader); // link the shaders together to form a program
 
-    //check for errors
+    // check for errors
     if (!mold::render::shader::GetLinkError(mold::render::shader::GlobalShaderProgram))
     {
         mold::log::Error("Failed to link shader program");
         return false;
     }
 
-    //use shader
+    // use shader
     glUseProgram(mold::render::shader::GlobalShaderProgram);
 
     return true;
@@ -121,16 +121,16 @@ bool mold::Init(uint width, uint height)
 double lastX;
 double lastY;
 
-void handleScroll(GLFWwindow* window, double xoffset, double yoffset)
+void handleScroll(GLFWwindow *window, double xoffset, double yoffset)
 {
-    mold::input::GlobalScrollAxis = yoffset;
+    mold::input::GlobalScrollAxis = yoffset; // the scroll wheel in glfw works as a mouse where the yoffset is the cursor axis itself
 }
 
 void handleMouse()
 {
-    // handle mouse input for camera
+    // handle mouse input
     double xpos, ypos;
-    glfwGetCursorPos(mold::GlobalWindow, &xpos, &ypos);
+    glfwGetCursorPos(mold::GlobalWindow, &xpos, &ypos); // get cursor position
 
     // wrap cursor around window borders
     if (mold::input::GlobalCursorLockMode == mold::CursorLockingMode::Wrapped)
@@ -164,18 +164,20 @@ void handleMouse()
         }
     }
 
+    // set axis data
     mold::input::GlobalCursorAxis.x = xpos - lastX;
     mold::input::GlobalCursorAxis.y = lastY - ypos;
 
     mold::input::GlobalCursorPos.x = xpos;
     mold::input::GlobalCursorPos.y = ypos;
 
+    // call event
     mold::GlobalEventSystem.GetMap()[mold::EventType::Mouse]();
 
     // update last values
     lastX = xpos;
     lastY = ypos;
-    mold::input::GlobalScrollAxis = 0; // reset scroll
+    mold::input::GlobalScrollAxis = 0; // reset scroll value
 }
 
 float oldYaw, oldPitch;
@@ -184,25 +186,28 @@ glm::vec3 oldDirection;
 void mold::Run()
 {
     mold::log::Info("Running the game");
+
+    // run the game if the window is open
     while (!glfwWindowShouldClose(mold::GlobalWindow))
     {
+        // calculate delta time
         float currentFrame = glfwGetTime();
         mold::time::DeltaTime = currentFrame - mold::time::LastFrame;
         mold::time::LastFrame = currentFrame;
 
-        //tick
+        // call tick
         GlobalEventSystem.GetMap()[EventType::Tick]();
 
-        glClearColor(0, 0, 0, 0);                           //black
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //clear screen
+        glClearColor(0, 0, 0, 0);                           // black
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear screen and the depth buffer
 
-        //update window title
+        // update window title (Rewritten mold 3D @ ?? FPS)
         std::string wtitle = "Rewritten mold 3D @ ";
         wtitle += std::to_string((int)std::round((float)1 / mold::time::DeltaTime));
         wtitle += " FPS";
         glfwSetWindowTitle(mold::GlobalWindow, wtitle.c_str());
 
-        //handle cursor locking mode
+        // handle cursor locking mode
         switch (input::GlobalCursorLockMode)
         {
         case CursorLockingMode::Normal:
@@ -220,13 +225,13 @@ void mold::Run()
             break;
         }
 
-        //do mouse handling
+        // do mouse handling
         handleMouse();
 
-        //update camera front
+        // update camera front
         if (mold::render::camera::Yaw != oldYaw || mold::render::camera::Pitch != oldPitch) // update only when the values change so we don't do cos and sin on every tick
         {
-            //clamp the value of pitch
+            // clamp the value of pitch
             mold::render::camera::Pitch = std::clamp(mold::render::camera::Pitch, -89.0f, 89.0f);
 
             oldDirection.x = cos(glm::radians(mold::render::camera::Yaw)) * cos(glm::radians(mold::render::camera::Pitch));
@@ -246,25 +251,25 @@ void mold::Run()
         mold::render::shader::SetUniform4fv("view", view);
         mold::render::shader::SetUniform4fv("projection", projection);
 
-        //use shader
+        // ensure that we use shader
         glUseProgram(mold::render::shader::GlobalShaderProgram);
 
-        //draw stuff
+        // draw stuff
         GlobalEventSystem.GetMap()[EventType::Redraw]();
 
-        //draw game objects
+        // draw game objects
         for (auto const &[name, ptr] : GlobalGameObjects.Get())
         {
-            if (ptr->Enabled) //don't render disabled gameobjects
+            if (ptr->Enabled) // don't render disabled gameobjects
             {
                 ptr->Bind(); // bind vabo, texture and matrices
                 ptr->Draw(); // do drawing
             }
         }
 
-        glFlush();
+        glFlush(); // flush pipeline
 
-        glfwSwapBuffers(mold::GlobalWindow);
-        glfwPollEvents();
+        glfwSwapBuffers(mold::GlobalWindow); // swap buffers
+        glfwPollEvents();                    // poll events
     }
 }

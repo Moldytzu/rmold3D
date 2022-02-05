@@ -4,12 +4,12 @@ std::map<std::string, uint32_t> newObjects;
 
 void mold::render::objects::GameObjectsManager::Add(std::string name, GameObject *object)
 {
-    GameObjects.emplace(std::move(name), std::move(object));
+    GameObjects.emplace(std::move(name), std::move(object)); //build std::pair and insert it in the map
 }
 
 void mold::render::objects::GameObjectsManager::Instantiate(GameObject *object)
 {
-    Instantiate(object,object->Type());
+    Instantiate(object, object->Type()); // instantiate with the object's type as name
 }
 
 void mold::render::objects::GameObjectsManager::Instantiate(GameObject *object, std::string name)
@@ -25,32 +25,32 @@ void mold::render::objects::GameObjectsManager::Instantiate(GameObject *object, 
 
 bool mold::render::objects::GameObjectsManager::Exists(std::string name)
 {
-    return Get().contains(name);
+    return Get().contains(name); // check if map contains the game object's name
 }
 
 void mold::render::objects::GameObjectsManager::Remove(std::string name)
 {
     if (!Exists(name))
-        {
-            mold::log::Warn("Can't remove inexistent game object " + name);
-            return;
-        }
+    {
+        mold::log::Warn("Can't remove inexistent game object " + name);
+        return;
+    }
 
-    GameObjects.erase(name);
+    GameObjects.erase(name); // erase name if it exists
 }
 
 mold::render::objects::GameObject *mold::render::objects::GameObjectsManager::Get(std::string name)
 {
     if (!Exists(name))
-        {
-            mold::log::Warn("Can't get inexistent game object " + name);
-            return nullptr;
-        }
+    {
+        mold::log::Warn("Can't get inexistent game object " + name);
+        return nullptr;
+    }
 
-    return GameObjects[name];
+    return GameObjects[name]; // get if exists
 }
 
 std::map<std::string, mold::render::objects::GameObject *> mold::render::objects::GameObjectsManager::Get()
 {
-    return GameObjects;
+    return GameObjects; // return map
 }
