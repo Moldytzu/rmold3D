@@ -109,7 +109,7 @@ int main()
     }
 
     //Instantiate an empty gameobject as player
-    mold::GlobalGameObjects.Instantiate(new mold::render::objects::GameObject(), "Player");
+    mold::GlobalGameObjects.Instantiate(new mold::render::objects::GameObject(mold::render::image::Texture(mold::render::Colour(0))), "Player");
     mold::GlobalGameObjects.Get("Player")->AttachComponent("PlayerController", new Player);
 
     //main loop

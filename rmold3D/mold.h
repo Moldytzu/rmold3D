@@ -207,6 +207,8 @@ namespace mold
 
                 float Opacity = 1.0f;
 
+                std::string Name;
+
             protected:
                 mold::render::image::Texture Texture;
                 mold::render::VABO Vabo;
@@ -246,7 +248,7 @@ namespace mold
         inline float FOV = 90.0f;
         inline float WindowWidth;
         inline float WindowHeight;
-        inline float MouseSensibility = 0.5f;
+        inline float MouseSensibility = 5.0f;
     };
 
     namespace time

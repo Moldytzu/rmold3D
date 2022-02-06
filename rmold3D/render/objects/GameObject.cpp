@@ -59,7 +59,7 @@ void mold::render::objects::GameObject::Bind()
 
 void mold::render::objects::GameObject::AttachComponent(std::string name, Component *component)
 {
-    Components.emplace(std::move(name), std::move(component));
+    Components.emplace(Name + " : " + name, std::move(component));
     component->Start(this); // reset component
 }
 
@@ -79,7 +79,7 @@ void mold::render::objects::GameObject::TickComponents()
     if(Components.size() == 0) return; // no components to tick
     for (auto const &[name, ptr] : Components)
     {
-        if (ptr->Enabled) // don't tick disabled components
+        if (ptr->Enabled && name.starts_with(Name + " :")) // don't tick disabled components
         {
             ptr->Tick(); // tick it
         }
@@ -91,7 +91,7 @@ void mold::render::objects::GameObject::HandleComponents(mold::EventType event)
     if(Components.size() == 0) return; // no components to handle
     for (auto const &[name, ptr] : Components)
     {
-        if (ptr->Enabled) // don't pass events to disabled components
+        if (ptr->Enabled && name.starts_with(Name + " :")) // don't pass events to disabled components
         {
             ptr->Handle(event); // pass event
         }
