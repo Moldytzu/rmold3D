@@ -108,7 +108,7 @@ int main()
     mold::GlobalGameObjects.Get("Textured Cube 2")->Move(glm::vec3(1.0f, 0.0f, 2.0f));
 
     //Instantiate an empty gameobject as player
-    mold::GlobalGameObjects.Instantiate(new mold::render::objects::GameObject(mold::render::image::Texture(mold::render::Colour(0))), "Player");
+    mold::GlobalGameObjects.Instantiate(new mold::render::objects::Empty(), "Player");
     mold::GlobalGameObjects.Get("Player")->AttachComponent("PlayerController", new Player);
 
     //main loop

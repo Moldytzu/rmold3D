@@ -225,6 +225,12 @@ namespace mold
                 std::string Type();
             };
 
+            class Empty : public GameObject
+            {
+            public:
+                Empty();
+            };
+
             class GameObjectsManager
             {
             public:
