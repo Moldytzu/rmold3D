@@ -10,7 +10,7 @@
 class Player : public mold::render::objects::Component
 {
 public:
-    float Speed = 5.0f; // adjust accordingly
+    float Speed = 25.0f; // adjust accordingly
     void Tick()
     {
         if (mold::input::GetKey(GLFW_KEY_UP))
@@ -81,6 +81,10 @@ int main()
 {
     if (!mold::Init(1024, 768))
         mold::Destroy();
+
+    // ground
+    mold::GlobalGameObjects.Instantiate(new mold::render::objects::Plane(mold::render::image::Texture(mold::render::Colour(255, 0, 255))));
+    mold::GlobalGameObjects.Get("Textured Plane")->Scale(glm::vec3(7.5f, 1.0f, 7.5f));
 
     mold::GlobalGameObjects.Instantiate(new mold::render::objects::Cube(mold::render::image::Texture("texture.bmp")), "Simple Cube");
 

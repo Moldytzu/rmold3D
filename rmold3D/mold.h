@@ -225,6 +225,16 @@ namespace mold
                 std::string Type();
             };
 
+            class Plane : public GameObject
+            {
+            public:
+                Plane();
+                Plane(mold::render::image::Texture texture);
+
+                void Draw();
+                std::string Type();
+            };
+
             class Empty : public GameObject
             {
             public:
