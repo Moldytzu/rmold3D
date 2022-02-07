@@ -10,7 +10,8 @@ Started with:
 - 2 cubes: 55-60 FPS; 0.25 seconds to start up
 
 Right now we have:
-- 2000 cubes: 60 FPS with stutters; 1 second to start up with 65 MB RAM
+- 2000 cubes: 60 FPS; 1 second to start up with 65 MB RAM
+- 10000 cubes: 17 FPS; 19 seconds to start up with 70 MB RAM
 
 */
 
@@ -84,7 +85,7 @@ void onExit()
     mold::log::Info("Goodbye!");
 }
 
-#define CUBES 2000
+#define CUBES 10000
 
 //entry point
 int main()
