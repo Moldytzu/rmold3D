@@ -24,9 +24,6 @@ std::unordered_map<EventType, void (*)()> EventSystem::GetMap()
 
 void EventSystem::CallEvent(EventType type)
 {
-    if (!ExistsCallback(type))
-        return; // return if the callback doesn't exist
-
     for (auto const &[name, ptr] : GlobalGameObjects.Get())
     {
         if (ptr->Enabled) // don't handle events on disabled gameobjects
@@ -34,6 +31,9 @@ void EventSystem::CallEvent(EventType type)
             ptr->HandleComponents(type); // handle events
         }
     }
+
+    if (!ExistsCallback(type))
+        return; // return if the callback doesn't exist
 
     events[type](); // call event
 }
