@@ -41,8 +41,16 @@ mold::render::image::Texture::Texture(mold::render::Colour colour)
     CreateIndex(); // generate index
 }
 
+std::unordered_map<std::string, mold::render::image::Texture> db; // database to store the filenames with their coresponding texture data
+
 mold::render::image::Texture::Texture(std::string filename)
 {
+    if(db.contains(filename)) // don't load if the file is already in memory
+    {
+        *this = db[filename]; // set the values to the values that are already stored in the database
+        return;
+    }
+
     if (!filename.ends_with(".bmp")) // we support only bitmaps
     {
         mold::log::Error("Unsupported texture format. Please use the 24-bit uncompressed bitmap.");
@@ -100,4 +108,6 @@ mold::render::image::Texture::Texture(std::string filename)
     delete header;
 
     CreateIndex(); // create index for opengl
+
+    db.emplace(std::move(filename),std::move(*this)); // add to database
 }

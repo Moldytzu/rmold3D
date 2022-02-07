@@ -10,7 +10,7 @@ Started with:
 - 2 cubes: 55-60 FPS; 0.25 seconds to start up
 
 Right now we have:
-- 2000 cubes: 18-21 FPS with stutters; 9.7 seconds to start up
+- 2000 cubes: 60 FPS with stutters; 1 second to start up with 65 MB RAM
 
 */
 
@@ -18,7 +18,7 @@ Right now we have:
 class Player : public mold::render::objects::Component
 {
 public:
-    float Speed = 5.0f; // adjust accordingly
+    float Speed = 25.0f; // adjust accordingly
     void Tick()
     {
         if (mold::input::GetKey(GLFW_KEY_UP))
