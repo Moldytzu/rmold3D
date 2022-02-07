@@ -52,33 +52,21 @@ mold::render::image::Texture::Texture(std::string filename)
     }
 
     if (!filename.ends_with(".bmp")) // we support only bitmaps
-    {
-        mold::log::Error("Unsupported texture format. Please use the 24-bit uncompressed bitmap.");
-        mold::Destroy();
-    }
+        mold::log::Fatal("Unsupported texture format. Please use the 24-bit uncompressed bitmap.");
 
     std::ifstream stream(filename); // create stream
 
     if (!stream.good()) // fails if file doesn't exist
-    {
-        mold::log::Error("Failed to load bitmap " + filename);
-        mold::Destroy();
-    }
+        mold::log::Fatal("Failed to load bitmap " + filename);
 
     mold::render::image::BitmapImageHeader *header = new mold::render::image::BitmapImageHeader; // allocate memory for the header
 
     stream.read((char *)header, sizeof(mold::render::image::BitmapImageHeader)); // read it
     if (!stream.good())                                                          // fail
-    {
-        mold::log::Error("Failed to read header of bitmap " + filename);
-        mold::Destroy();
-    }
+        mold::log::Fatal("Failed to read header of bitmap " + filename);
 
     if (header->BPP != 24) // check bpp
-    {
-        mold::log::Error("Unexpected " + std::to_string(header->BPP) + " bpp. Expected 24.");
-        mold::Destroy();
-    }
+        mold::log::Fatal("Unexpected " + std::to_string(header->BPP) + " bpp. Expected 24.");
 
     Width = header->BitmapWidth;
     Height = header->BitmapHeight;
@@ -87,10 +75,7 @@ mold::render::image::Texture::Texture(std::string filename)
 
     stream.read((char *)PixelData, header->ImageSize); // read it
     if (!stream.good())                                // fail
-    {
-        mold::log::Error("Failed to read contents of bitmap " + filename);
-        mold::Destroy();
-    }
+        mold::log::Fatal("Failed to read contents of bitmap " + filename);
 
     for (int i = 0; i < header->ImageSize; i += 3)
     {

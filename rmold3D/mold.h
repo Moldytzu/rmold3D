@@ -300,6 +300,7 @@ namespace mold
         void Info(std::string str);
         void Warn(std::string str);
         void Error(std::string str);
+        void Fatal(std::string str);
     };
 
     class EventSystem

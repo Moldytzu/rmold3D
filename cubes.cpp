@@ -91,7 +91,7 @@ void onExit()
 int main()
 {
     if (!mold::Init(1024, 768))
-        mold::Destroy();
+        mold::log::Fatal("Failed to start the engine");
 
     //Callbacks
     mold::GlobalEventSystem.AttachCallback(mold::EventType::Tick, onTick);

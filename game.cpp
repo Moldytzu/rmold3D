@@ -80,7 +80,7 @@ void onExit()
 int main()
 {
     if (!mold::Init(1024, 768))
-        mold::Destroy();
+        mold::log::Fatal("Failed to start the engine.");
 
     // ground
     mold::GlobalGameObjects.Instantiate(new mold::render::objects::Plane(mold::render::image::Texture(mold::render::Colour(255, 0, 255))));
