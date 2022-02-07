@@ -95,5 +95,9 @@ mold::render::image::Texture::Texture(std::string filename)
         PixelData[i + 2] = temp;
     }
 
+    // delete header and close stream
+    stream.close();
+    delete header;
+
     CreateIndex(); // create index for opengl
 }
