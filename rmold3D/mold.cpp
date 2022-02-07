@@ -169,7 +169,7 @@ void handleMouse()
     mold::input::GlobalCursorPos.y = ypos;
 
     // call event if we've got changes
-    if(mold::input::GlobalCursorAxis.x != 0 && mold::input::GlobalCursorAxis.y != 0)
+    if((mold::input::GlobalCursorAxis.x != 0 && mold::input::GlobalCursorAxis.y != 0) || mold::input::GlobalScrollAxis != 0)
         mold::GlobalEventSystem.CallEvent(mold::EventType::Mouse);
 
     // update last values
