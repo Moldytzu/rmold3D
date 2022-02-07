@@ -4,13 +4,13 @@
 Cubes stress test for rmold3D
 
 Started with: 
-- 2000 cubes: 20 FPS with stutters; 20 seconds to start up (mouse f-ed up)
+- 2000 cubes: 20 FPS with stutters; 20 seconds to start up; 1.4 GB RAM (mouse f-ed up)
 - 200 cubes: 55-60 FPS; 1.5 seconds to start up (mouse sped up)
 - 20 cubes: 55-60 FPS; 0.4 seconds to start up
 - 2 cubes: 55-60 FPS; 0.25 seconds to start up
 
 Right now we have:
-- 2000 cubes: 18-21 FPS with stutters; 15 seconds to start up (mouse f-ed up)
+- 2000 cubes: 18-21 FPS with stutters; 9.7 seconds to start up
 
 */
 
@@ -84,7 +84,7 @@ void onExit()
     mold::log::Info("Goodbye!");
 }
 
-#define CUBES 200
+#define CUBES 2000
 
 //entry point
 int main()
