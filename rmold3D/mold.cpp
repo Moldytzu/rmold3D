@@ -260,7 +260,7 @@ void mold::Run()
         {
             if (ptr->Enabled) // don't handle disabled gameobjects
             {
-                if(mold::render::camera::InView(ptr->GetPosition(),1.0f) && ptr->Type() != "Empty") // draw if the object is in view and if it isn't an empty gameobject
+                if(mold::render::camera::InView(ptr->GetPosition()) && ptr->Type() != "Empty") // draw if the object is in view and if it isn't an empty gameobject
                 {
                     ptr->Bind();           // bind vabo, texture and matrices
                     ptr->Draw();           // do drawing

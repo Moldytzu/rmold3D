@@ -157,7 +157,7 @@ namespace mold
             void Translate(CameraDirection direction, float value);
             void Rotate(CameraDirection direction, float value);
 
-            bool InView(glm::vec3 position, float horizontalScale);
+            bool InView(glm::vec3 position);
         };
 
         namespace objects

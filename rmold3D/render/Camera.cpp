@@ -42,7 +42,7 @@ void mold::render::camera::Rotate(mold::render::CameraDirection direction, float
     }
 }
 
-bool mold::render::camera::InView(glm::vec3 position, float horizontalScale)
+bool mold::render::camera::InView(glm::vec3 position)
 {
     float fovDiv = mold::settings::FOV/mold::settings::ViewDistanceDivisor;
     bool inY = position.y > (Position.y - fovDiv) && position.y < (Position.y + fovDiv);
