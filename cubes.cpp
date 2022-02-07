@@ -11,7 +11,7 @@ Started with:
 
 Right now we have:
 - 2000 cubes: 60 FPS; 1 second to start up with 65 MB RAM
-- 10000 cubes: 17 FPS; 19 seconds to start up with 70 MB RAM
+- 10000 cubes: 47 FPS; 19 seconds to start up with 71 MB RAM
 
 */
 

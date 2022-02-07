@@ -258,10 +258,13 @@ void mold::Run()
         // draw game objects
         for (auto const &[name, ptr] : GlobalGameObjects.Get())
         {
-            if (ptr->Enabled) // don't render disabled gameobjects
+            if (ptr->Enabled) // don't handle disabled gameobjects
             {
-                ptr->Bind();           // bind vabo, texture and matrices
-                ptr->Draw();           // do drawing
+                if(mold::render::camera::InView(ptr->GetPosition(),1.0f) && ptr->Type() != "Empty") // draw if the object is in view and if it isn't an empty gameobject
+                {
+                    ptr->Bind();           // bind vabo, texture and matrices
+                    ptr->Draw();           // do drawing
+                }
                 ptr->TickComponents(); // tick it's components
             }
         }

@@ -156,6 +156,8 @@ namespace mold
 
             void Translate(CameraDirection direction, float value);
             void Rotate(CameraDirection direction, float value);
+
+            bool InView(glm::vec3 position, float horizontalScale);
         };
 
         namespace objects
@@ -262,6 +264,7 @@ namespace mold
     namespace settings
     {
         inline float FOV = 90.0f;
+        inline float ViewDistanceDivisor = 10.0f;
         inline float WindowWidth;
         inline float WindowHeight;
         inline float MouseSensibility = 5.0f;
