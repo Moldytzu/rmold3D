@@ -108,6 +108,28 @@ glm::vec3 mold::render::objects::GameObject::GetPosition()
     return PositionMatrix[3]; // position is stored on the 3rd axis (is this the correct term?)
 }
 
+// Wrapped
+
+mold::render::objects::GameObject *mold::render::objects::GameObject::Translate(float x, float y, float z)
+{
+    return Translate(glm::vec3(x, y, z)); // to chain instructions
+}
+
+mold::render::objects::GameObject *mold::render::objects::GameObject::Move(float x, float y, float z)
+{
+    return Move(glm::vec3(x, y, z)); // to chain instructions
+}
+
+mold::render::objects::GameObject *mold::render::objects::GameObject::Scale(float x, float y, float z)
+{
+    return Scale(glm::vec3(x, y, z)); // to chain instructions
+}
+
+mold::render::objects::GameObject *mold::render::objects::GameObject::Rotate(float x, float y, float z, float angle)
+{
+    return Rotate(glm::vec3(x, y, z), angle); // to chain instructions
+}
+
 // Texturing
 
 void mold::render::objects::GameObject::ReplaceTexture(mold::render::image::Texture newTexture)

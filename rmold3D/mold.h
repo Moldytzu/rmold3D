@@ -184,10 +184,16 @@ namespace mold
                 GameObject();
                 GameObject(mold::render::image::Texture texture);
 
-                GameObject *Translate(glm::vec3 offset);                      // translate position
-                GameObject *Move(glm::vec3 position);                         // set position
-                GameObject *Scale(glm::vec3 scaleFactor);                     // set scale factor
-                GameObject *Rotate(glm::vec3 axis, float angle);              // set rotation
+                GameObject *Translate(glm::vec3 offset);         // translate position
+                GameObject *Move(glm::vec3 position);            // set position
+                GameObject *Scale(glm::vec3 scaleFactor);        // set scale factor
+                GameObject *Rotate(glm::vec3 axis, float angle); // set rotation
+
+                GameObject *Translate(float x, float y, float z);           // translate position
+                GameObject *Move(float x, float y, float z);                // set position
+                GameObject *Scale(float x, float y, float z);               // set scale factor
+                GameObject *Rotate(float x, float y, float z, float angle); // set rotation
+
                 void ReplaceTexture(mold::render::image::Texture newTexture); // replace the texture with a new one
                 void Bind();                                                  // bind everything
                 glm::vec3 GetPosition();                                      // get position
