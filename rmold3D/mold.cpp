@@ -17,6 +17,11 @@ void mold::Destroy()
 {
     mold::GlobalEventSystem.CallEvent(mold::EventType::Exit); // call exit event
 
+    for (auto const &[name, ptr] : GlobalGameObjects.Get())
+    {
+        delete ptr; // delete gameobject
+    }
+
     delete mold::GlobalApplication; // deconstuct application
 
     glfwTerminate(); // terminate glfw

@@ -9,6 +9,7 @@ void mold::render::image::Texture::Bind()
 
 void mold::render::image::Texture::Deallocate()
 {
+    delete[] PixelData; // delete pixel data as it's allocated on the heap
     glDeleteTextures(1, &TextureIndex); // delete texture
 }
 

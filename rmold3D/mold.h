@@ -328,8 +328,7 @@ namespace mold
 
     Application *BuildApplication();
 
-private:
-    bool Init(uint width, uint height); // these are called internaly
+    bool Init(uint width, uint height);
     void Run();
 
 };
