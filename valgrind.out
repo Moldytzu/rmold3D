@@ -1,0 +1,95 @@
+==26023== Memcheck, a memory error detector
+==26023== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==26023== Using Valgrind-3.17.0 and LibVEX; rerun with -h for copyright info
+==26023== Command: ./game
+==26023== Parent PID: 26022
+==26023== 
+==26023== 
+==26023== HEAP SUMMARY:
+==26023==     in use at exit: 1,011,874 bytes in 2,859 blocks
+==26023==   total heap usage: 92,760 allocs, 89,901 frees, 41,257,221 bytes allocated
+==26023== 
+==26023== 128 bytes in 1 blocks are possibly lost in loss record 2,144 of 2,197
+==26023==    at 0x4843839: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==26023==    by 0x5CA7F44: ??? (in /usr/lib/x86_64-linux-gnu/dri/vmwgfx_dri.so)
+==26023==    by 0x5CA9B17: ??? (in /usr/lib/x86_64-linux-gnu/dri/vmwgfx_dri.so)
+==26023==    by 0x5CB4EF1: ??? (in /usr/lib/x86_64-linux-gnu/dri/vmwgfx_dri.so)
+==26023==    by 0x5CB665B: ??? (in /usr/lib/x86_64-linux-gnu/dri/vmwgfx_dri.so)
+==26023==    by 0x616C564: ??? (in /usr/lib/x86_64-linux-gnu/dri/vmwgfx_dri.so)
+==26023==    by 0x59F20FB: ???
+==26023==    by 0x59D4B48: ???
+==26023==    by 0x59D5333: ???
+==26023==    by 0x59D56F2: ???
+==26023==    by 0x4887491: ??? (in /usr/lib/x86_64-linux-gnu/libglfw.so.3.3)
+==26023==    by 0x4887DC1: ??? (in /usr/lib/x86_64-linux-gnu/libglfw.so.3.3)
+==26023== 
+==26023== 176 bytes in 1 blocks are possibly lost in loss record 2,153 of 2,197
+==26023==    at 0x4843839: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==26023==    by 0x5CA7F44: ??? (in /usr/lib/x86_64-linux-gnu/dri/vmwgfx_dri.so)
+==26023==    by 0x5CA9B70: ??? (in /usr/lib/x86_64-linux-gnu/dri/vmwgfx_dri.so)
+==26023==    by 0x5CB4EF1: ??? (in /usr/lib/x86_64-linux-gnu/dri/vmwgfx_dri.so)
+==26023==    by 0x5CB665B: ??? (in /usr/lib/x86_64-linux-gnu/dri/vmwgfx_dri.so)
+==26023==    by 0x616C564: ??? (in /usr/lib/x86_64-linux-gnu/dri/vmwgfx_dri.so)
+==26023==    by 0x59F20FB: ???
+==26023==    by 0x59D4B48: ???
+==26023==    by 0x59D5333: ???
+==26023==    by 0x59D56F2: ???
+==26023==    by 0x4887491: ??? (in /usr/lib/x86_64-linux-gnu/libglfw.so.3.3)
+==26023==    by 0x4887DC1: ??? (in /usr/lib/x86_64-linux-gnu/libglfw.so.3.3)
+==26023== 
+==26023== 928 (160 direct, 768 indirect) bytes in 1 blocks are definitely lost in loss record 2,174 of 2,197
+==26023==    at 0x4843FB3: operator new(unsigned long) (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==26023==    by 0x10D2D3: Game::Game() (game.cpp:57)
+==26023==    by 0x10CA08: mold::BuildApplication() (game.cpp:111)
+==26023==    by 0x122E3E: main (Application.cpp:17)
+==26023== 
+==26023== 928 (160 direct, 768 indirect) bytes in 1 blocks are definitely lost in loss record 2,175 of 2,197
+==26023==    at 0x4843FB3: operator new(unsigned long) (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==26023==    by 0x10D7AE: Game::Game() (game.cpp:70)
+==26023==    by 0x10CA08: mold::BuildApplication() (game.cpp:111)
+==26023==    by 0x122E3E: main (Application.cpp:17)
+==26023== 
+==26023== 928 (160 direct, 768 indirect) bytes in 1 blocks are definitely lost in loss record 2,176 of 2,197
+==26023==    at 0x4843FB3: operator new(unsigned long) (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==26023==    by 0x10D840: Game::Game() (game.cpp:71)
+==26023==    by 0x10CA08: mold::BuildApplication() (game.cpp:111)
+==26023==    by 0x122E3E: main (Application.cpp:17)
+==26023== 
+==26023== 928 (160 direct, 768 indirect) bytes in 1 blocks are definitely lost in loss record 2,177 of 2,197
+==26023==    at 0x4843FB3: operator new(unsigned long) (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==26023==    by 0x10D8D2: Game::Game() (game.cpp:72)
+==26023==    by 0x10CA08: mold::BuildApplication() (game.cpp:111)
+==26023==    by 0x122E3E: main (Application.cpp:17)
+==26023== 
+==26023== 928 (160 direct, 768 indirect) bytes in 1 blocks are definitely lost in loss record 2,178 of 2,197
+==26023==    at 0x4843FB3: operator new(unsigned long) (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==26023==    by 0x10D95A: Game::Game() (game.cpp:73)
+==26023==    by 0x10CA08: mold::BuildApplication() (game.cpp:111)
+==26023==    by 0x122E3E: main (Application.cpp:17)
+==26023== 
+==26023== 960 (32 direct, 928 indirect) bytes in 1 blocks are definitely lost in loss record 2,179 of 2,197
+==26023==    at 0x4843FB3: operator new(unsigned long) (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==26023==    by 0x10DC28: Game::Game() (game.cpp:81)
+==26023==    by 0x10CA08: mold::BuildApplication() (game.cpp:111)
+==26023==    by 0x122E3E: main (Application.cpp:17)
+==26023== 
+==26023== 786,592 (160 direct, 786,432 indirect) bytes in 1 blocks are definitely lost in loss record 2,197 of 2,197
+==26023==    at 0x4843FB3: operator new(unsigned long) (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==26023==    by 0x10D41C: Game::Game() (game.cpp:60)
+==26023==    by 0x10CA08: mold::BuildApplication() (game.cpp:111)
+==26023==    by 0x122E3E: main (Application.cpp:17)
+==26023== 
+==26023== LEAK SUMMARY:
+==26023==    definitely lost: 992 bytes in 7 blocks
+==26023==    indirectly lost: 791,200 bytes in 8 blocks
+==26023==      possibly lost: 304 bytes in 2 blocks
+==26023==    still reachable: 219,378 bytes in 2,842 blocks
+==26023==         suppressed: 0 bytes in 0 blocks
+==26023== Reachable blocks (those to which a pointer was found) are not shown.
+==26023== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==26023== 
+==26023== For lists of detected and suppressed errors, rerun with: -s
+==26023== ERROR SUMMARY: 9 errors from 9 contexts (suppressed: 0 from 0)
+
+
+sudo valgrind --leak-check=full --log-file="./valgrind.out" ./game
