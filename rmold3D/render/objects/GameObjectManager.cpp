@@ -8,12 +8,12 @@ void mold::render::objects::GameObjectsManager::Add(std::string name, GameObject
     GameObjects.emplace(std::move(name), std::move(object)); // build std::pair and insert it in the map
 }
 
-void mold::render::objects::GameObjectsManager::Instantiate(GameObject *object)
+mold::render::objects::GameObject *mold::render::objects::GameObjectsManager::Instantiate(GameObject *object)
 {
-    Instantiate(object, object->Type()); // instantiate with the object's type as name
+    return Instantiate(object, object->Type()); // instantiate with the object's type as name
 }
 
-void mold::render::objects::GameObjectsManager::Instantiate(GameObject *object, std::string name)
+mold::render::objects::GameObject *mold::render::objects::GameObjectsManager::Instantiate(GameObject *object, std::string name)
 {
     std::string tname = name; // create a string based on the object's type
 
@@ -22,6 +22,8 @@ void mold::render::objects::GameObjectsManager::Instantiate(GameObject *object, 
 
     Add(tname, object); // add our new object to our map/database with the other game objects
     newObjects[name]++; // increment the no' of instantiated objects with that type
+
+    return object; // chain
 }
 
 bool mold::render::objects::GameObjectsManager::Exists(std::string name)

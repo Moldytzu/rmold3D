@@ -28,7 +28,8 @@ void mold::render::objects::GameObject::DettachComponent(std::string name)
 
 void mold::render::objects::GameObject::TickComponents()
 {
-    if(Components.size() == 0) return; // no components to tick
+    if (Components.size() == 0)
+        return; // no components to tick
     for (auto const &[name, ptr] : Components)
     {
         if (ptr->Enabled && name.starts_with(Name + " :")) // don't tick disabled components
@@ -40,7 +41,8 @@ void mold::render::objects::GameObject::TickComponents()
 
 void mold::render::objects::GameObject::HandleComponents(mold::EventType event)
 {
-    if(Components.size() == 0) return; // no components to handle
+    if (Components.size() == 0)
+        return; // no components to handle
     for (auto const &[name, ptr] : Components)
     {
         if (ptr->Enabled && name.starts_with(Name + " :")) // don't pass events to disabled components
@@ -77,24 +79,28 @@ mold::render::objects::GameObject::~GameObject()
 
 // Positioning
 
-void mold::render::objects::GameObject::Translate(glm::vec3 offset)
+mold::render::objects::GameObject *mold::render::objects::GameObject::Translate(glm::vec3 offset)
 {
     PositionMatrix = glm::translate(PositionMatrix, offset); // translate matrix
+    return this;                                             // to chain instructions
 }
 
-void mold::render::objects::GameObject::Move(glm::vec3 position)
+mold::render::objects::GameObject *mold::render::objects::GameObject::Move(glm::vec3 position)
 {
     PositionMatrix = glm::translate(glm::mat4(1.0f), position); // move matrix by translating a new one to the desired position
+    return this;                                                // to chain instructions
 }
 
-void mold::render::objects::GameObject::Scale(glm::vec3 scaleFactor)
+mold::render::objects::GameObject *mold::render::objects::GameObject::Scale(glm::vec3 scaleFactor)
 {
     PositionMatrix = glm::scale(PositionMatrix, scaleFactor); // scale matrix
+    return this;                                              // to chain instructions
 }
 
-void mold::render::objects::GameObject::Rotate(glm::vec3 axis, float angle)
+mold::render::objects::GameObject *mold::render::objects::GameObject::Rotate(glm::vec3 axis, float angle)
 {
     PositionMatrix = glm::rotate(PositionMatrix, glm::radians(angle), glm::normalize(axis)); // rotate matrix
+    return this;                                                                             // to chain instructions
 }
 
 glm::vec3 mold::render::objects::GameObject::GetPosition()

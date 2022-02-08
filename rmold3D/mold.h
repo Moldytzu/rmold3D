@@ -134,7 +134,7 @@ namespace mold
             void Deallocate();
 
         private:
-            uint VAO=0, VBO=0;
+            uint VAO = 0, VBO = 0;
         };
 
         enum CameraDirection
@@ -184,19 +184,19 @@ namespace mold
                 GameObject();
                 GameObject(mold::render::image::Texture texture);
 
-                void Translate(glm::vec3 offset);                             // translate position
-                void Move(glm::vec3 position);                                // set position
-                void Scale(glm::vec3 scaleFactor);                            // set scale factor
-                void Rotate(glm::vec3 axis, float angle);                     // set rotation
+                GameObject *Translate(glm::vec3 offset);                      // translate position
+                GameObject *Move(glm::vec3 position);                         // set position
+                GameObject *Scale(glm::vec3 scaleFactor);                     // set scale factor
+                GameObject *Rotate(glm::vec3 axis, float angle);              // set rotation
                 void ReplaceTexture(mold::render::image::Texture newTexture); // replace the texture with a new one
                 void Bind();                                                  // bind everything
                 glm::vec3 GetPosition();                                      // get position
 
-                void AttachComponent(std::string name, Component *component);              // attach component
-                void DettachComponent(std::string name);                                   // dettach component
-                bool ExistsComponent(std::string name);                                    // check if component exists
-                void TickComponents();                                                     // tick every component
-                void HandleComponents(mold::EventType event);                              // forward events to every component
+                void AttachComponent(std::string name, Component *component);                        // attach component
+                void DettachComponent(std::string name);                                             // dettach component
+                bool ExistsComponent(std::string name);                                              // check if component exists
+                void TickComponents();                                                               // tick every component
+                void HandleComponents(mold::EventType event);                                        // forward events to every component
                 std::unordered_map<std::string, mold::render::objects::Component *> GetComponents(); // get components attached
 
                 virtual void Draw();
@@ -245,8 +245,8 @@ namespace mold
             class GameObjectsManager
             {
             public:
-                void Instantiate(GameObject *object);
-                void Instantiate(GameObject *object, std::string name);
+                GameObject *Instantiate(GameObject *object);
+                GameObject *Instantiate(GameObject *object, std::string name);
                 void Remove(std::string name);
                 bool Exists(std::string name);
                 GameObject *Get(std::string name);
