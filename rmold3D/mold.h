@@ -134,7 +134,7 @@ namespace mold
             void Deallocate();
 
         private:
-            uint VAO, VBO;
+            uint VAO=0, VBO=0;
         };
 
         enum CameraDirection
