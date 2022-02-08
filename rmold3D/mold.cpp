@@ -50,8 +50,10 @@ void mold::Init(uint width, uint height)
     if (mold::GlobalWindow == NULL)                                                        // exit if the window couldn't be created
         mold::log::Fatal("Couldn't create glfw window!");
 
+    #ifdef GLFW_RAW_MOUSE_MOTION
     if (glfwRawMouseMotionSupported()) // enable raw mouse motion if supported
         glfwSetInputMode(mold::GlobalWindow, GLFW_RAW_MOUSE_MOTION, GLFW_TRUE);
+    #endif
 
     glfwMakeContextCurrent(mold::GlobalWindow); // create opengl context
 
