@@ -2,26 +2,6 @@
 
 using namespace mold;
 
-void EventSystem::AttachCallback(EventType type, void (*callback)())
-{
-    events.emplace(type, callback); // build std::pair and insert it in the map
-}
-
-void EventSystem::DetachCallback(EventType type)
-{
-    events.erase(type);
-}
-
-bool EventSystem::ExistsCallback(EventType type)
-{
-    return events.contains(type);
-}
-
-std::unordered_map<EventType, void (*)()> EventSystem::GetMap()
-{
-    return events; // return map
-}
-
 void EventSystem::CallEvent(EventType type)
 {
     for (auto const &[name, ptr] : GlobalGameObjects.Get())
@@ -32,8 +12,23 @@ void EventSystem::CallEvent(EventType type)
         }
     }
 
-    if (!ExistsCallback(type))
-        return; // return if the callback doesn't exist
-
-    events[type](); // call event
+    switch (type)
+    {
+    case EventType::Tick:
+        GlobalApplication->Tick();
+        break;
+    case EventType::Redraw:
+        GlobalApplication->OnDraw();
+        break;
+    case EventType::Mouse:
+        GlobalApplication->OnMouseInput();
+        break;
+    case EventType::Resize:
+        GlobalApplication->OnResize();
+        break;
+    
+    default:
+        break;
+    }
+    // call event
 }

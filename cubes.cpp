@@ -15,6 +15,8 @@ Right now we have:
 
 */
 
+#define CUBES 200
+
 // Player component
 class Player : public mold::render::objects::Component
 {
@@ -43,7 +45,7 @@ public:
 
     void Start(mold::render::objects::GameObject *parent)
     {
-        mold::render::objects::Component::Start(parent); // call super
+        mold::render::objects::Component::Start(parent);                      // call super
         mold::input::GlobalCursorLockMode = mold::CursorLockingMode::Wrapped; // set proper cursor locking mode
     }
 
@@ -57,65 +59,52 @@ public:
     }
 };
 
-// mouse update event
-void onMouse()
+class Game : public mold::Application
 {
-    mold::settings::FOV -= mold::input::GlobalScrollAxis;
-}
-
-// tick update
-void onTick()
-{
-    if (mold::input::GetKey(GLFW_KEY_ESCAPE))
-        mold::input::GlobalCursorLockMode = mold::CursorLockingMode::Normal;
-
-    if (mold::input::GetKey(GLFW_KEY_F1))
-        mold::input::GlobalCursorLockMode = mold::CursorLockingMode::Wrapped;
-}
-
-//resize
-void onResize()
-{
-    mold::log::Info("Resize!");
-}
-
-//exit
-void onExit()
-{
-    mold::log::Info("Goodbye!");
-}
-
-#define CUBES 10000
-
-//entry point
-int main()
-{
-    if (!mold::Init(1024, 768))
-        mold::log::Fatal("Failed to start the engine");
-
-    //Callbacks
-    mold::GlobalEventSystem.AttachCallback(mold::EventType::Tick, onTick);
-    mold::GlobalEventSystem.AttachCallback(mold::EventType::Resize, onResize);
-    mold::GlobalEventSystem.AttachCallback(mold::EventType::Exit, onExit);
-    mold::GlobalEventSystem.AttachCallback(mold::EventType::Mouse, onMouse);
-
-    mold::GlobalGameObjects.Instantiate(new mold::render::objects::Cube(mold::render::image::Texture("texture.bmp")));
-
-    //Instantiate many cubes
-    int offset = 0;
-    for(int i = 1;i<CUBES;i++)
+public:
+    Game() : mold::Application()
     {
         mold::GlobalGameObjects.Instantiate(new mold::render::objects::Cube(mold::render::image::Texture("texture.bmp")));
-        mold::GlobalGameObjects.Get("Textured Cube " + std::to_string(i))->Translate(glm::vec3(offset++));
+
+        //Instantiate many cubes
+        int offset = 0;
+        for (int i = 1; i < CUBES; i++)
+        {
+            mold::GlobalGameObjects.Instantiate(new mold::render::objects::Cube(mold::render::image::Texture("texture.bmp")));
+            mold::GlobalGameObjects.Get("Textured Cube " + std::to_string(i))->Translate(glm::vec3(offset++));
+        }
+
+        //Instantiate an empty gameobject as player
+        mold::GlobalGameObjects.Instantiate(new mold::render::objects::GameObject(mold::render::image::Texture(mold::render::Colour(0))), "Player");
+        mold::GlobalGameObjects.Get("Player")->AttachComponent("PlayerController", new Player);
     }
 
-    //Instantiate an empty gameobject as player
-    mold::GlobalGameObjects.Instantiate(new mold::render::objects::GameObject(mold::render::image::Texture(mold::render::Colour(0))), "Player");
-    mold::GlobalGameObjects.Get("Player")->AttachComponent("PlayerController", new Player);
+    ~Game()
+    {
+        mold::log::Info("Goodbye!");
+    }
 
-    //main loop
-    mold::Run();
+    void OnResize() override
+    {
+        mold::log::Info("Resize!");
+    }
 
-    mold::Destroy();
-    return 0;
+    void Tick() override
+    {
+        if (mold::input::GetKey(GLFW_KEY_ESCAPE))
+            mold::input::GlobalCursorLockMode = mold::CursorLockingMode::Normal;
+
+        if (mold::input::GetKey(GLFW_KEY_F1))
+            mold::input::GlobalCursorLockMode = mold::CursorLockingMode::Wrapped;
+    }
+
+    void OnMouseInput() override
+    {
+        mold::settings::FOV -= mold::input::GlobalScrollAxis;
+    }
+};
+
+mold::Application *mold::BuildApplication()
+{
+    return new Game();
 }

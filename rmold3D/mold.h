@@ -25,7 +25,6 @@ namespace mold
         Resize,
         Exit,
         Mouse,
-        LAST,
     };
 
     namespace render
@@ -306,23 +305,28 @@ namespace mold
     class EventSystem
     {
     public:
-        void AttachCallback(EventType type, void (*callback)());
-        void DetachCallback(EventType type);
-
-        bool ExistsCallback(EventType type);
-
         void CallEvent(EventType type);
+    };
 
-        std::unordered_map<EventType, void (*)()> GetMap();
-    private:
-        std::unordered_map<EventType, void (*)()> events; // type, callback
+    class Application
+    {
+    public:
+        Application();
+        Application(uint width, uint height);
+        virtual void Tick();
+        virtual void OnDraw();
+        virtual void OnResize();
+        virtual void OnMouseInput();
     };
 
     inline GLFWwindow *GlobalWindow;
     inline EventSystem GlobalEventSystem;
     inline mold::render::objects::GameObjectsManager GlobalGameObjects;
+    inline Application *GlobalApplication;
 
     bool Init(uint width, uint height);
     void Run();
     void Destroy();
+
+    Application *BuildApplication();
 };
