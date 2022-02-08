@@ -328,7 +328,7 @@ namespace mold
 
     Application *BuildApplication();
 
-    bool Init(uint width, uint height);
+    void Init(uint width, uint height);
     void Run();
 
 };

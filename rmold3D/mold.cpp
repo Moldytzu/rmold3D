@@ -31,7 +31,7 @@ void mold::Destroy()
     exit(0); // exit
 }
 
-bool mold::Init(uint width, uint height)
+void mold::Init(uint width, uint height)
 {
     mold::settings::WindowHeight = height;
     mold::settings::WindowWidth = width;
@@ -48,10 +48,7 @@ bool mold::Init(uint width, uint height)
 
     mold::GlobalWindow = glfwCreateWindow(width, height, "Rewritten mold 3D", NULL, NULL); // create window
     if (mold::GlobalWindow == NULL)                                                        // exit if the window couldn't be created
-    {
-        mold::log::Error("Couldn't create glfw window!");
-        return false;
-    }
+        mold::log::Fatal("Couldn't create glfw window!");
 
     if (glfwRawMouseMotionSupported()) // enable raw mouse motion if supported
         glfwSetInputMode(mold::GlobalWindow, GLFW_RAW_MOUSE_MOTION, GLFW_TRUE);
@@ -59,10 +56,7 @@ bool mold::Init(uint width, uint height)
     glfwMakeContextCurrent(mold::GlobalWindow); // create opengl context
 
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) // load glad
-    {
-        mold::log::Error("Couldn't load glad!");
-        return false;
-    }
+        mold::log::Fatal("Couldn't load glad!");
 
     mold::log::Info("Rendering OpenGL " + std::string((const char *)glGetString(GL_VERSION)) + " on a " + std::string((const char *)glGetString(GL_VENDOR)) + " " + std::string((const char *)glGetString(GL_RENDERER))); // display opengl information
 
@@ -89,8 +83,8 @@ bool mold::Init(uint width, uint height)
         int bufSize;
         glGetShaderInfoLog(vertexShader, errorLen, (GLsizei *)&bufSize, (GLchar *)buffer); // get log info
         mold::log::Error("Vertex Shader: " + std::string(buffer));
-        free((void *)buffer); // free up the buffer after we display it
-        return false;
+        delete[] buffer; // free up the buffer after we display it
+        mold::Destroy();
     }
 
     uint fragmentShader = mold::render::shader::CompileShader(mold::render::shader::FragmentShaderSource, GL_FRAGMENT_SHADER); // create and compile fragment shader
@@ -104,23 +98,18 @@ bool mold::Init(uint width, uint height)
         int bufSize;
         glGetShaderInfoLog(vertexShader, errorLen, (GLsizei *)&bufSize, (GLchar *)buffer); // get log info
         mold::log::Error("Fragment Shader: " + std::string(buffer));
-        free((void *)buffer); // free up the buffer after we display it
-        return false;
+        delete[] buffer; // free up the buffer after we display it
+        mold::Destroy();
     }
 
     mold::render::shader::GlobalShaderProgram = mold::render::shader::LinkShader(fragmentShader, vertexShader); // link the shaders together to form a program
 
     // check for errors
     if (!mold::render::shader::GetLinkError(mold::render::shader::GlobalShaderProgram))
-    {
-        mold::log::Error("Failed to link shader program");
-        return false;
-    }
+        mold::log::Fatal("Failed to link shader program");
 
     // use shader
     glUseProgram(mold::render::shader::GlobalShaderProgram);
-
-    return true;
 }
 
 // mouse handling

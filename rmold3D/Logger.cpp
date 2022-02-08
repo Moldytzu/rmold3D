@@ -22,6 +22,6 @@ void mold::log::Error(std::string str)
 
 void mold::log::Fatal(std::string str)
 {
-    printf("[%.2f/Fatal Error] %s\n", DIFFERENCE, str.c_str());
+    printf("[%.2f/Fatal] %s\n", DIFFERENCE, str.c_str());
     mold::Destroy();
 }
