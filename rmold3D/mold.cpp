@@ -17,6 +17,8 @@ void mold::Destroy()
 {
     mold::GlobalEventSystem.CallEvent(mold::EventType::Exit); // call exit event
 
+    delete mold::GlobalApplication; // deconstuct application
+
     glfwTerminate(); // terminate glfw
 
     exit(0); // exit
@@ -169,7 +171,7 @@ void handleMouse()
     mold::input::GlobalCursorPos.y = ypos;
 
     // call event if we've got changes
-    if((mold::input::GlobalCursorAxis.x != 0 && mold::input::GlobalCursorAxis.y != 0) || mold::input::GlobalScrollAxis != 0)
+    if ((mold::input::GlobalCursorAxis.x != 0 && mold::input::GlobalCursorAxis.y != 0) || mold::input::GlobalScrollAxis != 0)
         mold::GlobalEventSystem.CallEvent(mold::EventType::Mouse);
 
     // update last values
@@ -258,15 +260,15 @@ void mold::Run()
         // draw game objects
         for (auto const &[name, ptr] : GlobalGameObjects.Get())
         {
-            if (ptr->Enabled) // don't handle disabled gameobjects
+            if (!ptr->Enabled)
+                continue;
+
+            if (mold::render::camera::InView(ptr->GetPosition()) && ptr->Type() != "Empty") // draw if the object is in view and if it isn't an empty gameobject
             {
-                if(mold::render::camera::InView(ptr->GetPosition()) && ptr->Type() != "Empty") // draw if the object is in view and if it isn't an empty gameobject
-                {
-                    ptr->Bind();           // bind vabo, texture and matrices
-                    ptr->Draw();           // do drawing
-                }
-                ptr->TickComponents(); // tick it's components
+                ptr->Bind(); // bind vabo, texture and matrices
+                ptr->Draw(); // do drawing
             }
+            ptr->TickComponents(); // tick it's components
         }
 
         glFlush(); // flush pipeline

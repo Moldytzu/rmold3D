@@ -324,9 +324,12 @@ namespace mold
     inline mold::render::objects::GameObjectsManager GlobalGameObjects;
     inline Application *GlobalApplication;
 
-    bool Init(uint width, uint height);
-    void Run();
     void Destroy();
 
     Application *BuildApplication();
+
+private:
+    bool Init(uint width, uint height); // these are called internaly
+    void Run();
+
 };

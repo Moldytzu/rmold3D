@@ -51,7 +51,7 @@ public:
 class Game : public mold::Application
 {
 public:
-    Game() : mold::Application()
+    Game() : mold::Application(1280,720) // 720p
     {
         // ground
         mold::GlobalGameObjects.Instantiate(new mold::render::objects::Plane(mold::render::image::Texture(mold::render::Colour(255, 0, 255))));

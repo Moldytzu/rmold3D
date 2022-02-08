@@ -12,7 +12,7 @@ void EventSystem::CallEvent(EventType type)
         }
     }
 
-    switch (type)
+    switch (type) // call the event
     {
     case EventType::Tick:
         GlobalApplication->Tick();
@@ -30,5 +30,4 @@ void EventSystem::CallEvent(EventType type)
     default:
         break;
     }
-    // call event
 }

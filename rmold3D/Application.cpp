@@ -15,9 +15,7 @@ mold::Application::Application(uint width, uint height)
 int main()
 {
     mold::GlobalApplication = mold::BuildApplication(); // ask the sandbox to build an application
-    mold::Run(); // run the engine on it
-    delete mold::GlobalApplication; // deconstruct it
-
+    mold::Run(); // run the engine
     mold::Destroy(); // clean everything
     return 0;
 }

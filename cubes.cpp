@@ -62,7 +62,7 @@ public:
 class Game : public mold::Application
 {
 public:
-    Game() : mold::Application()
+    Game() : mold::Application(1024,768)
     {
         mold::GlobalGameObjects.Instantiate(new mold::render::objects::Cube(mold::render::image::Texture("texture.bmp")));
 
