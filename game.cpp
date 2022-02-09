@@ -30,6 +30,10 @@ public:
             mold::render::camera::Translate(glm::vec3(-1,0,0), Speed * mold::time::DeltaTime / 10);
         if (mold::input::GetKey('D'))
             mold::render::camera::Translate(glm::vec3(1,0,0), Speed * mold::time::DeltaTime / 10);
+        if (mold::input::GetKey('I'))
+            mold::render::camera::Translate(glm::vec3(0,1,0), Speed * mold::time::DeltaTime / 10);
+        if (mold::input::GetKey('K'))
+            mold::render::camera::Translate(glm::vec3(0,-1,0), Speed * mold::time::DeltaTime / 10);
     }
 
     void Start(mold::render::objects::GameObject *parent)

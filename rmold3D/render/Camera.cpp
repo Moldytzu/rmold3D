@@ -11,6 +11,10 @@ void mold::render::camera::Translate(glm::vec3 axis, float value)
         Position -= glm::normalize(glm::cross(Front, Up)) * value;
     if (axis.x > 0) // right
         Position += glm::normalize(glm::cross(Front, Up)) * value;
+    if (axis.y > 0) // up
+        Position += glm::normalize(Up) * value;
+    if (axis.y < 0) // down
+        Position -= glm::normalize(Up) * value;
 }
 
 void mold::render::camera::Rotate(glm::vec3 axis, float value)
