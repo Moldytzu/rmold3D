@@ -32,7 +32,7 @@ lib: $(OBJS)
 	ar -crs $(LIB) $(OBJS)
 
 define buildGame
-	$(CPP) $(1) $(LIB) -lglfw -lGL -lX11 -lpthread -lXrandr -lXi -ldl -o game $(CFLAGS)
+	$(CPP) $(1) $(LIB) -lglfw -o game $(CFLAGS)
 endef
 
 game: lib 
