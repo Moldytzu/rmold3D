@@ -113,7 +113,7 @@ namespace mold
                                                     "   gl_Position = projection * view * model * vec4(vertexPosition, 1.0);\n"
                                                     "   textureCoord = textureCoordornate;\n"
                                                     "   icolour = fcolour;\n"
-                                                    "   norms = normals;\n"
+                                                    "   norms = mat3(transpose(inverse(model))) * normals;\n"
                                                     "}\n";
 
             inline std::string FragmentShaderSource = "#version 330 core\n"
@@ -128,9 +128,13 @@ namespace mold
                                                       "{\n"
                                                       "   float ambient = 0.2f;"
                                                       "   vec3 normal = normalize(norms);\n"
-                                                      "   vec3 direction = vec3(sunPos-objPos);\n"
+                                                      "   vec3 direction = normalize(sunPos-objPos);\n"
                                                       "   float diffuse = max(dot(normal,direction),0.0f);\n"
-                                                      "   FragColor = texture(mainTexture, textureCoord) * icolour * vec4(vec3(diffuse + ambient),1.0f);\n"
+                                                      "   vec3 reflect = reflect(-direction, normal);\n"
+                                                      "   float spec = pow(max(dot(direction, reflect), 0.0), 8);\n"
+                                                      "   float dist = length(sunPos-objPos);\n"
+                                                      "   float attenuation = 1.0f / (dist * dist);"
+                                                      "   FragColor = texture(mainTexture, textureCoord) * (diffuse + ambient + spec);\n"
                                                       "}\n";
 
             inline uint GlobalShaderProgram;

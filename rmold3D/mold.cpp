@@ -70,8 +70,8 @@ void mold::Init(uint width, uint height)
     glViewport(0, 0, width, height); // set viewport
     glm::ortho(0.0f, (float)width, 0.0f, (float)height, 0.1f, 100.0f);
     glEnable(GL_DEPTH_TEST);                           // depth testing
-    glEnable(GL_BLEND);                                // blending
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); // substract alpha channel for transparency
+    //glEnable(GL_BLEND);                                // blending
+    //glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); // substract alpha channel for transparency
 
     // compile shaders
     uint vertexShader = mold::render::shader::CompileShader(mold::render::shader::VertexShaderSource, GL_VERTEX_SHADER); // create and compile vertex shader
