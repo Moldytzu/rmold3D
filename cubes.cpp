@@ -22,7 +22,7 @@ class Player : public mold::render::objects::Component
 {
 public:
     float Speed = 25.0f; // adjust accordingly
-    void Tick()
+    void Tick() override
     {
         if (mold::input::GetKey(GLFW_KEY_UP))
             mold::render::camera::Rotate(mold::render::CameraDirection::Forward, Speed * 2 * mold::time::DeltaTime);
@@ -43,13 +43,13 @@ public:
             mold::render::camera::Translate(mold::render::CameraDirection::Right, Speed * mold::time::DeltaTime / 10);
     }
 
-    void Start(mold::render::objects::GameObject *parent)
+    void Start(mold::render::objects::GameObject *parent) override
     {
         mold::render::objects::Component::Start(parent);                      // call super
         mold::input::GlobalCursorLockMode = mold::CursorLockingMode::Wrapped; // set proper cursor locking mode
     }
 
-    void Handle(mold::EventType event)
+    void Handle(mold::EventType event) override
     {
         if (event == mold::EventType::Mouse) // update mouse
         {
