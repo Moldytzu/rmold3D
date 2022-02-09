@@ -15,6 +15,7 @@
 
 #define Vertex(X, Y, Z) X, Y, Z
 #define TexCoord(X, Y) X, Y
+#define Normal(X, Y, Z) X, Y, Z
 
 namespace mold
 {
@@ -89,6 +90,7 @@ namespace mold
         {
             void SetUniform4fv(std::string location, glm::mat4 matrix);
             void SetUniform4v(std::string location, glm::vec4 vector);
+            void SetUniform3v(std::string location, glm::vec3 vector);
 
             uint CompileShader(std::string source, uint type);
             uint LinkShader(uint fragment, uint vertex);
@@ -98,8 +100,10 @@ namespace mold
             inline std::string VertexShaderSource = "#version 330 core\n"
                                                     "layout (location = 0) in vec3 vertexPosition;\n"
                                                     "layout (location = 1) in vec2 textureCoordornate;\n"
+                                                    "layout (location = 2) in vec3 normals;\n"
                                                     "out vec2 textureCoord;\n"
                                                     "out vec4 icolour;\n"
+                                                    "out vec3 norms;\n"
                                                     "uniform mat4 model;\n"
                                                     "uniform mat4 view;\n"
                                                     "uniform mat4 projection;\n"
@@ -109,19 +113,32 @@ namespace mold
                                                     "   gl_Position = projection * view * model * vec4(vertexPosition, 1.0);\n"
                                                     "   textureCoord = textureCoordornate;\n"
                                                     "   icolour = fcolour;\n"
+                                                    "   norms = normals;\n"
                                                     "}\n";
 
             inline std::string FragmentShaderSource = "#version 330 core\n"
                                                       "out vec4 FragColor;\n"
                                                       "in vec2 textureCoord;\n"
+                                                      "in vec3 norms;\n"
                                                       "in vec4 icolour;\n"
                                                       "uniform sampler2D mainTexture;\n"
+                                                      "uniform vec3 sunPos;\n"
+                                                      "uniform vec3 objPos;\n"
                                                       "void main()\n"
                                                       "{\n"
-                                                      "   FragColor = texture(mainTexture, textureCoord) * icolour;\n"
+                                                      "   float ambient = 0.2f;"
+                                                      "   vec3 normal = normalize(norms);\n"
+                                                      "   vec3 direction = vec3(sunPos-objPos);\n"
+                                                      "   float diffuse = max(dot(normal,direction),0.0f);\n"
+                                                      "   FragColor = texture(mainTexture, textureCoord) * icolour * vec4(vec3(diffuse + ambient),1.0f);\n"
                                                       "}\n";
 
             inline uint GlobalShaderProgram;
+        };
+
+        namespace lighting
+        {
+            inline glm::vec3 SunPosition = glm::vec3(1.5f);
         };
 
         class VABO

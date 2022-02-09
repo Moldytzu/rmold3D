@@ -241,6 +241,9 @@ void mold::Run()
             oldPitch = mold::render::camera::Pitch;
         }
 
+        // ensure that we use shader
+        glUseProgram(mold::render::shader::GlobalShaderProgram);
+
         // give the shader our view and projection
 
 #define view glm::lookAt(mold::render::camera::Position, mold::render::camera::Position + mold::render::camera::Front, mold::render::camera::Up)
@@ -249,8 +252,7 @@ void mold::Run()
         mold::render::shader::SetUniform4fv("view", view);
         mold::render::shader::SetUniform4fv("projection", projection);
 
-        // ensure that we use shader
-        glUseProgram(mold::render::shader::GlobalShaderProgram);
+        mold::render::shader::SetUniform3v("sunPos", mold::render::lighting::SunPosition);
 
         // draw stuff
         mold::GlobalEventSystem.CallEvent(EventType::Redraw);

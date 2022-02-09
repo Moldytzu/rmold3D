@@ -12,6 +12,12 @@ void mold::render::shader::SetUniform4v(std::string location, glm::vec4 vector)
     glUniform4fv(loc, 1, &vector[0]);                                                             // set vector
 }
 
+void mold::render::shader::SetUniform3v(std::string location, glm::vec3 vector)
+{
+    uint loc = glGetUniformLocation(mold::render::shader::GlobalShaderProgram, location.c_str()); // get location
+    glUniform4fv(loc, 1, &vector[0]);                                                             // set vector
+}
+
 uint mold::render::shader::CompileShader(std::string source, uint type)
 {
     const char *cstr = source.c_str();
