@@ -189,13 +189,11 @@ namespace mold
             {
             public:
                 virtual void Tick();
-                virtual void Start(GameObject *parent);
+                virtual void Start();
                 virtual void Handle(mold::EventType event);
 
                 bool Enabled = true;
-
-            protected:
-                GameObject *Parent = NULL;
+                GameObject *Parent = nullptr;
             };
 
             class GameObject
