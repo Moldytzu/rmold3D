@@ -17,6 +17,8 @@
 #define TexCoord(X, Y) X, Y
 #define Normal(X, Y, Z) X, Y, Z
 
+typedef unsigned int uint;
+
 namespace mold
 {
     enum EventType
