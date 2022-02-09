@@ -14,22 +14,22 @@ public:
     void Tick()
     {
         if (mold::input::GetKey(GLFW_KEY_UP))
-            mold::render::camera::Rotate(mold::render::CameraDirection::Forward, Speed * 2 * mold::time::DeltaTime);
+            mold::render::camera::Rotate(glm::vec3(0,0,1), Speed * 2 * mold::time::DeltaTime);
         if (mold::input::GetKey(GLFW_KEY_DOWN))
-            mold::render::camera::Rotate(mold::render::CameraDirection::Backwards, Speed * 2 * mold::time::DeltaTime);
+            mold::render::camera::Rotate(glm::vec3(0,0,-1), Speed * 2 * mold::time::DeltaTime);
         if (mold::input::GetKey(GLFW_KEY_LEFT))
-            mold::render::camera::Rotate(mold::render::CameraDirection::Left, Speed * 2 * mold::time::DeltaTime);
+            mold::render::camera::Rotate(glm::vec3(-1,0,0), Speed * 2 * mold::time::DeltaTime);
         if (mold::input::GetKey(GLFW_KEY_RIGHT))
-            mold::render::camera::Rotate(mold::render::CameraDirection::Right, Speed * 2 * mold::time::DeltaTime);
+            mold::render::camera::Rotate(glm::vec3(1,0,0), Speed * 2 * mold::time::DeltaTime);
 
         if (mold::input::GetKey('W'))
-            mold::render::camera::Translate(mold::render::CameraDirection::Forward, Speed * mold::time::DeltaTime / 10);
+            mold::render::camera::Translate(glm::vec3(0,0,1), Speed * mold::time::DeltaTime / 10);
         if (mold::input::GetKey('S'))
-            mold::render::camera::Translate(mold::render::CameraDirection::Backwards, Speed * mold::time::DeltaTime / 10);
+            mold::render::camera::Translate(glm::vec3(0,0,-1), Speed * mold::time::DeltaTime / 10);
         if (mold::input::GetKey('A'))
-            mold::render::camera::Translate(mold::render::CameraDirection::Left, Speed * mold::time::DeltaTime / 10);
+            mold::render::camera::Translate(glm::vec3(-1,0,0), Speed * mold::time::DeltaTime / 10);
         if (mold::input::GetKey('D'))
-            mold::render::camera::Translate(mold::render::CameraDirection::Right, Speed * mold::time::DeltaTime / 10);
+            mold::render::camera::Translate(glm::vec3(1,0,0), Speed * mold::time::DeltaTime / 10);
     }
 
     void Start(mold::render::objects::GameObject *parent)

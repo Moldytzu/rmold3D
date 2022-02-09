@@ -165,14 +165,6 @@ namespace mold
             uint VAO = 0, VBO = 0;
         };
 
-        enum CameraDirection
-        {
-            Forward,
-            Backwards,
-            Left,
-            Right
-        };
-
         namespace camera
         {
             inline glm::vec3 Position = glm::vec3(0.0f, 0.0f, 3.0f);
@@ -181,8 +173,8 @@ namespace mold
             inline float Yaw = -90.0f; //-90.0f left, 0 front, 90.0f right
             inline float Pitch = 0.0f; // 90.0f up, 0 front, -90.0f down
 
-            void Translate(CameraDirection direction, float value);
-            void Rotate(CameraDirection direction, float value);
+            void Translate(glm::vec3 axis, float value);
+            void Rotate(glm::vec3 axis, float value);
 
             bool InView(glm::vec3 position);
         };

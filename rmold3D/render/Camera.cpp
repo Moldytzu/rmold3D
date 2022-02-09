@@ -1,50 +1,33 @@
 #include <rmold3D/mold.h>
 
-void mold::render::camera::Translate(mold::render::CameraDirection direction, float value)
+void mold::render::camera::Translate(glm::vec3 axis, float value)
 {
-    switch (direction) // translate in the desired position
-    {
-    case mold::render::CameraDirection::Forward:
+    // translate in the desired position
+    if (axis.z > 0) // forwards
         Position += value * Front;
-        break;
-    case mold::render::CameraDirection::Backwards:
+    if (axis.z < 0) // backwards
         Position -= value * Front;
-        break;
-    case mold::render::CameraDirection::Left:
+    if (axis.x < 0) // left
         Position -= glm::normalize(glm::cross(Front, Up)) * value;
-        break;
-    case mold::render::CameraDirection::Right:
+    if (axis.x > 0) // right
         Position += glm::normalize(glm::cross(Front, Up)) * value;
-        break;
-    default:
-        break;
-    }
 }
 
-void mold::render::camera::Rotate(mold::render::CameraDirection direction, float value)
+void mold::render::camera::Rotate(glm::vec3 axis, float value)
 {
-    switch (direction) // rotate in the desired direction
-    {
-    case mold::render::CameraDirection::Forward:
+    if (axis.z > 0) // forwards
         Pitch += value;
-        break;
-    case mold::render::CameraDirection::Backwards:
+    if (axis.z < 0) // backwards
         Pitch -= value;
-        break;
-    case mold::render::CameraDirection::Left:
+    if (axis.x < 0) // left
         Yaw -= value;
-        break;
-    case mold::render::CameraDirection::Right:
+    if (axis.x > 0) // right
         Yaw += value;
-        break;
-    default:
-        break;
-    }
 }
 
 bool mold::render::camera::InView(glm::vec3 position)
 {
-    float fovDiv = mold::settings::FOV/mold::settings::ViewDistanceDivisor;
+    float fovDiv = mold::settings::FOV / mold::settings::ViewDistanceDivisor;
     bool inY = position.y > (Position.y - fovDiv) && position.y < (Position.y + fovDiv);
     bool inX = position.x > (Position.x - fovDiv) && position.x < (Position.x + fovDiv);
     bool inZ = position.z > (Position.z - fovDiv) && position.z < (Position.z + fovDiv);
