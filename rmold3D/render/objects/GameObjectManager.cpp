@@ -29,11 +29,7 @@ mold::render::objects::GameObject *mold::render::objects::GameObjectsManager::In
 bool mold::render::objects::GameObjectsManager::Exists(std::string name)
 {
     // check if map contains the game object's name
-    #if __cplusplus == 201703L
     return Get().count(name);
-    #else
-    return Get().contains(name);
-    #endif
 }
 
 void mold::render::objects::GameObjectsManager::Remove(std::string name)

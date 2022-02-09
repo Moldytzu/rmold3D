@@ -33,11 +33,7 @@ void mold::render::objects::GameObject::TickComponents()
     for (auto const &[name, ptr] : Components)
     {
         // don't tick disabled components
-        #if __cplusplus == 201703L
         if (ptr->Enabled && StartsWith(name,(Name+std::string(" :"))))
-        #else
-        if (ptr->Enabled && name.starts_with(Name + " :"))
-        #endif
         {
             ptr->Tick(); // tick it
         }
@@ -51,11 +47,7 @@ void mold::render::objects::GameObject::HandleComponents(mold::EventType event)
     for (auto const &[name, ptr] : Components)
     {
         // don't pass events to disabled components
-        #if __cplusplus == 201703L
-        if (ptr->Enabled && StartsWith(name,(Name+std::string(" :"))))
-        #else
-        if (ptr->Enabled && name.starts_with(Name + " :"))
-        #endif 
+        if (ptr->Enabled && StartsWith(name,(Name+std::string(" :")))) 
         {
             ptr->Handle(event); // pass event
         }
@@ -64,11 +56,7 @@ void mold::render::objects::GameObject::HandleComponents(mold::EventType event)
 
 bool mold::render::objects::GameObject::ExistsComponent(std::string name)
 {
-    #if __cplusplus == 201703L
     return Components.count(name);
-    #else
-    return Components.contains(name);
-    #endif
 }
 
 // Default functions
