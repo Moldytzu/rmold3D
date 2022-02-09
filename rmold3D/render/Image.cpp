@@ -46,13 +46,23 @@ std::unordered_map<std::string, mold::render::image::Texture> db; // database to
 
 mold::render::image::Texture::Texture(std::string filename)
 {
-    if(db.contains(filename)) // don't load if the file is already in memory
+    // don't load if the file is already in memory
+    #if __cplusplus == 201703L
+    if(db.count(filename))
+    #else
+    if(db.contains(filename))
+    #endif
     {
-        *this = db[filename]; // set the values to the values that are already stored in the database
+        *this = db[filename];
         return;
     }
 
-    if (!filename.ends_with(".bmp")) // we support only bitmaps
+    // we support only bitmaps
+    #if __cplusplus == 201703L
+    if (!EndsWith(filename,std::string(".bmp")))
+    #else
+    if (!filename.ends_with(".bmp"))
+    #endif
         mold::log::Fatal("Unsupported texture format. Please use the 24-bit uncompressed bitmap.");
 
     std::ifstream stream(filename); // create stream

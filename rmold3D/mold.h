@@ -19,6 +19,11 @@
 
 typedef unsigned int uint;
 
+#if __cplusplus == 201703L
+#define EndsWith(str,suffix) (str.size() >= suffix.size() && 0 == str.compare(str.size()-suffix.size(), suffix.size(), suffix))
+#define StartsWith(str,prefix) (str.size() >= prefix.size() && 0 == str.compare(0, prefix.size(), prefix))
+#endif
+
 namespace mold
 {
     enum EventType
