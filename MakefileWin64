@@ -25,10 +25,10 @@ clean:
 	rm -rf $(OBJS)
 
 lib: $(OBJS)
-	ar -crs $(LIB) $(OBJS)
+	C:\msys64\mingw64\bin\ar -crs $(LIB) $(OBJS)
 
 define buildGame
-	$(CPP) $(1) $(LIB) -lglfw -ldl -o game $(CFLAGS)
+	$(CPP) $(1) $(LIB) -lglfw3 -o game $(CFLAGS)
 endef
 
 game: lib 

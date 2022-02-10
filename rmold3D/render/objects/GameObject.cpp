@@ -1,4 +1,4 @@
-#include <rmold3D/mold.h>
+#include "../../mold.h"
 
 using namespace mold::render::objects;
 
