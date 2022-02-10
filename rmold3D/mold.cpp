@@ -2,7 +2,7 @@
 
 void handleScroll(GLFWwindow *, double, double);
 
-//glfw callbacks
+// glfw callbacks
 void onResize(GLFWwindow *window, int width, int height)
 {
     mold::GlobalEventSystem.CallEvent(mold::EventType::Resize); // call resize event
@@ -12,14 +12,14 @@ void onResize(GLFWwindow *window, int width, int height)
     glm::ortho(0.0f, (float)width, 0.0f, (float)height, 0.1f, 100.0f); // reset orthography
 }
 
-//clean up
+// clean up
 void mold::Destroy()
 {
     mold::GlobalEventSystem.CallEvent(mold::EventType::Exit); // call exit event
 
     for (auto const &[name, ptr] : GlobalGameObjects.Get())
         delete ptr; // delete gameobject
-    
+
     mold::render::objects::GameObject tmp;
     for (auto const &[name, ptr] : tmp.GetComponents())
         delete ptr; // delete all components
@@ -43,17 +43,17 @@ void mold::Init(uint width, uint height)
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); // GL 3.3 Core
 
-    //set rng
+    // set rng
     srand((uint64_t)glfwGetTime());
 
     mold::GlobalWindow = glfwCreateWindow(width, height, "Rewritten mold 3D", NULL, NULL); // create window
     if (mold::GlobalWindow == NULL)                                                        // exit if the window couldn't be created
         mold::log::Fatal("Couldn't create glfw window!");
 
-    #ifdef GLFW_RAW_MOUSE_MOTION
+#ifdef GLFW_RAW_MOUSE_MOTION
     if (glfwRawMouseMotionSupported()) // enable raw mouse motion if supported
         glfwSetInputMode(mold::GlobalWindow, GLFW_RAW_MOUSE_MOTION, GLFW_TRUE);
-    #endif
+#endif
 
     glfwMakeContextCurrent(mold::GlobalWindow); // create opengl context
 
@@ -67,11 +67,11 @@ void mold::Init(uint width, uint height)
     glfwSetScrollCallback(mold::GlobalWindow, handleScroll);
 
     // set up gl
-    glViewport(0, 0, width, height); // set viewport
-    glm::ortho(0.0f, (float)width, 0.0f, (float)height, 0.1f, 100.0f);
-    glEnable(GL_DEPTH_TEST);                           // depth testing
-    glEnable(GL_BLEND);                                // blending
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); // substract alpha channel for transparency
+    glViewport(0, 0, width, height);                                   // set viewport
+    glm::ortho(0.0f, (float)width, 0.0f, (float)height, 0.1f, 100.0f); // set orthographic projection
+    glEnable(GL_DEPTH_TEST);                                           // depth testing
+    glEnable(GL_BLEND);                                                // blending
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);                 // substract alpha channel for transparency
 
     // compile shaders
     uint vertexShader = mold::render::shader::CompileShader(mold::render::shader::VertexShaderSource, GL_VERTEX_SHADER); // create and compile vertex shader

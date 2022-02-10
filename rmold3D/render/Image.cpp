@@ -9,7 +9,7 @@ void mold::render::image::Texture::Bind()
 
 void mold::render::image::Texture::Deallocate()
 {
-    delete[] PixelData; // delete pixel data as it's allocated on the heap
+    delete[] PixelData;                 // delete pixel data as it's allocated on the heap
     glDeleteTextures(1, &TextureIndex); // delete texture
 }
 
@@ -47,14 +47,14 @@ std::unordered_map<std::string, mold::render::image::Texture> db; // database to
 mold::render::image::Texture::Texture(std::string filename)
 {
     // don't load if the file is already in memory
-    if(db.count(filename))
+    if (db.count(filename))
     {
         *this = db[filename];
         return;
     }
 
     // we support only bitmaps
-    if (!EndsWith(filename,std::string(".bmp")))
+    if (!EndsWith(filename, std::string(".bmp")))
         mold::log::Fatal("Unsupported texture format. Please use the 24-bit uncompressed bitmap.");
 
     std::ifstream stream(filename); // create stream
@@ -97,5 +97,5 @@ mold::render::image::Texture::Texture(std::string filename)
 
     CreateIndex(); // create index for opengl
 
-    db.emplace(std::move(filename),std::move(*this)); // add to database
+    db.emplace(std::move(filename), std::move(*this)); // add to database
 }

@@ -34,7 +34,7 @@ void mold::render::objects::GameObject::TickComponents()
     for (auto const &[name, ptr] : Components)
     {
         // don't tick disabled components
-        if (ptr->Enabled && StartsWith(name,(Name+std::string(" :"))))
+        if (ptr->Enabled && StartsWith(name, (Name + std::string(" :"))))
         {
             ptr->Tick(); // tick it
         }
@@ -48,7 +48,7 @@ void mold::render::objects::GameObject::HandleComponents(mold::EventType event)
     for (auto const &[name, ptr] : Components)
     {
         // don't pass events to disabled components
-        if (ptr->Enabled && StartsWith(name,(Name+std::string(" :")))) 
+        if (ptr->Enabled && StartsWith(name, (Name + std::string(" :"))))
         {
             ptr->Handle(event); // pass event
         }

@@ -26,7 +26,7 @@ void EventSystem::CallEvent(EventType type)
     case EventType::Resize:
         GlobalApplication->OnResize();
         break;
-    
+
     default:
         break;
     }

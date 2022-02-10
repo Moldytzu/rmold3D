@@ -23,8 +23,8 @@ typedef unsigned int uint;
 #error rmold3D deppends on C++17 features to work. You either don't have them enabled or your compiler doesn't support them.
 #endif
 
-#define EndsWith(str,suffix) (str.size() >= suffix.size() && 0 == str.compare(str.size()-suffix.size(), suffix.size(), suffix))
-#define StartsWith(str,prefix) (str.size() >= prefix.size() && 0 == str.compare(0, prefix.size(), prefix))
+#define EndsWith(str, suffix) (str.size() >= suffix.size() && 0 == str.compare(str.size() - suffix.size(), suffix.size(), suffix))
+#define StartsWith(str, prefix) (str.size() >= prefix.size() && 0 == str.compare(0, prefix.size(), prefix))
 
 namespace mold
 {
