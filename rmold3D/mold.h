@@ -143,7 +143,8 @@ namespace mold
                                                       "   float spec = pow(max(dot(direction, reflect), 0.0), 8);\n"
                                                       "   float dist = length(sunPos-objPos);\n"
                                                       "   float attenuation = 1.0f / (dist * dist);"
-                                                      "   FragColor = texture(mainTexture, textureCoord) * (diffuse + ambient + spec);\n"
+                                                      "   float lighting = diffuse + ambient + spec;"
+                                                      "   FragColor = texture(mainTexture, textureCoord) * icolour;\n"
                                                       "}\n";
 
             inline uint GlobalShaderProgram;
