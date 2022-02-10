@@ -148,7 +148,7 @@ glm::vec3 oldDirection;
 
 void mold::Run()
 {
-    mold::log::Info("Running the game");
+    mold::log::Info("Running " + mold::GlobalApplication->Name());
 
     // run the game if the window is open
     while (!glfwWindowShouldClose(mold::GlobalWindow))

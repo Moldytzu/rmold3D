@@ -349,6 +349,7 @@ namespace mold
         virtual void OnDraw();
         virtual void OnResize();
         virtual void OnMouseInput();
+        virtual std::string Name();
     };
 
     inline GLFWwindow *GlobalWindow;

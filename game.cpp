@@ -95,6 +95,11 @@ public:
     {
         mold::settings::FOV -= mold::input::GlobalScrollAxis;
     }
+
+    std::string Name() override
+    {
+        return "Example Game";
+    }
 };
 
 mold::Application *mold::BuildApplication()

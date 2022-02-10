@@ -105,6 +105,11 @@ public:
     {
         mold::settings::FOV -= mold::input::GlobalScrollAxis;
     }
+
+    std::string Name() override
+    {
+        return "Cubes Stress-test";
+    }
 };
 
 mold::Application *mold::BuildApplication()
