@@ -1,5 +1,7 @@
 #include <rmold3D/mold.h>
 
+using namespace mold::render::objects;
+
 std::unordered_map<std::string, uint32_t> newObjects;
 
 void mold::render::objects::GameObjectsManager::Add(std::string name, GameObject *object)
@@ -36,7 +38,7 @@ void mold::render::objects::GameObjectsManager::Remove(std::string name)
 {
     if (!Exists(name))
     {
-        mold::log::Warn("Can't remove inexistent game object " + name);
+        log::Warn("Can't remove inexistent game object " + name);
         return;
     }
 
@@ -47,7 +49,7 @@ mold::render::objects::GameObject *mold::render::objects::GameObjectsManager::Ge
 {
     if (!Exists(name))
     {
-        mold::log::Warn("Can't get inexistent game object " + name);
+        log::Warn("Can't get inexistent game object " + name);
         return nullptr;
     }
 

@@ -1,5 +1,7 @@
 #include <rmold3D/mold.h>
 
+using namespace mold::render::objects;
+
 // Components
 
 std::unordered_map<std::string, mold::render::objects::Component *> Components;
@@ -20,7 +22,7 @@ void mold::render::objects::GameObject::DettachComponent(std::string name)
 {
     if (!ExistsComponent(name))
     {
-        mold::log::Error("Failed to dettach non-existent component");
+        log::Error("Failed to dettach non-existent component");
         return;
     }
 

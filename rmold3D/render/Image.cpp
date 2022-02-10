@@ -1,5 +1,7 @@
 #include <rmold3D/mold.h>
 
+using namespace mold::render::image;
+
 mold::render::image::Texture::Texture() {}
 
 void mold::render::image::Texture::Bind()
@@ -55,21 +57,21 @@ mold::render::image::Texture::Texture(std::string filename)
 
     // we support only bitmaps
     if (!EndsWith(filename, std::string(".bmp")))
-        mold::log::Fatal("Unsupported texture format. Please use the 24-bit uncompressed bitmap.");
+        log::Fatal("Unsupported texture format. Please use the 24-bit uncompressed bitmap.");
 
     std::ifstream stream(filename); // create stream
 
     if (!stream.good()) // fails if file doesn't exist
-        mold::log::Fatal("Failed to load bitmap " + filename);
+        log::Fatal("Failed to load bitmap " + filename);
 
-    mold::render::image::BitmapImageHeader *header = new mold::render::image::BitmapImageHeader; // allocate memory for the header
+    BitmapImageHeader *header = new BitmapImageHeader; // allocate memory for the header
 
-    stream.read((char *)header, sizeof(mold::render::image::BitmapImageHeader)); // read it
+    stream.read((char *)header, sizeof(BitmapImageHeader)); // read it
     if (!stream.good())                                                          // fail
-        mold::log::Fatal("Failed to read header of bitmap " + filename);
+        log::Fatal("Failed to read header of bitmap " + filename);
 
     if (header->BPP != 24) // check bpp
-        mold::log::Fatal("Unexpected " + std::to_string(header->BPP) + " bpp. Expected 24.");
+        log::Fatal("Unexpected " + std::to_string(header->BPP) + " bpp. Expected 24.");
 
     Width = header->BitmapWidth;
     Height = header->BitmapHeight;
@@ -78,7 +80,7 @@ mold::render::image::Texture::Texture(std::string filename)
 
     stream.read((char *)PixelData, header->ImageSize); // read it
     if (!stream.good())                                // fail
-        mold::log::Fatal("Failed to read contents of bitmap " + filename);
+        log::Fatal("Failed to read contents of bitmap " + filename);
 
     for (int i = 0; i < header->ImageSize; i += 3)
     {

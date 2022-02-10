@@ -1,5 +1,7 @@
 #include <rmold3D/mold.h>
 
+using namespace mold::log;
+
 #define NOW std::chrono::high_resolution_clock::now()
 #define DIFFERENCE (double)(std::chrono::duration_cast<std::chrono::milliseconds>(NOW - engineStartedSince).count() / 1000.0f)
 
@@ -23,5 +25,5 @@ void mold::log::Error(std::string str)
 void mold::log::Fatal(std::string str)
 {
     printf("[%.2f/Fatal] %s\n", DIFFERENCE, str.c_str());
-    mold::Destroy();
+    Destroy();
 }

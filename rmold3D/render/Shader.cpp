@@ -1,5 +1,7 @@
 #include <rmold3D/mold.h>
 
+using namespace mold::render;
+
 mold::render::Shader::Shader()
 {
     Shaders = new uint[0xFFFF]; // 64k shaders should be enough :)
@@ -15,7 +17,7 @@ void mold::render::Shader::Recompile()
     int success;
     glGetProgramiv(Program, GL_LINK_STATUS, &success); // get compilation status
     if (!success)
-        mold::log::Fatal("Failed to link shader.");
+        log::Fatal("Failed to link shader.");
 }
 
 void mold::render::Shader::Deallocate()
@@ -40,7 +42,7 @@ void mold::render::Shader::AttachSource(std::string source, uint type)
     int success;
     glGetShaderiv(shader, GL_COMPILE_STATUS, &success); // get compilation status
     if (!success)
-        mold::log::Fatal("Failed to attach shader with the type " + std::to_string(type));
+        log::Fatal("Failed to attach shader with the type " + std::to_string(type));
 
     Shaders[ShadersIndex++] = shader;
 }

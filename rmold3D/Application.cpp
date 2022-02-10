@@ -1,5 +1,7 @@
 #include <rmold3D/mold.h>
 
+using namespace mold;
+
 void mold::Application::OnDraw() {}
 void mold::Application::OnMouseInput() {}
 void mold::Application::OnResize() {}
@@ -14,13 +16,13 @@ mold::Application::Application() : mold::Application::Application(800, 600) {}
 
 mold::Application::Application(uint width, uint height)
 {
-    mold::Init(width, height);
+    Init(width, height);
 }
 
 int main()
 {
-    mold::GlobalApplication = mold::BuildApplication(); // ask the sandbox to build an application
-    mold::Run();                                        // run the engine
-    mold::Destroy();                                    // clean everything
+    GlobalApplication = BuildApplication(); // ask the sandbox to build an application
+    Run();                                  // run the engine
+    Destroy();                              // clean everything
     return 0;
 }

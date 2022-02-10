@@ -1,8 +1,8 @@
 #include <rmold3D/mold.h>
 
-using namespace mold;
+using namespace mold::input;
 
 bool mold::input::GetKey(int key)
 {
-    return glfwGetKey(mold::GlobalWindow, key); // wrap glfwGetKey
+    return glfwGetKey(GlobalWindow, key); // wrap glfwGetKey
 }

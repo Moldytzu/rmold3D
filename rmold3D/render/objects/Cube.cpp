@@ -1,8 +1,10 @@
 #include <rmold3D/mold.h>
 
+using namespace mold::render::objects;
+
 mold::render::objects::Cube::Cube() {}
 
-mold::render::objects::Cube::Cube(mold::render::image::Texture texture) : GameObject(texture)
+mold::render::objects::Cube::Cube(image::Texture texture) : GameObject(texture)
 {
     float vertices[] =
         {
@@ -54,12 +56,12 @@ mold::render::objects::Cube::Cube(mold::render::image::Texture texture) : GameOb
             Vertex(-0.5f, 0.5f, 0.5f), TexCoord(0.0f, 0.0f), Normal(0,-1,0),   // right down
             Vertex(-0.5f, 0.5f, -0.5f), TexCoord(0.0f, 1.0f), Normal(0,-1,0),}; // right up
 
-    Vabo = mold::render::VABO(vertices, sizeof(vertices)); // generate VBO & VAO
+    Vabo = VABO(vertices, sizeof(vertices)); // generate VBO & VAO
 }
 
 void mold::render::objects::Cube::Draw()
 {
-    mold::render::DrawTriangles(36); // draw 36 triangles
+    DrawTriangles(36); // draw 36 triangles
 }
 
 std::string mold::render::objects::Cube::Type()

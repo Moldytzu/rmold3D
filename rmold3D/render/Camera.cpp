@@ -1,5 +1,7 @@
 #include <rmold3D/mold.h>
 
+using namespace mold::render::camera;
+
 void mold::render::camera::Translate(glm::vec3 axis, float value)
 {
     // translate in the desired position
@@ -31,7 +33,7 @@ void mold::render::camera::Rotate(glm::vec3 axis, float value)
 
 bool mold::render::camera::InView(glm::vec3 position)
 {
-    float fovDiv = mold::settings::FOV / mold::settings::ViewDistanceDivisor;
+    float fovDiv = settings::FOV / settings::ViewDistanceDivisor;
     bool inY = position.y > (Position.y - fovDiv) && position.y < (Position.y + fovDiv);
     bool inX = position.x > (Position.x - fovDiv) && position.x < (Position.x + fovDiv);
     bool inZ = position.z > (Position.z - fovDiv) && position.z < (Position.z + fovDiv);

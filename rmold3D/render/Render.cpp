@@ -1,5 +1,7 @@
 #include <rmold3D/mold.h>
 
+using namespace mold::render;
+
 mold::render::Colour::Colour(uint8_t r, uint8_t g, uint8_t b)
 {
     R = r, G = g, B = b; // set RGB values individually

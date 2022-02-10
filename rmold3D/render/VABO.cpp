@@ -1,5 +1,7 @@
 #include <rmold3D/mold.h>
 
+using namespace mold::render;
+
 mold::render::VABO::VABO() {}
 
 mold::render::VABO::VABO(float *vertices, size_t len)

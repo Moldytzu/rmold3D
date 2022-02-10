@@ -1,5 +1,7 @@
 #include <rmold3D/mold.h>
 
-void mold::render::objects::Component::Handle(mold::EventType event) {}
+using namespace mold::render::objects;
+
+void mold::render::objects::Component::Handle(EventType event) {}
 void mold::render::objects::Component::Tick() {}
 void mold::render::objects::Component::Start() {}

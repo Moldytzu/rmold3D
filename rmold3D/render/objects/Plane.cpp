@@ -1,8 +1,10 @@
 #include <rmold3D/mold.h>
 
+using namespace mold::render::objects;
+
 mold::render::objects::Plane::Plane() {}
 
-mold::render::objects::Plane::Plane(mold::render::image::Texture texture) : GameObject(texture)
+mold::render::objects::Plane::Plane(image::Texture texture) : GameObject(texture)
 {
     float vertices[] =
         {
@@ -19,7 +21,7 @@ mold::render::objects::Plane::Plane(mold::render::image::Texture texture) : Game
 
 void mold::render::objects::Plane::Draw()
 {
-    mold::render::DrawTriangles(6); // draw 6 triangles
+    DrawTriangles(6); // draw 6 triangles
 }
 
 std::string mold::render::objects::Plane::Type()
