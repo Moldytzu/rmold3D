@@ -165,9 +165,7 @@ void mold::Run()
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear screen and the depth buffer
 
         // update window title (Rewritten mold 3D @ ?? FPS)
-        std::string wtitle = "Rewritten mold 3D @ ";
-        wtitle += std::to_string((int)std::round((float)1 / mold::time::DeltaTime));
-        wtitle += " FPS";
+        std::string wtitle = "Rewritten mold 3D @ " + std::to_string((int)(1/mold::time::DeltaTime)) + " FPS";
         glfwSetWindowTitle(mold::GlobalWindow, wtitle.c_str());
 
         // handle cursor locking mode
