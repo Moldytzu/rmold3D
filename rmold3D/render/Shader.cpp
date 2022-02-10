@@ -1,56 +1,64 @@
 #include <rmold3D/mold.h>
 
-void mold::render::shader::SetUniform4fv(std::string location, glm::mat4 matrix)
+mold::render::Shader::Shader()
 {
-    uint loc = glGetUniformLocation(mold::render::shader::GlobalShaderProgram, location.c_str()); // get location
-    glUniformMatrix4fv(loc, 1, GL_FALSE, &matrix[0][0]);                                          // set matrix
+    Shaders = new uint[0xFFFF]; // 64k shaders should be enough :)
 }
 
-void mold::render::shader::SetUniform4v(std::string location, glm::vec4 vector)
+void mold::render::Shader::Recompile()
 {
-    uint loc = glGetUniformLocation(mold::render::shader::GlobalShaderProgram, location.c_str()); // get location
-    glUniform4fv(loc, 1, &vector[0]);                                                             // set vector
+    Program = glCreateProgram();           // create new program
+    for (int i = 0; i < ShadersIndex; i++) // attach each shader
+        glAttachShader(Program, Shaders[i]);
+    glLinkProgram(Program); // link the program
+
+    int success;
+    glGetProgramiv(Program, GL_LINK_STATUS, &success); // get compilation status
+    if (!success)
+        mold::log::Fatal("Failed to link shader.");
 }
 
-void mold::render::shader::SetUniform3v(std::string location, glm::vec3 vector)
+void mold::render::Shader::Deallocate()
 {
-    uint loc = glGetUniformLocation(mold::render::shader::GlobalShaderProgram, location.c_str()); // get location
-    glUniform4fv(loc, 1, &vector[0]);                                                             // set vector
+    glDeleteProgram(Program);
+    delete Shaders;
 }
 
-uint mold::render::shader::CompileShader(std::string source, uint type)
+void mold::render::Shader::Bind()
+{
+    if (Program != 0xdeadbeef)
+        glUseProgram(Program);
+}
+
+void mold::render::Shader::AttachSource(std::string source, uint type)
 {
     const char *cstr = source.c_str();
-    unsigned int vertexShader = glCreateShader(type); // create and compile shader
-    glShaderSource(vertexShader, 1, &cstr, NULL);     // specify the source
-    glCompileShader(vertexShader);                    // compile
-    return vertexShader;                              // return it
-}
+    unsigned int shader = glCreateShader(type); // create and compile shader
+    glShaderSource(shader, 1, &cstr, NULL);     // specify the source
+    glCompileShader(shader);                    // compile
 
-uint mold::render::shader::LinkShader(uint fragment, uint vertex)
-{
-    uint shaderProgram = glCreateProgram(); // create a program
-    glAttachShader(shaderProgram, vertex);  // attach shaders
-    glAttachShader(shaderProgram, fragment);
-    glLinkProgram(shaderProgram); // link it
-
-    // clean up the objects as you will not use them
-    glDeleteShader(vertex);
-    glDeleteShader(fragment);
-
-    return shaderProgram;
-}
-
-bool mold::render::shader::GetCompilationError(uint shader)
-{
     int success;
     glGetShaderiv(shader, GL_COMPILE_STATUS, &success); // get compilation status
-    return (bool)success;
+    if (!success)
+        mold::log::Fatal("Failed to attach shader with the type " + std::to_string(type));
+
+    Shaders[ShadersIndex++] = shader;
 }
 
-bool mold::render::shader::GetLinkError(uint program)
+void mold::render::Shader::Set(std::string location, glm::mat4 matrix)
 {
-    int success;
-    glGetProgramiv(program, GL_LINK_STATUS, &success); // get link status
-    return (bool)success;
+    uint loc = glGetUniformLocation(Program, location.c_str()); // get location
+    glUniformMatrix4fv(loc, 1, GL_FALSE, &matrix[0][0]);        // set matrix
+}
+
+void mold::render::Shader::Set(std::string location, glm::vec4 vector)
+{
+    uint loc = glGetUniformLocation(Program, location.c_str()); // get location
+    glUniform4fv(loc, 1, &vector[0]);                           // set vector
+}
+
+void mold::render::Shader::Set(std::string location, glm::vec3 vector)
+{
+    uint loc = glGetUniformLocation(Program, location.c_str()); // get location
+    glUniform4fv(loc, 1, &vector[0]);                           // set vector
 }

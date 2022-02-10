@@ -73,45 +73,10 @@ void mold::Init(uint width, uint height)
     glEnable(GL_BLEND);                                                // blending
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);                 // substract alpha channel for transparency
 
-    // compile shaders
-    uint vertexShader = mold::render::shader::CompileShader(mold::render::shader::VertexShaderSource, GL_VERTEX_SHADER); // create and compile vertex shader
-
-    // check for errors
-    if (!mold::render::shader::GetCompilationError(vertexShader))
-    {
-        int errorLen;
-        glGetShaderiv(vertexShader, GL_INFO_LOG_LENGTH, &errorLen); // get len of error
-        const char *buffer = new char[errorLen];                    // allocate memory for error buffer
-        int bufSize;
-        glGetShaderInfoLog(vertexShader, errorLen, (GLsizei *)&bufSize, (GLchar *)buffer); // get log info
-        mold::log::Error("Vertex Shader: " + std::string(buffer));
-        delete[] buffer; // free up the buffer after we display it
-        mold::Destroy();
-    }
-
-    uint fragmentShader = mold::render::shader::CompileShader(mold::render::shader::FragmentShaderSource, GL_FRAGMENT_SHADER); // create and compile fragment shader
-
-    // check for errors
-    if (!mold::render::shader::GetCompilationError(fragmentShader))
-    {
-        int errorLen;
-        glGetShaderiv(vertexShader, GL_INFO_LOG_LENGTH, &errorLen); // get len of error
-        const char *buffer = new char[errorLen];                    // allocate memory for error buffer
-        int bufSize;
-        glGetShaderInfoLog(vertexShader, errorLen, (GLsizei *)&bufSize, (GLchar *)buffer); // get log info
-        mold::log::Error("Fragment Shader: " + std::string(buffer));
-        delete[] buffer; // free up the buffer after we display it
-        mold::Destroy();
-    }
-
-    mold::render::shader::GlobalShaderProgram = mold::render::shader::LinkShader(fragmentShader, vertexShader); // link the shaders together to form a program
-
-    // check for errors
-    if (!mold::render::shader::GetLinkError(mold::render::shader::GlobalShaderProgram))
-        mold::log::Fatal("Failed to link shader program");
-
-    // use shader
-    glUseProgram(mold::render::shader::GlobalShaderProgram);
+    GlobalShader.AttachSource(mold::render::VertexShaderSource, GL_VERTEX_SHADER);     // attach vertex shader
+    GlobalShader.AttachSource(mold::render::FragmentShaderSource, GL_FRAGMENT_SHADER); // attach fragment shader
+    GlobalShader.Recompile();                                                          // compile it
+    GlobalShader.Bind();
 }
 
 // mouse handling
@@ -242,17 +207,15 @@ void mold::Run()
         }
 
         // ensure that we use shader
-        glUseProgram(mold::render::shader::GlobalShaderProgram);
+        GlobalShader.Bind();
 
         // give the shader our view and projection
-
 #define view glm::lookAt(mold::render::camera::Position, mold::render::camera::Position + mold::render::camera::Front, mold::render::camera::Up)
 #define projection glm::perspective(glm::radians(mold::settings::FOV), mold::settings::WindowWidth / mold::settings::WindowHeight, 0.1f, 100.0f)
 
-        mold::render::shader::SetUniform4fv("view", view);
-        mold::render::shader::SetUniform4fv("projection", projection);
-
-        mold::render::shader::SetUniform3v("sunPos", mold::render::lighting::SunPosition);
+        GlobalShader.Set("view", view);
+        GlobalShader.Set("projection", projection);
+        GlobalShader.Set("sunPos", mold::render::lighting::SunPosition);
 
         // draw stuff
         mold::GlobalEventSystem.CallEvent(EventType::Redraw);

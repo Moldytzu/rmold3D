@@ -145,11 +145,11 @@ void mold::render::objects::GameObject::ReplaceTexture(mold::render::image::Text
 
 void mold::render::objects::GameObject::Bind()
 {
-    Vabo.Bind();                                                                         // bind vao & vbo
-    Texture.Bind();                                                                      // bind texture
-    mold::render::shader::SetUniform4fv("model", PositionMatrix);                        // give the shader our position matrix
-    mold::render::shader::SetUniform4v("fcolour", glm::vec4(1.0f, 1.0f, 1.0f, Opacity)); // pass colour information needed for transparency
-    mold::render::shader::SetUniform3v("objPos", PositionMatrix[3]);
+    Vabo.Bind();                                                       // bind vao & vbo
+    Texture.Bind();                                                    // bind texture
+    GlobalShader.Set("model", PositionMatrix);                         // give the shader our position matrix
+    GlobalShader.Set("fcolour", glm::vec4(1.0f, 1.0f, 1.0f, Opacity)); // pass colour information needed for transparency
+    GlobalShader.Set("objPos", PositionMatrix[3]);
 }
 
 std::string mold::render::objects::GameObject::Type()
