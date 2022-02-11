@@ -43,7 +43,7 @@ public:
 
     void Handle(mold::EventType event) override
     {
-        if (event == mold::EventType::Mouse) // update mouse
+        if (event == mold::EventType::Mouse && mold::input::GlobalCursorLockMode == mold::CursorLockingMode::Wrapped) // update mouse
         {
             mold::render::camera::Yaw += mold::input::GlobalCursorAxis.x * mold::settings::MouseSensibility * mold::time::DeltaTime;
             mold::render::camera::Pitch += mold::input::GlobalCursorAxis.y * mold::settings::MouseSensibility * mold::time::DeltaTime;
