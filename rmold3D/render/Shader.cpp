@@ -23,7 +23,7 @@ void mold::render::Shader::Recompile()
 void mold::render::Shader::Deallocate()
 {
     glDeleteProgram(Program);
-    delete Shaders;
+    delete[] Shaders;
 }
 
 void mold::render::Shader::Bind()

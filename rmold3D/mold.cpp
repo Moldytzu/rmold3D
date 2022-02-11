@@ -28,6 +28,8 @@ void mold::Destroy()
 
     delete GlobalApplication; // deconstuct application
 
+    GlobalShader.Deallocate(); // deallocate shader
+
     glfwTerminate(); // terminate glfw
 
     exit(0); // exit
