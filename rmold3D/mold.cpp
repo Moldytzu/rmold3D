@@ -8,7 +8,7 @@ void handleScroll(GLFWwindow *, double, double);
 void onResize(GLFWwindow *window, int width, int height)
 {
     GlobalEventSystem.CallEvent(EventType::Resize); // call resize event
-    settings::WindowHeight = height;                      // set new window height and width
+    settings::WindowHeight = height;                // set new window height and width
     settings::WindowWidth = height;
     glViewport(0, 0, width, height);                                   // set new viewport
     glm::ortho(0.0f, (float)width, 0.0f, (float)height, 0.1f, 100.0f); // reset orthography
@@ -44,6 +44,7 @@ void mold::Init(uint width, uint height)
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); // GL 3.3 Core
+    glfwWindowHint(GLFW_SAMPLES, 4);                               // MSAA x4
 
     // set rng
     srand((uint64_t)glfwGetTime());
@@ -73,11 +74,12 @@ void mold::Init(uint width, uint height)
     glm::ortho(0.0f, (float)width, 0.0f, (float)height, 0.1f, 100.0f); // set orthographic projection
     glEnable(GL_DEPTH_TEST);                                           // depth testing
     glEnable(GL_BLEND);                                                // blending
+    glEnable(GL_MULTISAMPLE);                                          // enable multisampling even if it's already enabled on most of the gl drivers
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);                 // substract alpha channel for transparency
 
     GlobalShader.AttachSource(render::VertexShaderSource, GL_VERTEX_SHADER);     // attach vertex shader
     GlobalShader.AttachSource(render::FragmentShaderSource, GL_FRAGMENT_SHADER); // attach fragment shader
-    GlobalShader.Recompile();                                                          // compile it
+    GlobalShader.Recompile();                                                    // compile it
     GlobalShader.Bind();
 }
 
@@ -167,7 +169,7 @@ void mold::Run()
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear screen and the depth buffer
 
         // update window title (Rewritten mold 3D @ ?? FPS)
-        std::string wtitle = "Rewritten mold 3D @ " + std::to_string((int)(1/time::DeltaTime)) + " FPS";
+        std::string wtitle = "Rewritten mold 3D @ " + std::to_string((int)(1 / time::DeltaTime)) + " FPS";
         glfwSetWindowTitle(GlobalWindow, wtitle.c_str());
 
         // handle cursor locking mode
@@ -237,6 +239,6 @@ void mold::Run()
         glFlush(); // flush pipeline
 
         glfwSwapBuffers(GlobalWindow); // swap buffers
-        glfwPollEvents();                    // poll events
+        glfwPollEvents();              // poll events
     }
 }
