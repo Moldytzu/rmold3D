@@ -178,7 +178,7 @@ namespace mold
                                           "void main()\n"
                                           "{\n"
                                           "   TexCoords = aPos;\n"
-                                          "   gl_Position = projection * view * vec4(aPos, 1.0);\n"
+                                          "   gl_Position = vec4(projection * view * vec4(aPos, 1.0));\n"
                                           "}\n";
 
         class VABO

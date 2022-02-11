@@ -86,7 +86,7 @@ mold::render::Skybox::Skybox(std::string up, std::string side, std::string down)
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
 
-    SkyShader.Set("skybox",TextureID);
+    SkyShader.Set("skybox", TextureID);
 }
 
 void mold::render::Skybox::Bind()
