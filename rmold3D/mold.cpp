@@ -210,13 +210,16 @@ void mold::Run()
             oldPitch = render::camera::Pitch;
         }
 
+#define view glm::lookAt(render::camera::Position, render::camera::Position + render::camera::Front, render::camera::Up)
+#define projection glm::perspective(glm::radians(settings::FOV), settings::WindowWidth / settings::WindowHeight, 0.1f, 100.0f)
+
+        // draw skybox
+        GlobalSkybox.Bind();
+
         // ensure that we use shader
         GlobalShader.Bind();
 
         // give the shader our view and projection
-#define view glm::lookAt(render::camera::Position, render::camera::Position + render::camera::Front, render::camera::Up)
-#define projection glm::perspective(glm::radians(settings::FOV), settings::WindowWidth / settings::WindowHeight, 0.1f, 100.0f)
-
         GlobalShader.Set("view", view);
         GlobalShader.Set("projection", projection);
         GlobalShader.Set("sunPos", render::lighting::SunPosition);

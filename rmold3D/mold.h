@@ -107,6 +107,7 @@ namespace mold
             void Set(std::string location, glm::mat4 matrix);
             void Set(std::string location, glm::vec4 vector);
             void Set(std::string location, glm::vec3 vector);
+            void Set(std::string location, int value);
 
         private:
             uint Program = 0xdeadbeef;
@@ -160,6 +161,26 @@ namespace mold
             inline glm::vec3 SunPosition = glm::vec3(1.5f);
         };
 
+        inline std::string SkyboxFragmentSource = "#version 330 core\n"
+                                            "out vec4 FragColor;\n"
+                                            "in vec3 textureCoord;\n"
+                                            "uniform samplerCube skybox;\n"
+                                            "void main()\n"
+                                            "{\n"
+                                            "   FragColor = texture(skybox, textureCoord);\n"
+                                            "}\n";
+
+        inline std::string SkyboxVertexSource = "#version 330 core\n"
+                                          "layout (location = 0) in vec3 aPos;\n"
+                                          "out vec3 TexCoords;\n"
+                                          "uniform mat4 projection;\n"
+                                          "uniform mat4 view;\n"
+                                          "void main()\n"
+                                          "{\n"
+                                          "   TexCoords = aPos;\n"
+                                          "   gl_Position = projection * view * vec4(aPos, 1.0);\n"
+                                          "}\n";
+
         class VABO
         {
         public:
@@ -170,6 +191,23 @@ namespace mold
             void Deallocate();
 
         private:
+            uint VAO = 0, VBO = 0;
+        };    
+
+        class Skybox
+        {
+        public:
+            Skybox();
+            Skybox(std::string up, std::string side, std::string down);
+
+            void Bind();
+            void Deallocate();
+
+            bool Enabled = false;
+            Shader SkyShader;
+        
+        private:
+            uint TextureID;
             uint VAO = 0, VBO = 0;
         };
 
@@ -354,9 +392,10 @@ namespace mold
 
     inline GLFWwindow *GlobalWindow;
     inline EventSystem GlobalEventSystem;
-    inline render::objects::GameObjectsManager GlobalGameObjects;
     inline Application *GlobalApplication;
     inline render::Shader GlobalShader;
+    inline render::Skybox GlobalSkybox;
+    inline render::objects::GameObjectsManager GlobalGameObjects;
 
     void Destroy();
 

@@ -64,3 +64,9 @@ void mold::render::Shader::Set(std::string location, glm::vec3 vector)
     uint loc = glGetUniformLocation(Program, location.c_str()); // get location
     glUniform4fv(loc, 1, &vector[0]);                           // set vector
 }
+
+void mold::render::Shader::Set(std::string location, int value)
+{
+    uint loc = glGetUniformLocation(Program, location.c_str()); // get location
+    glUniform1i(loc, value);                                    // set value
+}
