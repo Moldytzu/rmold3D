@@ -88,3 +88,15 @@ void mold::render::Shader::Set(std::string location, int value)
     uint loc = glGetUniformLocation(Program, location.c_str()); // get location
     glUniform1i(loc, value);                                    // set value
 }
+
+void mold::render::Shader::Set(std::string location, float value)
+{
+    uint loc = glGetUniformLocation(Program, location.c_str()); // get location
+    glUniform1f(loc, value);                                    // set value
+}
+
+void mold::render::Shader::Set(std::string location, bool value)
+{
+    uint loc = glGetUniformLocation(Program, location.c_str()); // get location
+    glUniform1i(loc, value);                                    // set value
+}

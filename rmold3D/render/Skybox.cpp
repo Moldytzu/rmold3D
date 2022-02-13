@@ -49,6 +49,7 @@ void mold::render::Skybox::Bind()
     Vabo.Bind();                                 // bind vao & vbo
     GlobalShader.Bind();                         // bind the shader
     GlobalShader.Set("fcolour", glm::vec4(1.0)); // pass colour information needed for transparency
+    GlobalShader.Set("fogEnabled", false);       // disable fog for the skybox
 
     // up
     model = glm::translate(glm::mat4(1.0f), render::camera::Position + glm::vec3(0, Scale / 2, 0)); // translate the model to the camera

@@ -126,6 +126,8 @@ namespace mold
             void Set(std::string location, glm::vec4 vector);
             void Set(std::string location, glm::vec3 vector);
             void Set(std::string location, int value);
+            void Set(std::string location, float value);
+            void Set(std::string location, bool value);
 
         private:
             uint Program = 0xdeadbeef;
@@ -137,23 +139,33 @@ namespace mold
                                                 "layout (location = 0) in vec3 vertexPosition;\n"
                                                 "layout (location = 1) in vec2 textureCoordornate;\n"
                                                 "out vec2 textureCoord;\n"
+                                                "out float visibility;\n"
                                                 "uniform mat4 model;\n"
                                                 "uniform mat4 view;\n"
                                                 "uniform mat4 projection;\n"
+                                                "uniform float fogDensity;\n"
                                                 "void main()\n"
                                                 "{\n"
                                                 "   gl_Position = projection * view * model * vec4(vertexPosition, 1.0);\n"
+                                                "   float dis = length(gl_Position.xyz);\n"
+                                                "   visibility = exp(-pow(dis*fogDensity,1.5));\n"
+                                                "   visibility = clamp(visibility,0.0,1.0);\n"
                                                 "   textureCoord = textureCoordornate;\n"
                                                 "}\n";
 
         inline std::string FragmentShaderSource = "#version 330 core\n"
                                                   "out vec4 FragColor;\n"
                                                   "in vec2 textureCoord;\n"
+                                                  "in float visibility;\n"
                                                   "uniform vec4 fcolour;\n"
                                                   "uniform sampler2D mainTexture;\n"
+                                                  "uniform bool fogEnabled;\n"
+                                                  "uniform vec4 fogColour;\n"
                                                   "void main()\n"
                                                   "{\n"
                                                   "   FragColor = texture(mainTexture, textureCoord) * fcolour;\n"
+                                                  "   if(fogEnabled == true)\n"
+                                                  "      {FragColor = mix(fogColour, FragColor, visibility);}\n"
                                                   "}\n";
 
         namespace lighting
@@ -172,7 +184,7 @@ namespace mold
 
         private:
             uint VAO = 0, VBO = 0;
-        };    
+        };
 
         class Skybox
         {
@@ -184,10 +196,10 @@ namespace mold
             void Deallocate();
 
             float Scale = 25.0f;
-        
+
         private:
             VABO Vabo;
-            image::Texture upT,sideT,downT;
+            image::Texture upT, sideT, downT;
         };
 
         namespace camera
