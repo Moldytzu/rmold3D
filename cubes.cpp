@@ -22,18 +22,18 @@
 Cubes stress test for rmold3D
 
 Started with: 
-- 2000 cubes: 20 FPS with stutters; 20 seconds to start up; 1.4 GB RAM (mouse f-ed up)
+- 2000 cubes: 20 FPS with stutters; 20 seconds to start up; consuming 1.4 GB RAM (mouse f-ed up)
 - 200 cubes: 55-60 FPS; 1.5 seconds to start up (mouse sped up)
 - 20 cubes: 55-60 FPS; 0.4 seconds to start up
 - 2 cubes: 55-60 FPS; 0.25 seconds to start up
 
 Right now we have:
-- 2000 cubes: 60 FPS; 1 second to start up with 65 MB RAM
-- 10000 cubes: 47 FPS; 19 seconds to start up with 71 MB RAM
+- 2000 cubes: 60 FPS; 1.5 second to start up; consuming 64 MB RAM
+- 10000 cubes: 20 FPS; 46 seconds to start up; consuming 96 MB RAM
 
 */
 
-#define CUBES 200
+#define CUBES 10000
 
 // Player component
 class Player : public mold::render::objects::Component
@@ -98,6 +98,8 @@ public:
         //Instantiate an empty gameobject as player
         mold::GlobalGameObjects.Instantiate(new mold::render::objects::GameObject(mold::render::image::Texture(mold::render::Colour(0))), "Player");
         mold::GlobalGameObjects.Get("Player")->AttachComponent("PlayerController", new Player);
+
+        mold::render::fog::Colour = glm::vec4(0,0,0,1); // black
     }
 
     ~Game()
