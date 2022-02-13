@@ -29,7 +29,7 @@ Started with:
 
 Right now we have:
 - 2000 cubes: 60 FPS; 1.5 second to start up; consuming 64 MB RAM
-- 5000 cubes: 38 FPS; 8 seconds to start up
+- 5000 cubes: 40 FPS; 9 seconds to start up
 - 10000 cubes: 20 FPS; 46 seconds to start up; consuming 96 MB RAM
 
 */
@@ -100,7 +100,7 @@ public:
         mold::GlobalGameObjects.Instantiate(new mold::render::objects::GameObject(mold::render::image::Texture(mold::render::Colour(0))), "Player");
         mold::GlobalGameObjects.Get("Player")->AttachComponent("PlayerController", new Player);
 
-        mold::render::fog::Colour = glm::vec4(0,0,0,1); // black
+        mold::settings::FogColour = glm::vec4(0,0,0,1); // black
     }
 
     ~Game()

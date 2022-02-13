@@ -85,7 +85,7 @@ mold::render::image::Texture::Texture(std::string filename)
     BitmapImageHeader *header = new BitmapImageHeader; // allocate memory for the header
 
     stream.read((char *)header, sizeof(BitmapImageHeader)); // read it
-    if (!stream.good())                                                          // fail
+    if (!stream.good())                                     // fail
         log::Fatal("Failed to read header of bitmap " + filename);
 
     if (header->BPP != 24) // check bpp

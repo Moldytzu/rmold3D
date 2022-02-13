@@ -168,18 +168,6 @@ namespace mold
                                                   "      {FragColor = mix(fogColour, FragColor, visibility);}\n"
                                                   "}\n";
 
-        namespace lighting
-        {
-            inline glm::vec3 SunPosition = glm::vec3(1.5f);
-        };
-
-        namespace fog
-        {
-            inline bool Enabled = true;
-            inline float Density = 0.25f;
-            inline glm::vec4 Colour = glm::vec4(1);
-        };
-
         class VABO
         {
         public:
@@ -338,6 +326,9 @@ namespace mold
         inline float WindowWidth;
         inline float WindowHeight;
         inline float MouseSensibility = 5.0f;
+        inline bool FogEnabled = true;
+        inline float FogDensity = 0.25f;
+        inline glm::vec4 FogColour = glm::vec4(1);
     };
 
     namespace time
