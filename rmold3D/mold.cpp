@@ -213,9 +213,6 @@ void mold::Run()
 #define view glm::lookAt(render::camera::Position, render::camera::Position + render::camera::Front, render::camera::Up)
 #define projection glm::perspective(glm::radians(settings::FOV), settings::WindowWidth / settings::WindowHeight, 0.1f, 100.0f)
 
-        // draw skybox
-        GlobalSkybox.Bind();
-
         // ensure that we use shader
         GlobalShader.Bind();
 
@@ -226,6 +223,9 @@ void mold::Run()
 
         // draw stuff
         GlobalEventSystem.CallEvent(EventType::Redraw);
+
+        // draw skybox
+        GlobalSkybox.Bind();
 
         // draw game objects
         for (auto const &[name, ptr] : GlobalGameObjects.Get())

@@ -161,26 +161,6 @@ namespace mold
             inline glm::vec3 SunPosition = glm::vec3(1.5f);
         };
 
-        inline std::string SkyboxFragmentSource = "#version 330 core\n"
-                                            "out vec4 FragColor;\n"
-                                            "in vec3 textureCoord;\n"
-                                            "uniform samplerCube skybox;\n"
-                                            "void main()\n"
-                                            "{\n"
-                                            "   FragColor = texture(skybox, textureCoord);\n"
-                                            "}\n";
-
-        inline std::string SkyboxVertexSource = "#version 330 core\n"
-                                          "layout (location = 0) in vec3 aPos;\n"
-                                          "out vec3 TexCoords;\n"
-                                          "uniform mat4 projection;\n"
-                                          "uniform mat4 view;\n"
-                                          "void main()\n"
-                                          "{\n"
-                                          "   TexCoords = aPos;\n"
-                                          "   gl_Position = vec4(projection * view * vec4(aPos, 1.0));\n"
-                                          "}\n";
-
         class VABO
         {
         public:
@@ -203,12 +183,11 @@ namespace mold
             void Bind();
             void Deallocate();
 
-            bool Enabled = false;
-            Shader SkyShader;
+            float Scale = 25.0f;
         
         private:
-            uint TextureID;
-            uint VAO = 0, VBO = 0;
+            VABO Vabo;
+            image::Texture upT,sideT,downT;
         };
 
         namespace camera
