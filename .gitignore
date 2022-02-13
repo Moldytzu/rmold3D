@@ -2,3 +2,5 @@ engrmold3D.a
 game
 .vscode
 *.o
+gmon.out
+gprof.out
