@@ -151,7 +151,6 @@ void mold::render::objects::GameObject::Bind()
     Texture.Bind();                                                    // bind texture
     GlobalShader.Set("model", PositionMatrix);                         // give the shader our position matrix
     GlobalShader.Set("fcolour", glm::vec4(1.0f, 1.0f, 1.0f, Opacity)); // pass colour information needed for transparency
-    GlobalShader.Set("objPos", PositionMatrix[3]);
 }
 
 std::string mold::render::objects::GameObject::Type()

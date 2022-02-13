@@ -13,12 +13,10 @@ mold::render::VABO::VABO(float *vertices, size_t len)
     glBindVertexArray(VAO);                                                                          // bind vao
     glBindBuffer(GL_ARRAY_BUFFER, VBO);                                                              // bind vbo
     glBufferData(GL_ARRAY_BUFFER, len, vertices, GL_STATIC_DRAW);                                    // set data
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void *)0);                   // position attribute
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void *)0);                   // position attribute
     glEnableVertexAttribArray(0);                                                                    // enable it
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void *)(3 * sizeof(float))); // texture coord attribute
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void *)(3 * sizeof(float))); // texture coord attribute
     glEnableVertexAttribArray(1);                                                                    // enable it
-    glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void *)(3 * sizeof(float))); // normal attribute
-    glEnableVertexAttribArray(2);                                                                    // enable it
 }
 
 void mold::render::VABO::Bind()

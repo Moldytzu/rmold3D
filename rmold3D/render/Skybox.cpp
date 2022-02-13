@@ -13,12 +13,12 @@ mold::render::Skybox::Skybox(std::string up, std::string side, std::string down)
 
     float vertices[] =
         {
-            Vertex(-0.5f, -0.5f, -0.5f), TexCoord(0.0f, 1.0f), Normal(0, -1, 0), // right up
-            Vertex(0.5f, -0.5f, -0.5f), TexCoord(1.0f, 1.0f), Normal(0, -1, 0),  // left up
-            Vertex(0.5f, -0.5f, 0.5f), TexCoord(1.0f, 0.0f), Normal(0, -1, 0),   // left down
-            Vertex(0.5f, -0.5f, 0.5f), TexCoord(1.0f, 0.0f), Normal(0, -1, 0),   // left down
-            Vertex(-0.5f, -0.5f, 0.5f), TexCoord(0.0f, 0.0f), Normal(0, -1, 0),  // right down
-            Vertex(-0.5f, -0.5f, -0.5f), TexCoord(0.0f, 1.0f), Normal(0, -1, 0), // right up
+            Vertex(-0.5f, -0.5f, -0.5f), TexCoord(0.0f, 1.0f), // right up
+            Vertex(0.5f, -0.5f, -0.5f), TexCoord(1.0f, 1.0f),  // left up
+            Vertex(0.5f, -0.5f, 0.5f), TexCoord(1.0f, 0.0f),   // left down
+            Vertex(0.5f, -0.5f, 0.5f), TexCoord(1.0f, 0.0f),   // left down
+            Vertex(-0.5f, -0.5f, 0.5f), TexCoord(0.0f, 0.0f),  // right down
+            Vertex(-0.5f, -0.5f, -0.5f), TexCoord(0.0f, 1.0f), // right up
         };
 
     Vabo = mold::render::VABO(vertices, sizeof(vertices)); // generate VBO & VAO

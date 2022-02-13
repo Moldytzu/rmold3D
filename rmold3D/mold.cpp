@@ -219,7 +219,6 @@ void mold::Run()
         // give the shader our view and projection
         GlobalShader.Set("view", view);
         GlobalShader.Set("projection", projection);
-        GlobalShader.Set("sunPos", render::lighting::SunPosition);
 
         // draw stuff
         GlobalEventSystem.CallEvent(EventType::Redraw);
