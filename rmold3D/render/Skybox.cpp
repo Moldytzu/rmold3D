@@ -22,13 +22,8 @@ using namespace mold::render;
 
 mold::render::Skybox::Skybox() {}
 
-mold::render::Skybox::Skybox(std::string up, std::string side, std::string down)
+mold::render::Skybox::Skybox(std::string up, std::string side, std::string down) : upT{up}, sideT{side}, downT{down}
 {
-
-    upT = image::Texture(up);
-    sideT = image::Texture(side);
-    downT = image::Texture(down);
-
     float vertices[] =
         {
             Vertex(-0.5f, -0.5f, -0.5f), TexCoord(0.0f, 1.0f), // right up

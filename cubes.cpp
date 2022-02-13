@@ -28,13 +28,13 @@ Started with:
 - 2 cubes: 55-60 FPS; 0.25 seconds to start up
 
 Right now we have:
-- 2000 cubes: 60 FPS; 1.5 second to start up; consuming 64 MB RAM
-- 5000 cubes: 40 FPS; 9 seconds to start up
-- 10000 cubes: 20 FPS; 46 seconds to start up; consuming 96 MB RAM
+- 2000 cubes: 60 FPS; 1.8 second to start up; consuming 64 MB RAM
+- 5000 cubes: 40 FPS; 8 seconds to start up; consuming 77 MB RAM
+- 10000 cubes: 20 FPS; 42 seconds to start up; consuming 96 MB RAM
 
 */
 
-#define CUBES 5000
+#define CUBES 2000
 
 // Player component
 class Player : public mold::render::objects::Component

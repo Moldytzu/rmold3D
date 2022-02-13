@@ -88,11 +88,7 @@ void mold::render::objects::GameObject::Draw() {}
 
 mold::render::objects::GameObject::GameObject() {}
 
-mold::render::objects::GameObject::GameObject(mold::render::image::Texture texture)
-{
-    Texture = texture; // set texture and enable the object
-    Enabled = true;
-}
+mold::render::objects::GameObject::GameObject(mold::render::image::Texture texture) : Texture{texture}, Enabled{true} {} // set texture and enable the object
 
 mold::render::objects::GameObject::~GameObject()
 {
