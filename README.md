@@ -8,4 +8,5 @@
     - Texture loading and mapping
     - 2 3D figures
     - Skybox
+    - Fog
     

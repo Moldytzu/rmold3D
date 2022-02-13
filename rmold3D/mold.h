@@ -173,6 +173,13 @@ namespace mold
             inline glm::vec3 SunPosition = glm::vec3(1.5f);
         };
 
+        namespace fog
+        {
+            inline bool Enabled = true;
+            inline float Density = 0.25f;
+            inline glm::vec4 Colour = glm::vec4(1);
+        };
+
         class VABO
         {
         public:

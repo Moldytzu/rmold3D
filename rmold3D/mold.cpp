@@ -245,9 +245,9 @@ void mold::Run()
         GlobalSkybox.Bind();
 
         // set fog parameters
-        GlobalShader.Set("fogDensity", 0.25f);
-        GlobalShader.Set("fogEnabled", true);
-        GlobalShader.Set("fogColour", glm::vec4(1));
+        GlobalShader.Set("fogDensity", render::fog::Density);
+        GlobalShader.Set("fogEnabled", render::fog::Enabled);
+        GlobalShader.Set("fogColour", render::fog::Colour);
 
         // draw game objects
         for (auto const &[name, ptr] : GlobalGameObjects.Get())
