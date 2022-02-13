@@ -169,6 +169,9 @@ void handleMouse()
 
 float oldYaw, oldPitch;
 glm::vec3 oldDirection;
+int oldFPS;
+CursorLockingMode oldLockingMode;
+glm::vec3 oldPosition, oldFront;
 
 void mold::Run()
 {
@@ -189,25 +192,33 @@ void mold::Run()
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear screen and the depth buffer
 
         // update window title (Rewritten mold 3D @ ?? FPS)
-        std::string wtitle = "Rewritten mold 3D @ " + std::to_string((int)(1 / time::DeltaTime)) + " FPS";
-        glfwSetWindowTitle(GlobalWindow, wtitle.c_str());
+        if (oldFPS != (int)(1 / time::DeltaTime))
+        {
+            std::string wtitle = "Rewritten mold 3D @ " + std::to_string((int)(1 / time::DeltaTime)) + " FPS";
+            glfwSetWindowTitle(GlobalWindow, wtitle.c_str());
+            oldFPS = (int)(1 / time::DeltaTime);
+        }
 
         // handle cursor locking mode
-        switch (input::GlobalCursorLockMode)
+        if (oldLockingMode != input::GlobalCursorLockMode)
         {
-        case CursorLockingMode::Normal:
-            glfwSetInputMode(GlobalWindow, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
-            break;
-        case CursorLockingMode::Locked:
-            glfwSetInputMode(GlobalWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-            break;
-        case CursorLockingMode::Centred:
-            glfwSetCursorPos(GlobalWindow, settings::WindowWidth / 2, settings::WindowHeight / 2);
-            glfwSetInputMode(GlobalWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-            break;
-        default:
-            glfwSetInputMode(GlobalWindow, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
-            break;
+            switch (input::GlobalCursorLockMode)
+            {
+            case CursorLockingMode::Normal:
+                glfwSetInputMode(GlobalWindow, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+                break;
+            case CursorLockingMode::Locked:
+                glfwSetInputMode(GlobalWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+                break;
+            case CursorLockingMode::Centred:
+                glfwSetCursorPos(GlobalWindow, settings::WindowWidth / 2, settings::WindowHeight / 2);
+                glfwSetInputMode(GlobalWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+                break;
+            default:
+                glfwSetInputMode(GlobalWindow, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+                break;
+            }
+            oldLockingMode = input::GlobalCursorLockMode; // save old value
         }
 
         // do mouse handling
@@ -228,15 +239,22 @@ void mold::Run()
             oldPitch = render::camera::Pitch;
         }
 
-#define view glm::lookAt(render::camera::Position, render::camera::Position + render::camera::Front, render::camera::Up)
-#define projection glm::perspective(glm::radians(settings::FOV), settings::WindowWidth / settings::WindowHeight, 0.1f, 100.0f)
+        // update view and projection
+        if (render::camera::Position != oldPosition || render::camera::Front != oldFront)
+        {
+            render::camera::View = glm::lookAt(render::camera::Position, render::camera::Position + render::camera::Front, render::camera::Up);
+            render::camera::Projection = glm::perspective(glm::radians(settings::FOV), settings::WindowWidth / settings::WindowHeight, 0.1f, 100.0f);
+
+            oldPosition = render::camera::Position; // save the values
+            oldFront = render::camera::Front;
+        }
 
         // ensure that we use shader
         GlobalShader.Bind();
 
         // give the shader our view and projection
-        GlobalShader.Set("view", view);
-        GlobalShader.Set("projection", projection);
+        GlobalShader.Set("view", render::camera::View);
+        GlobalShader.Set("projection", render::camera::Projection);
 
         // draw stuff
         GlobalEventSystem.CallEvent(EventType::Redraw);
@@ -245,9 +263,12 @@ void mold::Run()
         GlobalSkybox.Bind();
 
         // set fog parameters
-        GlobalShader.Set("fogDensity", render::fog::Density);
         GlobalShader.Set("fogEnabled", render::fog::Enabled);
-        GlobalShader.Set("fogColour", render::fog::Colour);
+        if (render::fog::Enabled) // set density and colour only if the fog is enabled
+        {
+            GlobalShader.Set("fogDensity", render::fog::Density);
+            GlobalShader.Set("fogColour", render::fog::Colour);
+        }
 
         // draw game objects
         for (auto const &[name, ptr] : GlobalGameObjects.Get())

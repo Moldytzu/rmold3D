@@ -217,6 +217,9 @@ namespace mold
             inline float Yaw = -90.0f; //-90.0f left, 0 front, 90.0f right
             inline float Pitch = 0.0f; // 90.0f up, 0 front, -90.0f down
 
+            inline glm::mat4 View;
+            inline glm::mat4 Projection;
+
             void Translate(glm::vec3 axis, float value);
             void Rotate(glm::vec3 axis, float value);
 
