@@ -47,6 +47,7 @@ void mold::Destroy()
     delete GlobalApplication; // deconstuct application
 
     GlobalShader.Deallocate(); // deallocate shader
+    GlobalSkybox.Deallocate(); // deallocate skybox
 
     glfwTerminate(); // terminate glfw
 

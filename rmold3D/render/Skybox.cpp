@@ -101,4 +101,8 @@ void mold::render::Skybox::Bind()
 
 void mold::render::Skybox::Deallocate()
 {
+    Vabo.Deallocate();
+    upT.Deallocate();
+    sideT.Deallocate();
+    downT.Deallocate();
 }
