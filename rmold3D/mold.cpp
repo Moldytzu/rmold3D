@@ -271,6 +271,9 @@ void mold::Run()
             GlobalShader.Set("fogColour", settings::FogColour);
         }
 
+        // set lighting parameters
+        GlobalShader.Set("lightingEnabled", settings::LightingEnabled);
+
         // draw game objects
         for (auto const &[name, ptr] : GlobalGameObjects.Get())
         {

@@ -86,11 +86,15 @@ public:
         mold::GlobalGameObjects.Instantiate(new mold::render::objects::Cube(mold::render::image::Texture(mold::render::Colour(0, 0, 255))))->Move(1.0f, 0.0f, 2.0f);
         mold::GlobalGameObjects.Instantiate(new mold::render::objects::Cube(mold::render::image::Texture(mold::render::Colour(255))));
 
+        // Set up skybox
+        mold::GlobalSkybox = mold::render::Skybox("up.bmp","side.bmp","down.bmp");
+
         // Instantiate an empty gameobject as player
         mold::GlobalGameObjects.Instantiate(new mold::render::objects::Empty(), "Player")->AttachComponent("PlayerController", new Player);
 
-        // Set up skybox
-        mold::GlobalSkybox = mold::render::Skybox("up.bmp","side.bmp","down.bmp");
+        // Enable the experimental lighting and disable the fog
+        mold::settings::LightingEnabled = true;
+        mold::settings::FogEnabled = false;
     }
 
     ~Game()
@@ -110,6 +114,8 @@ public:
 
         if (mold::input::GetKey(GLFW_KEY_F1))
             mold::input::GlobalCursorLockMode = mold::CursorLockingMode::Wrapped;
+
+        light.Bind();
     }
 
     void OnMouseInput() override
@@ -121,6 +127,9 @@ public:
     {
         return "Example Game";
     }
+
+private:
+    mold::render::objects::Light light = mold::render::objects::Light(glm::vec3(0,2,0),glm::vec3(1));
 };
 
 mold::Application *mold::BuildApplication()
