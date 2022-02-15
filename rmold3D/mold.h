@@ -379,19 +379,18 @@ void main()
 
     namespace settings
     {
-        inline float FOV = 90.0f;
-        inline float ViewDistanceDivisor = 10.0f;
-        inline float WindowWidth;
-        inline float WindowHeight;
-        inline float MouseSensibility = 5.0f;
-        inline bool FogEnabled = true;
-        inline float FogDensity = 0.25f;
-        inline glm::vec4 FogColour = glm::vec4(1);
-        inline float LightingEnabled = false;   // experimental, don't use it!
-        inline float LightingAmbient = 0.1f;    // ambient lighting
-        inline float SkyboxDistance = 25;       // distance to the skybox
-        inline bool MSAAEnabled = true;         // enable msaa
-        inline bool TransparencyEnabled = true; // enable transparency
+        inline float FOV = 90.0f;                  // field of view
+        inline float WindowWidth;                  // window width
+        inline float WindowHeight;                 // window height
+        inline float MouseSensibility = 5.0f;      // mouse sensibility
+        inline bool FogEnabled = true;             // enable fog
+        inline float FogDensity = 0.25f;           // fog density
+        inline glm::vec4 FogColour = glm::vec4(1); // fog colour
+        inline float LightingEnabled = false;      // experimental, don't use it!
+        inline float LightingAmbient = 0.1f;       // ambient lighting
+        inline float SkyboxDistance = 25;          // distance to the skybox
+        inline bool MSAAEnabled = true;            // enable msaa
+        inline bool TransparencyEnabled = true;    // enable transparency
     };
 
     namespace time
