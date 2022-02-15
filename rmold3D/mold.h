@@ -135,76 +135,80 @@ namespace mold
             uint ShadersIndex = 0;
         };
 
-        inline std::string VertexShaderSource = "#version 330 core\n"
-                                                "layout (location = 0) in vec3 vertexPosition;\n"
-                                                "layout (location = 1) in vec2 textureCoordornate;\n"
+        inline std::string VertexShaderSource = R"V0G0N(
+#version 330 core
+                                                
+layout (location = 0) in vec3 vertexPosition;
+layout (location = 1) in vec2 textureCoordornate;
+                                                
+out vec2 textureCoord;
+out float visibility;
+out vec3 vertexPos;
+out vec3 lightPosition;
+                                                
+uniform mat4 model;
+uniform mat4 view;
+uniform mat4 projection;
+uniform float fogDensity;
+uniform vec3 lightPositionU;
 
-                                                "out vec2 textureCoord;\n"
-                                                "out float visibility;\n"
-                                                "out vec3 vertexPos;\n"
-                                                "out vec3 lightPosition;\n"
+void main()
+{
+    gl_Position = projection * view * model * vec4(vertexPosition, 1.0);
+    float dis = length(gl_Position.xyz);
+    visibility = exp(-pow(dis*fogDensity,1.5));
+    visibility = clamp(visibility,0.0,1.0);
+    textureCoord = textureCoordornate;
+    vertexPos = (model * vec4(vertexPosition, 1.0)).xyz;
+    lightPosition = lightPositionU;
+}
+)V0G0N";
 
-                                                "uniform mat4 model;\n"
-                                                "uniform mat4 view;\n"
-                                                "uniform mat4 projection;\n"
-                                                "uniform float fogDensity;\n"
-                                                "uniform vec3 lightPositionU;\n"
+        inline std::string FragmentShaderSource = R"V0G0N(
+#version 330 core
 
-                                                "void main()\n"
-                                                "{\n"
-                                                "   gl_Position = projection * view * model * vec4(vertexPosition, 1.0);\n"
-                                                "   float dis = length(gl_Position.xyz);\n"
-                                                "   visibility = exp(-pow(dis*fogDensity,1.5));\n"
-                                                "   visibility = clamp(visibility,0.0,1.0);\n"
-                                                "   textureCoord = textureCoordornate;\n"
-                                                "   vertexPos = (model * vec4(vertexPosition, 1.0)).xyz\n;"
-                                                "   lightPosition = lightPositionU;\n"
-                                                "}\n";
+out vec4 FragColor;
 
-        inline std::string FragmentShaderSource = "#version 330 core\n"
+in vec2 textureCoord;
+in float visibility;
+in vec3 vertexPos;
+in vec3 lightPosition;
 
-                                                  "out vec4 FragColor;\n"
+uniform vec4 fcolour;
+uniform vec4 fogColour;
+uniform bool fogEnabled;
+uniform sampler2D mainTexture;
+uniform vec3 lightColour;
+uniform bool lightingEnabled;
 
-                                                  "in vec2 textureCoord;\n"
-                                                  "in float visibility;\n"
-                                                  "in vec3 vertexPos;\n"
-                                                  "in vec3 lightPosition;\n"
+const float lightPower = 5.0;
+const float shininess = 16.0;
 
-                                                  "uniform vec4 fcolour;\n"
-                                                  "uniform vec4 fogColour;\n"
-                                                  "uniform bool fogEnabled;\n"
-                                                  "uniform sampler2D mainTexture;\n"
-                                                  "uniform vec3 lightColour;\n"
-                                                  "uniform bool lightingEnabled;\n"
+vec3 calculateLight(vec4 inputColour, vec3 position, vec3 colour, vec3 vertex, float power, float shine, float ambient) {
+   vec3 normal = normalize(vec3(mat4(1.0) * vec4(1.0,1.0,1.0, 0.0)));
+   vec3 lightDir = position - vertex;
+   float distance = pow(length(lightDir),2);
+   float lambertian = max(dot(lightDir, normal), 0.0);
+   vec3 viewDir = normalize(-vertex);
+   vec3 halfDir = normalize(lightDir + viewDir);
+   float specAngle = max(dot(halfDir, normal), 0.0);
+   float specular = pow(specAngle, shine);
+   return inputColour.xyz * ambient + vec3(ambient) * lambertian * colour * power / distance + colour * specular * colour * power / distance;
+}
 
-                                                  "const float lightPower = 5.0;\n"
-                                                  "const float shininess = 16.0;\n"
-
-                                                  "vec3 calculateLight(vec4 inputColour, vec3 position, vec3 colour, vec3 vertex, float power, float shine, float ambient) {\n"
-                                                  "   vec3 normal = normalize(vec3(mat4(1.0) * vec4(1.0,1.0,1.0, 0.0)));\n"
-                                                  "   vec3 lightDir = position - vertex;\n"
-                                                  "   float distance = pow(length(lightDir),2);\n"
-                                                  "   float lambertian = max(dot(lightDir, normal), 0.0);\n"
-                                                  "   vec3 viewDir = normalize(-vertex);\n"
-                                                  "   vec3 halfDir = normalize(lightDir + viewDir);\n"
-                                                  "   float specAngle = max(dot(halfDir, normal), 0.0);\n"
-                                                  "   float specular = pow(specAngle, shine);\n"
-                                                  "   return inputColour.xyz * ambient + vec3(ambient) * lambertian * colour * power / distance + colour * specular * colour * power / distance;\n"
-                                                  "}\n"
-
-                                                  "void main()\n"
-                                                  "{\n"
-                                                  "   FragColor = texture(mainTexture, textureCoord);\n"
-                                                  "   if(lightingEnabled == true)\n"
-                                                  "   {\n"
-                                                  "      FragColor = vec4(calculateLight(FragColor, vec3(1),vec3(1),vertexPos,lightPower,shininess,0.25),1.0);\n"
-                                                  "   }\n"
-
-                                                  "   if(fogEnabled == true)\n"
-                                                  "   {\n"
-                                                  "      FragColor = mix(fogColour, FragColor, visibility);\n"
-                                                  "   }\n"
-                                                  "}\n";
+void main()
+{
+   FragColor = texture(mainTexture, textureCoord);
+   if(lightingEnabled == true)
+   {
+      FragColor = vec4(calculateLight(FragColor, vec3(1),vec3(1),vertexPos,lightPower,shininess,0.25),1.0);
+   }
+   if(fogEnabled == true)
+   {
+      FragColor = mix(fogColour, FragColor, visibility);
+   }
+}
+)V0G0N";
 
         class VABO
         {
