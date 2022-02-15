@@ -41,59 +41,59 @@ void mold::render::Skybox::Bind()
 {
     glm::mat4 model;
 
-    Vabo.Bind();                                 // bind vao & vbo
-    GlobalShader.Bind();                         // bind the shader
-    GlobalShader.Set("fcolour", glm::vec4(1.0)); // pass colour information needed for transparency
-    GlobalShader.Set("fogEnabled", false);       // disable fog for the skybox
-    GlobalShader.Set("lightingEnabled",false);   // disable lights
-    GlobalShader.Set("lightingAmbient",settings::LightingAmbient); // set ambient lighting
+    Vabo.Bind();                                                    // bind vao & vbo
+    GlobalShader.Bind();                                            // bind the shader
+    GlobalShader.Set("fcolour", glm::vec4(1.0));                    // pass colour information needed for transparency
+    GlobalShader.Set("fogEnabled", false);                          // disable fog for the skybox
+    GlobalShader.Set("lightingEnabled", false);                     // disable lights
+    GlobalShader.Set("lightingAmbient", settings::LightingAmbient); // set ambient lighting
 
     // up
-    model = glm::translate(glm::mat4(1.0f), render::camera::Position + glm::vec3(0, Scale / 2, 0)); // translate the model to the camera
-    model = glm::scale(model, glm::vec3(Scale + 1, 1, Scale + 1));                                  // scale x and z
-    upT.Bind();                                                                                     // bind texture
-    GlobalShader.Set("model", model);                                                               // give the shader our position matrix
-    DrawTriangles(6);                                                                               // draw 6 triangles
+    model = glm::translate(glm::mat4(1.0f), render::camera::Position + glm::vec3(0, settings::SkyboxDistance / 2, 0)); // translate the model to the camera
+    model = glm::scale(model, glm::vec3(settings::SkyboxDistance + 1, 1, settings::SkyboxDistance + 1));               // scale x and z
+    upT.Bind();                                                                                                        // bind texture
+    GlobalShader.Set("model", model);                                                                                  // give the shader our position matrix
+    DrawTriangles(6);                                                                                                  // draw 6 triangles
 
     // down
-    model = glm::translate(glm::mat4(1.0f), render::camera::Position - glm::vec3(0, Scale / 2, 0)); // translate the model to the camera
-    model = glm::scale(model, glm::vec3(Scale + 1, 1, Scale + 1));                                  // scale x and z
-    downT.Bind();                                                                                   // bind texture
-    GlobalShader.Set("model", model);                                                               // give the shader our position matrix
-    DrawTriangles(6);                                                                               // draw 6 triangles
+    model = glm::translate(glm::mat4(1.0f), render::camera::Position - glm::vec3(0, settings::SkyboxDistance / 2, 0)); // translate the model to the camera
+    model = glm::scale(model, glm::vec3(settings::SkyboxDistance + 1, 1, settings::SkyboxDistance + 1));               // scale x and z
+    downT.Bind();                                                                                                      // bind texture
+    GlobalShader.Set("model", model);                                                                                  // give the shader our position matrix
+    DrawTriangles(6);                                                                                                  // draw 6 triangles
 
     // sides
     sideT.Bind(); // bind texture
 
     // front
-    model = glm::translate(glm::mat4(1.0f), render::camera::Position - glm::vec3(0, 0, Scale / 2 - 1)); // translate the model to the camera
-    model = glm::rotate(model, glm::radians(90.0f), glm::normalize(glm::vec3(1, 0, 0)));                // flip it
-    model = glm::scale(model, glm::vec3(Scale + 1, 1, Scale + 1));                                      // scale x and z
-    GlobalShader.Set("model", model);                                                                   // give the shader our position matrix
-    DrawTriangles(6);                                                                                   // draw 6 triangles
+    model = glm::translate(glm::mat4(1.0f), render::camera::Position - glm::vec3(0, 0, settings::SkyboxDistance / 2 - 1)); // translate the model to the camera
+    model = glm::rotate(model, glm::radians(90.0f), glm::normalize(glm::vec3(1, 0, 0)));                                   // flip it
+    model = glm::scale(model, glm::vec3(settings::SkyboxDistance + 1, 1, settings::SkyboxDistance + 1));                   // scale x and z
+    GlobalShader.Set("model", model);                                                                                      // give the shader our position matrix
+    DrawTriangles(6);                                                                                                      // draw 6 triangles
 
     // back
-    model = glm::translate(glm::mat4(1.0f), render::camera::Position + glm::vec3(0, 0, Scale / 2 - 1)); // translate the model to the camera
-    model = glm::rotate(model, glm::radians(90.0f), glm::normalize(glm::vec3(1, 0, 0)));                // flip it
-    model = glm::scale(model, glm::vec3(Scale + 1, 1, Scale + 1));                                      // scale x and z
-    GlobalShader.Set("model", model);                                                                   // give the shader our position matrix
-    DrawTriangles(6);                                                                                   // draw 6 triangles
+    model = glm::translate(glm::mat4(1.0f), render::camera::Position + glm::vec3(0, 0, settings::SkyboxDistance / 2 - 1)); // translate the model to the camera
+    model = glm::rotate(model, glm::radians(90.0f), glm::normalize(glm::vec3(1, 0, 0)));                                   // flip it
+    model = glm::scale(model, glm::vec3(settings::SkyboxDistance + 1, 1, settings::SkyboxDistance + 1));                   // scale x and z
+    GlobalShader.Set("model", model);                                                                                      // give the shader our position matrix
+    DrawTriangles(6);                                                                                                      // draw 6 triangles
 
     // right
-    model = glm::translate(glm::mat4(1.0f), render::camera::Position + glm::vec3(Scale / 2, 0, 0)); // translate the model to the camera
-    model = glm::rotate(model, glm::radians(90.0f), glm::normalize(glm::vec3(1, 0, 0)));            // flip it
-    model = glm::rotate(model, glm::radians(90.0f), glm::normalize(glm::vec3(0, 0, 1)));            // flip it
-    model = glm::scale(model, glm::vec3(Scale + 1, 1, Scale + 1));                                  // scale x and z
-    GlobalShader.Set("model", model);                                                               // give the shader our position matrix
-    DrawTriangles(6);                                                                               // draw 6 triangles
+    model = glm::translate(glm::mat4(1.0f), render::camera::Position + glm::vec3(settings::SkyboxDistance / 2, 0, 0)); // translate the model to the camera
+    model = glm::rotate(model, glm::radians(90.0f), glm::normalize(glm::vec3(1, 0, 0)));                               // flip it
+    model = glm::rotate(model, glm::radians(90.0f), glm::normalize(glm::vec3(0, 0, 1)));                               // flip it
+    model = glm::scale(model, glm::vec3(settings::SkyboxDistance + 1, 1, settings::SkyboxDistance + 1));               // scale x and z
+    GlobalShader.Set("model", model);                                                                                  // give the shader our position matrix
+    DrawTriangles(6);                                                                                                  // draw 6 triangles
 
     // left
-    model = glm::translate(glm::mat4(1.0f), render::camera::Position - glm::vec3(Scale / 2, 0, 0)); // translate the model to the camera
-    model = glm::rotate(model, glm::radians(90.0f), glm::normalize(glm::vec3(1, 0, 0)));            // flip it
-    model = glm::rotate(model, glm::radians(90.0f), glm::normalize(glm::vec3(0, 0, 1)));            // flip it
-    model = glm::scale(model, glm::vec3(Scale + 1, 1, Scale + 1));                                  // scale x and z
-    GlobalShader.Set("model", model);                                                               // give the shader our position matrix
-    DrawTriangles(6);                                                                               // draw 6 triangles
+    model = glm::translate(glm::mat4(1.0f), render::camera::Position - glm::vec3(settings::SkyboxDistance / 2, 0, 0)); // translate the model to the camera
+    model = glm::rotate(model, glm::radians(90.0f), glm::normalize(glm::vec3(1, 0, 0)));                               // flip it
+    model = glm::rotate(model, glm::radians(90.0f), glm::normalize(glm::vec3(0, 0, 1)));                               // flip it
+    model = glm::scale(model, glm::vec3(settings::SkyboxDistance + 1, 1, settings::SkyboxDistance + 1));               // scale x and z
+    GlobalShader.Set("model", model);                                                                                  // give the shader our position matrix
+    DrawTriangles(6);                                                                                                  // draw 6 triangles
 }
 
 void mold::render::Skybox::Deallocate()

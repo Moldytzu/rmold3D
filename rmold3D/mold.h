@@ -240,8 +240,6 @@ void main()
             void Bind();
             void Deallocate();
 
-            float Scale = 25.0f;
-
         private:
             VABO Vabo;
             image::Texture upT, sideT, downT;
@@ -395,6 +393,7 @@ void main()
         inline glm::vec4 FogColour = glm::vec4(1);
         inline float LightingEnabled = false; // experimental, don't use it!
         inline float LightingAmbient = 0.1f;  // ambient lighting
+        inline float SkyboxDistance = 100; // distance to the skybox
     };
 
     namespace time

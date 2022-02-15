@@ -19,7 +19,7 @@
 #include <rmold3D/mold.h>
 
 /*remaining features to add:
-- lighting
+- multiple lights
 - internal console
 - internal profiler
 */
@@ -114,6 +114,8 @@ public:
 
         if (mold::input::GetKey(GLFW_KEY_F1))
             mold::input::GlobalCursorLockMode = mold::CursorLockingMode::Wrapped;
+
+        mold::GlobalSun.Position = mold::render::camera::Position;
     }
 
     void OnMouseInput() override
