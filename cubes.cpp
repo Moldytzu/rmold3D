@@ -28,9 +28,9 @@ Started with:
 - 2 cubes: 55-60 FPS; 0.25 seconds to start up
 
 Right now we have:
-- 2000 cubes: 60 FPS; 1 second to start up; consuming 64 MB RAM
-- 5000 cubes: 50 FPS; 5 seconds to start up; consuming 70 MB RAM
-- 10000 cubes: 26 FPS; 30 seconds to start up; consuming 98 MB RAM
+- 2000 cubes: 60 FPS; 0.7 second to start up; consuming 64 MB RAM
+- 5000 cubes: 60 FPS; 2.5 seconds to start up; consuming 70 MB RAM
+- 10000 cubes: 60 FPS; 10 seconds to start up; consuming 96 MB RAM
 
 */
 
