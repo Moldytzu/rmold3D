@@ -66,16 +66,15 @@ void mold::render::Shader::AttachSource(std::string source, uint type)
         // The maxLength includes the NULL character
         char *errorLog = new char[maxLength];
         glGetShaderInfoLog(shader, maxLength, &maxLength, &errorLog[0]);
-        errorLog[maxLength-1] = 0;
+        errorLog[maxLength - 1] = 0;
         log::Error(errorLog);
         delete errorLog;
-        if(type == GL_FRAGMENT_SHADER)
+        if (type == GL_FRAGMENT_SHADER)
             log::Fatal("Failed to attach fragemnt shader");
         else if (type == GL_VERTEX_SHADER)
             log::Fatal("Failed to attach vertex shader");
         else
             log::Fatal("Failed to attach a shader with an unknown type");
-        
     }
 
     Shaders[ShadersIndex++] = shader;
@@ -83,20 +82,20 @@ void mold::render::Shader::AttachSource(std::string source, uint type)
 
 void mold::render::Shader::Set(std::string location, glm::mat4 matrix)
 {
-    uint loc = glGetUniformLocation(Program, location.c_str()); // get location
-    glUniformMatrix4fv(loc, 1, GL_FALSE, &matrix[0][0]);        // set matrix
+    uint loc = glGetUniformLocation(Program, location.c_str());   // get location
+    glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr(matrix)); // set matrix
 }
 
 void mold::render::Shader::Set(std::string location, glm::vec4 vector)
 {
     uint loc = glGetUniformLocation(Program, location.c_str()); // get location
-    glUniform4fv(loc, 1, &vector[0]);                           // set vector
+    glUniform4fv(loc, 1, glm::value_ptr(vector));               // set vector
 }
 
 void mold::render::Shader::Set(std::string location, glm::vec3 vector)
 {
     uint loc = glGetUniformLocation(Program, location.c_str()); // get location
-    glUniform4fv(loc, 1, &vector[0]);                           // set vector
+    glUniform4fv(loc, 1, glm::value_ptr(vector));               // set vector
 }
 
 void mold::render::Shader::Set(std::string location, int value)

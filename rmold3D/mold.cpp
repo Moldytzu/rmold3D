@@ -273,6 +273,8 @@ void mold::Run()
 
         // set lighting parameters
         GlobalShader.Set("lightingEnabled", settings::LightingEnabled);
+        if(settings::LightingEnabled) // bind sun if the lighting is enabled
+            GlobalSun.Bind();
 
         // draw game objects
         for (auto const &[name, ptr] : GlobalGameObjects.Get())

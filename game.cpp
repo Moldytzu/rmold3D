@@ -94,7 +94,7 @@ public:
 
         // Enable the experimental lighting and disable the fog
         mold::settings::LightingEnabled = true;
-        mold::settings::FogEnabled = false;
+        mold::settings::FogEnabled = true;
     }
 
     ~Game()
@@ -114,8 +114,6 @@ public:
 
         if (mold::input::GetKey(GLFW_KEY_F1))
             mold::input::GlobalCursorLockMode = mold::CursorLockingMode::Wrapped;
-
-        light.Bind();
     }
 
     void OnMouseInput() override
@@ -127,9 +125,6 @@ public:
     {
         return "Example Game";
     }
-
-private:
-    mold::render::objects::Light light = mold::render::objects::Light(glm::vec3(0,2,0),glm::vec3(1));
 };
 
 mold::Application *mold::BuildApplication()
