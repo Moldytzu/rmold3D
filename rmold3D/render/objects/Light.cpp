@@ -25,6 +25,6 @@ Light::Light(glm::vec3 pos, glm::vec3 col) : Position{pos}, Colour{col} {}
 
 void Light::Bind()
 {
-    GlobalShader.Set("lightColourU",Colour);
-    GlobalShader.Set("lightPositionU",Position);
+    GlobalShader.Set("lightColour",Colour);
+    GlobalShader.Set("lightPosition",Position);
 }

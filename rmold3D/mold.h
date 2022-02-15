@@ -144,13 +144,11 @@ layout (location = 1) in vec2 textureCoordornate;
 out vec2 textureCoord;
 out float visibility;
 out vec3 vertexPos;
-out vec3 lightPosition;
                                                 
 uniform mat4 model;
 uniform mat4 view;
 uniform mat4 projection;
 uniform float fogDensity;
-uniform vec3 lightPositionU;
 uniform bool fogEnabled;
 
 void calculateFog()
@@ -165,7 +163,6 @@ void main()
     gl_Position = projection * view * model * vec4(vertexPosition, 1.0);
     textureCoord = textureCoordornate;
     vertexPos = (model * vec4(vertexPosition, 1.0)).xyz;
-    lightPosition = lightPositionU;
 
     if(fogEnabled == true)
     {
@@ -182,7 +179,6 @@ out vec4 FragColor;
 in vec2 textureCoord;
 in float visibility;
 in vec3 vertexPos;
-in vec3 lightPosition;
 
 uniform vec4 fcolour;
 uniform vec4 fogColour;
@@ -191,8 +187,10 @@ uniform sampler2D mainTexture;
 uniform vec3 lightColour;
 uniform bool lightingEnabled;
 uniform float lightingAmbient;
+uniform vec3 lightPosition;
+uniform vec3 lightColour;
 
-const float lightPower = 5.0;
+const float lightPower = 50.0;
 const float shininess = 16.0;
 
 vec3 calculateLight(vec4 inputColour, vec3 position, vec3 colour, vec3 vertex, float power, float shine)
@@ -213,7 +211,7 @@ void main()
    FragColor = texture(mainTexture, textureCoord) * vec4(vec3(lightingAmbient),1.0);
    if(lightingEnabled == true)
    {
-      FragColor = vec4(calculateLight(FragColor, vec3(0,5,0),vec3(1),vertexPos,lightPower,shininess),1.0);
+      FragColor = vec4(calculateLight(FragColor, lightPosition,lightColour,vertexPos,lightPower,shininess),1.0);
    }
    if(fogEnabled == true)
    {
@@ -396,7 +394,7 @@ void main()
         inline float FogDensity = 0.25f;
         inline glm::vec4 FogColour = glm::vec4(1);
         inline float LightingEnabled = false; // experimental, don't use it!
-        inline float LightingAmbient = 0.1f; // ambient lighting
+        inline float LightingAmbient = 0.1f;  // ambient lighting
     };
 
     namespace time
@@ -455,7 +453,7 @@ void main()
     inline Application *GlobalApplication;
     inline render::Shader GlobalShader;
     inline render::Skybox GlobalSkybox;
-    inline render::objects::Light GlobalSun = render::objects::Light(glm::vec3(0, 5, 0), glm::vec3(1));
+    inline render::objects::Light GlobalSun = render::objects::Light(glm::vec3(1, 10, 1), glm::vec3(1));
     inline render::objects::GameObjectsManager GlobalGameObjects;
 
     void Destroy();
