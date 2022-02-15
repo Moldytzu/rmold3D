@@ -28,7 +28,7 @@ Light::Light(glm::vec3 pos, glm::vec3 col, float power, float shinniness) : Posi
 void Light::Bind()
 {
     GlobalShader.Set("lightColour",Colour);
-    GlobalShader.Set("lightPosition",Position);
+    GlobalShader.Set("lightPosition",Position+glm::vec3(1));
     GlobalShader.Set("lightPower",Power);
     GlobalShader.Set("lightShininess",Shinniness);
 }

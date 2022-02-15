@@ -184,14 +184,6 @@ void mold::Run()
         time::DeltaTime = currentFrame - time::LastFrame;
         time::LastFrame = currentFrame;
 
-        // update window title (Rewritten mold 3D @ ?? FPS)
-        if (oldFPS != (int)(1 / time::DeltaTime))
-        {
-            std::string wtitle = "Rewritten mold 3D @ " + std::to_string((int)(1 / time::DeltaTime)) + " FPS";
-            glfwSetWindowTitle(GlobalWindow, wtitle.c_str());
-            oldFPS = (int)(1 / time::DeltaTime);
-        }
-
         // call tick
         GlobalEventSystem.CallEvent(EventType::Tick);
 
@@ -208,6 +200,14 @@ void mold::Run()
             glEnable(GL_BLEND);
         else
             glDisable(GL_BLEND);
+
+        // update window title (Rewritten mold 3D @ ?? FPS)
+        if (oldFPS != (int)(1 / time::DeltaTime))
+        {
+            std::string wtitle = "Rewritten mold 3D @ " + std::to_string((int)(1 / time::DeltaTime)) + " FPS";
+            glfwSetWindowTitle(GlobalWindow, wtitle.c_str());
+            oldFPS = (int)(1 / time::DeltaTime);
+        }
 
         // handle cursor locking mode
         if (oldLockingMode != input::GlobalCursorLockMode)
