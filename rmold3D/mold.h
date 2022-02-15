@@ -179,12 +179,11 @@ namespace mold
 
                                                   "const vec3 lightPos = vec3(1.0, 1.0, 1.0);\n"
                                                   "const vec3 lightColor = vec3(1.0, 1.0, 1.0);\n"
-                                                  "const float lightPower = 40.0;\n"
-                                                  "const vec3 ambientColor = vec3(0.1, 0.0, 0.0);\n"
-                                                  "const vec3 diffuseColor = vec3(0.5, 0.0, 0.0);\n"
+                                                  "const float lightPower = 5.0;\n"
+                                                  "const vec3 diffuseColor = vec3(0.1, 0.1, 0.1);\n"
                                                   "const vec3 specColor = vec3(1.0, 1.0, 1.0);\n"
                                                   "const float shininess = 16.0;\n"
-                                                  "const float screenGamma = 2.2;\n"
+                                                  "const float ambientGamma = 0.1;\n"
                                                   
                                                   "void main()\n"
                                                   "{\n"
@@ -199,7 +198,7 @@ namespace mold
                                                   "   float specAngle = max(dot(halfDir, normal), 0.0);\n"
                                                   "   specular = pow(specAngle, shininess);\n"
                                                   "   FragColor = texture(mainTexture, textureCoord);\n"
-                                                  "   vec3 colorLinear = FragColor.xyz + diffuseColor * lambertian * lightColor * lightPower / distance + specColor * specular * lightColor * lightPower / distance;\n"
+                                                  "   vec3 colorLinear = FragColor.xyz * ambientGamma + diffuseColor * lambertian * lightColor * lightPower / distance + specColor * specular * lightColor * lightPower / distance;\n"
                                                   "   if(lightingEnabled == true)\n"
                                                   "   {\n"
                                                   "      FragColor = vec4(colorLinear,1.0);\n"
@@ -383,7 +382,7 @@ namespace mold
         inline float MouseSensibility = 5.0f;
         inline bool FogEnabled = true;
         inline float FogDensity = 0.25f;
-        inline glm::vec4 FogColour = glm::vec4(1);
+        inline glm::vec4 FogColour = glm::vec4(1,1,1,0.25);
         inline float LightingEnabled = false; // experimental, don't use it!
     };
 
