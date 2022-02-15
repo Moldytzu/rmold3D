@@ -30,6 +30,7 @@
 #include <string>
 #include <memory>
 #include <fstream>
+#include <sstream>
 
 #define Vertex(X, Y, Z) X, Y, Z
 #define TexCoord(X, Y) X, Y
@@ -395,7 +396,9 @@ void main()
         inline bool MSAAEnabled = true;            // enable msaa
         inline bool TransparencyEnabled = true;    // enable transparency
 
-        void Update(); // update settings
+        void Update();                           // update settings
+        void LoadFromFile(std::string filename); // load settings from file
+        void SaveToFile(std::string filename);   // save settings to file
     };
 
     namespace time

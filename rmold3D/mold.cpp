@@ -96,8 +96,8 @@ void mold::Init(uint width, uint height)
     glEnable(GL_DEPTH_TEST);                                           // depth testing
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);                 // substract alpha channel for transparency
 
-    // update settings
-    mold::settings::Update();
+    // load settings
+    mold::settings::LoadFromFile("mold.cfg");
 
     GlobalShader.AttachSource(render::VertexShaderSource, GL_VERTEX_SHADER);     // attach vertex shader
     GlobalShader.AttachSource(render::FragmentShaderSource, GL_FRAGMENT_SHADER); // attach fragment shader

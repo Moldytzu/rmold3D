@@ -4,3 +4,4 @@ game
 *.o
 gmon.out
 gprof.out
+mold.cfg
