@@ -151,16 +151,26 @@ uniform mat4 view;
 uniform mat4 projection;
 uniform float fogDensity;
 uniform vec3 lightPositionU;
+uniform bool fogEnabled;
+
+void calculateFog()
+{
+    float distance = length(gl_Position.xyz);
+    visibility = exp(-pow(distance*fogDensity,1.5));
+    visibility = clamp(visibility,0.0,1.0);
+}
 
 void main()
 {
     gl_Position = projection * view * model * vec4(vertexPosition, 1.0);
-    float dis = length(gl_Position.xyz);
-    visibility = exp(-pow(dis*fogDensity,1.5));
-    visibility = clamp(visibility,0.0,1.0);
     textureCoord = textureCoordornate;
     vertexPos = (model * vec4(vertexPosition, 1.0)).xyz;
     lightPosition = lightPositionU;
+
+    if(fogEnabled == true)
+    {
+        calculateFog();
+    }
 }
 )V0G0N";
 
@@ -184,7 +194,8 @@ uniform bool lightingEnabled;
 const float lightPower = 5.0;
 const float shininess = 16.0;
 
-vec3 calculateLight(vec4 inputColour, vec3 position, vec3 colour, vec3 vertex, float power, float shine, float ambient) {
+vec3 calculateLight(vec4 inputColour, vec3 position, vec3 colour, vec3 vertex, float power, float shine, float ambient)
+{
    vec3 normal = normalize(vec3(mat4(1.0) * vec4(1.0,1.0,1.0, 0.0)));
    vec3 lightDir = position - vertex;
    float distance = pow(length(lightDir),2);
