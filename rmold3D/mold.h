@@ -393,7 +393,7 @@ void main()
         inline glm::vec4 FogColour = glm::vec4(1);
         inline float LightingEnabled = false; // experimental, don't use it!
         inline float LightingAmbient = 0.1f;  // ambient lighting
-        inline float SkyboxDistance = 100; // distance to the skybox
+        inline float SkyboxDistance = 25; // distance to the skybox
     };
 
     namespace time
