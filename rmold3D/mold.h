@@ -141,13 +141,12 @@ namespace mold
 
                                                 "out vec2 textureCoord;\n"
                                                 "out vec3 surfaceNormal;\n"
-                                                "out vec3 positionToLight;\n"
                                                 "out float visibility;\n"
+                                                "out vec3 vertexPos;\n"
                                                 
                                                 "uniform mat4 model;\n"
                                                 "uniform mat4 view;\n"
                                                 "uniform mat4 projection;\n"
-                                                "uniform vec3 lightPosition;\n"
                                                 "uniform float fogDensity;\n"
                                                 
                                                 "void main()\n"
@@ -158,7 +157,7 @@ namespace mold
                                                 "   visibility = clamp(visibility,0.0,1.0);\n"
                                                 "   textureCoord = textureCoordornate;\n"
                                                 "   surfaceNormal = (model * vec4(1.0,1.0,1.0,0.0)).xyz;\n"
-                                                "   positionToLight = lightPosition;\n"
+                                                "   vertexPos = (model * vec4(vertexPosition, 1.0)).xyz\n;"
                                                 "}\n";
 
         inline std::string FragmentShaderSource = "#version 330 core\n"
@@ -167,8 +166,8 @@ namespace mold
                                                   
                                                   "in vec2 textureCoord;\n"
                                                   "in vec3 surfaceNormal;\n"
-                                                  "in vec3 positionToLight;\n"
                                                   "in float visibility;\n"
+                                                  "in vec3 vertexPos;\n"
                                                   
                                                   "uniform vec4 fcolour;\n"
                                                   "uniform vec4 fogColour;\n"
@@ -176,19 +175,34 @@ namespace mold
                                                   "uniform sampler2D mainTexture;\n"
                                                   "uniform bool fogEnabled;\n"
                                                   "uniform bool lightingEnabled;\n"
+                                                  "uniform vec3 lightPosition;\n"
+
+                                                  "const vec3 lightPos = vec3(1.0, 1.0, 1.0);\n"
+                                                  "const vec3 lightColor = vec3(1.0, 1.0, 1.0);\n"
+                                                  "const float lightPower = 40.0;\n"
+                                                  "const vec3 ambientColor = vec3(0.1, 0.0, 0.0);\n"
+                                                  "const vec3 diffuseColor = vec3(0.5, 0.0, 0.0);\n"
+                                                  "const vec3 specColor = vec3(1.0, 1.0, 1.0);\n"
+                                                  "const float shininess = 16.0;\n"
+                                                  "const float screenGamma = 2.2;\n"
                                                   
                                                   "void main()\n"
                                                   "{\n"
-                                                  "   vec3 unitNormal = normalize(surfaceNormal);\n"
-                                                  "   vec3 unitLight = normalize(positionToLight);\n"
-                                                  "   float dotl = dot(unitNormal,unitLight);\n"
-                                                  "   float brightness = max(dotl,0.0);\n"
-                                                  "   vec3 lighting = brightness * lightColour;\n"
+                                                  "   vec3 normal = normalize(vec3(mat4(1.0) * vec4(1.0,1.0,1.0, 0.0)));\n"
+                                                  "   vec3 lightDir = lightPos - vertexPos;\n"
+                                                  "   float distance = length(lightDir);\n"
+                                                  "   distance = distance * distance;\n"
+                                                  "   float lambertian = max(dot(lightDir, normal), 0.0);\n"
+                                                  "   float specular = 0.0;\n"
+                                                  "   vec3 viewDir = normalize(-vertexPos);\n"
+                                                  "   vec3 halfDir = normalize(lightDir + viewDir);\n"
+                                                  "   float specAngle = max(dot(halfDir, normal), 0.0);\n"
+                                                  "   specular = pow(specAngle, shininess);\n"
                                                   "   FragColor = texture(mainTexture, textureCoord);\n"
-                                                  
+                                                  "   vec3 colorLinear = FragColor.xyz + diffuseColor * lambertian * lightColor * lightPower / distance + specColor * specular * lightColor * lightPower / distance;\n"
                                                   "   if(lightingEnabled == true)\n"
                                                   "   {\n"
-                                                  "      FragColor = FragColor * vec4(lighting,1.0);\n"
+                                                  "      FragColor = vec4(colorLinear,1.0);\n"
                                                   "   }\n"
 
                                                   "   if(fogEnabled == true)\n"

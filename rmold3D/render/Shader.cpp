@@ -21,7 +21,8 @@
 using namespace mold::render;
 
 mold::render::Shader::Shader() : Shaders{new uint[0xFFFF]} // 64k shaders should be enough :)
-{}
+{
+}
 
 void mold::render::Shader::Recompile()
 {
@@ -58,7 +59,24 @@ void mold::render::Shader::AttachSource(std::string source, uint type)
     int success;
     glGetShaderiv(shader, GL_COMPILE_STATUS, &success); // get compilation status
     if (!success)
-        log::Fatal("Failed to attach shader with the type " + std::to_string(type));
+    {
+        GLint maxLength = 0;
+        glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &maxLength);
+
+        // The maxLength includes the NULL character
+        char *errorLog = new char[maxLength];
+        glGetShaderInfoLog(shader, maxLength, &maxLength, &errorLog[0]);
+        errorLog[maxLength-1] = 0;
+        log::Error(errorLog);
+        delete errorLog;
+        if(type == GL_FRAGMENT_SHADER)
+            log::Fatal("Failed to attach fragemnt shader");
+        else if (type == GL_VERTEX_SHADER)
+            log::Fatal("Failed to attach vertex shader");
+        else
+            log::Fatal("Failed to attach a shader with an unknown type");
+        
+    }
 
     Shaders[ShadersIndex++] = shader;
 }
