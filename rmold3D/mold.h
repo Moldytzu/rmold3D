@@ -199,9 +199,7 @@ vec3 calculateLight(vec4 inputColour, vec3 position, vec3 colour, vec3 vertex, f
    float lambertian = max(dot(lightDir, normal), 0.0);
    vec3 viewDir = normalize(-vertex);
    vec3 halfDir = normalize(lightDir + viewDir);
-   float specAngle = max(dot(halfDir, normal), 0.0);
-   float specular = pow(specAngle, shine);
-   return inputColour.xyz * lambertian * colour * power / distance + colour * specular * colour * power / distance;
+   return inputColour.xyz * lambertian * colour * power / distance;
 }
 
 void main()
