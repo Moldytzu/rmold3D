@@ -210,6 +210,8 @@ void main()
    {
       FragColor = mix(fogColour, FragColor, visibility);
    }
+
+   FragColor.rgb = pow(FragColor.rgb, vec3(1.0/2.2));
 }
 )V0G0N";
 

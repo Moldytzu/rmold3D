@@ -191,12 +191,12 @@ void mold::Run()
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear screen and the depth buffer
 
         // enable/disable transparency and msaa depending on the settings
-        if(settings::MSAAEnabled)
+        if (settings::MSAAEnabled)
             glEnable(GL_MULTISAMPLE);
         else
             glDisable(GL_MULTISAMPLE);
 
-        if(settings::TransparencyEnabled)
+        if (settings::TransparencyEnabled)
             glEnable(GL_BLEND);
         else
             glDisable(GL_BLEND);
@@ -277,7 +277,7 @@ void mold::Run()
 
         // set lighting parameters
         GlobalShader.Set("lightingEnabled", settings::LightingEnabled);
-        if(settings::LightingEnabled) // bind sun if the lighting is enabled
+        if (settings::LightingEnabled) // bind sun if the lighting is enabled
             GlobalSun.Bind();
 
         // draw game objects
