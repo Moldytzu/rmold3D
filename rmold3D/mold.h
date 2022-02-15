@@ -384,7 +384,7 @@ void main()
         inline float WindowHeight;                 // window height
         inline float MouseSensibility = 5.0f;      // mouse sensibility
         inline bool FogEnabled = true;             // enable fog
-        inline float FogDensity = 0.25f;           // fog density
+        inline float FogDensity = 0.09f;           // fog density
         inline glm::vec4 FogColour = glm::vec4(1); // fog colour
         inline float LightingEnabled = false;      // experimental, don't use it!
         inline float LightingAmbient = 0.1f;       // ambient lighting

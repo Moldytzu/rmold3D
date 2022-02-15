@@ -92,9 +92,8 @@ public:
         // Instantiate an empty gameobject as player
         mold::GlobalGameObjects.Instantiate(new mold::render::objects::Empty(), "Player")->AttachComponent("PlayerController", new Player);
 
-        // Enable the experimental lighting and disable the fog
+        // Enable the experimental lighting
         mold::settings::LightingEnabled = true;
-        mold::settings::FogEnabled = false;
     }
 
     ~Game()
