@@ -374,6 +374,7 @@ void main()
             };
         };
         void DrawTriangles(uint count);
+        void HandleFog();
     };
 
     namespace settings
@@ -385,6 +386,7 @@ void main()
         inline bool FogEnabled = true;             // enable fog
         inline float FogDensity = 0.09f;           // fog density
         inline glm::vec4 FogColour = glm::vec4(1); // fog colour
+        inline bool FogAutoDensity = true;         // dynamically set fog density depending on the skybox distance
         inline float LightingEnabled = false;      // experimental, don't use it!
         inline float LightingAmbient = 0.1f;       // ambient lighting
         inline float SkyboxDistance = 25;          // distance to the skybox

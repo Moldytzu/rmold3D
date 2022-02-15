@@ -272,13 +272,8 @@ void mold::Run()
         // draw skybox
         GlobalSkybox.Bind();
 
-        // set fog parameters
-        GlobalShader.Set("fogEnabled", settings::FogEnabled);
-        if (settings::FogEnabled) // set density and colour only if the fog is enabled
-        {
-            GlobalShader.Set("fogDensity", settings::FogDensity);
-            GlobalShader.Set("fogColour", settings::FogColour);
-        }
+        // handle fog
+        render::HandleFog();
 
         // set lighting parameters
         GlobalShader.Set("lightingEnabled", settings::LightingEnabled);
