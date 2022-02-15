@@ -94,7 +94,7 @@ public:
 
         // Enable the experimental lighting and disable the fog
         mold::settings::LightingEnabled = true;
-        mold::settings::FogEnabled = true;
+        mold::settings::FogEnabled = false;
     }
 
     ~Game()

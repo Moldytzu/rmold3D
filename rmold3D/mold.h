@@ -190,11 +190,12 @@ uniform bool fogEnabled;
 uniform sampler2D mainTexture;
 uniform vec3 lightColour;
 uniform bool lightingEnabled;
+uniform float lightingAmbient;
 
 const float lightPower = 5.0;
 const float shininess = 16.0;
 
-vec3 calculateLight(vec4 inputColour, vec3 position, vec3 colour, vec3 vertex, float power, float shine, float ambient)
+vec3 calculateLight(vec4 inputColour, vec3 position, vec3 colour, vec3 vertex, float power, float shine)
 {
    vec3 normal = normalize(vec3(mat4(1.0) * vec4(1.0,1.0,1.0, 0.0)));
    vec3 lightDir = position - vertex;
@@ -204,15 +205,15 @@ vec3 calculateLight(vec4 inputColour, vec3 position, vec3 colour, vec3 vertex, f
    vec3 halfDir = normalize(lightDir + viewDir);
    float specAngle = max(dot(halfDir, normal), 0.0);
    float specular = pow(specAngle, shine);
-   return inputColour.xyz * ambient + vec3(ambient) * lambertian * colour * power / distance + colour * specular * colour * power / distance;
+   return inputColour.xyz * lambertian * colour * power / distance + colour * specular * colour * power / distance;
 }
 
 void main()
 {
-   FragColor = texture(mainTexture, textureCoord);
+   FragColor = texture(mainTexture, textureCoord) * vec4(vec3(lightingAmbient),1.0);
    if(lightingEnabled == true)
    {
-      FragColor = vec4(calculateLight(FragColor, vec3(1),vec3(1),vertexPos,lightPower,shininess,0.25),1.0);
+      FragColor = vec4(calculateLight(FragColor, vec3(0,5,0),vec3(1),vertexPos,lightPower,shininess),1.0);
    }
    if(fogEnabled == true)
    {
@@ -395,6 +396,7 @@ void main()
         inline float FogDensity = 0.25f;
         inline glm::vec4 FogColour = glm::vec4(1);
         inline float LightingEnabled = false; // experimental, don't use it!
+        inline float LightingAmbient = 0.1f; // ambient lighting
     };
 
     namespace time
