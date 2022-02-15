@@ -274,8 +274,8 @@ void main()
 
                 void Bind();
 
-                glm::vec3 Position,Colour;
-                float Power,Shinniness;
+                glm::vec3 Position, Colour;
+                float Power, Shinniness;
             };
 
             class GameObject;
@@ -391,9 +391,11 @@ void main()
         inline bool FogEnabled = true;
         inline float FogDensity = 0.25f;
         inline glm::vec4 FogColour = glm::vec4(1);
-        inline float LightingEnabled = false; // experimental, don't use it!
-        inline float LightingAmbient = 0.1f;  // ambient lighting
-        inline float SkyboxDistance = 25; // distance to the skybox
+        inline float LightingEnabled = false;   // experimental, don't use it!
+        inline float LightingAmbient = 0.1f;    // ambient lighting
+        inline float SkyboxDistance = 25;       // distance to the skybox
+        inline bool MSAAEnabled = true;         // enable msaa
+        inline bool TransparencyEnabled = true; // enable transparency
     };
 
     namespace time

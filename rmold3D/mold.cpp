@@ -94,8 +94,6 @@ void mold::Init(uint width, uint height)
     glViewport(0, 0, width, height);                                   // set viewport
     glm::ortho(0.0f, (float)width, 0.0f, (float)height, 0.1f, 100.0f); // set orthographic projection
     glEnable(GL_DEPTH_TEST);                                           // depth testing
-    glEnable(GL_BLEND);                                                // blending
-    glEnable(GL_MULTISAMPLE);                                          // enable multisampling even if it's already enabled on most of the gl drivers
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);                 // substract alpha channel for transparency
 
     GlobalShader.AttachSource(render::VertexShaderSource, GL_VERTEX_SHADER);     // attach vertex shader
@@ -186,12 +184,6 @@ void mold::Run()
         time::DeltaTime = currentFrame - time::LastFrame;
         time::LastFrame = currentFrame;
 
-        // call tick
-        GlobalEventSystem.CallEvent(EventType::Tick);
-
-        glClearColor(0, 0, 0, 0);                           // black
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear screen and the depth buffer
-
         // update window title (Rewritten mold 3D @ ?? FPS)
         if (oldFPS != (int)(1 / time::DeltaTime))
         {
@@ -199,6 +191,23 @@ void mold::Run()
             glfwSetWindowTitle(GlobalWindow, wtitle.c_str());
             oldFPS = (int)(1 / time::DeltaTime);
         }
+
+        // call tick
+        GlobalEventSystem.CallEvent(EventType::Tick);
+
+        glClearColor(0, 0, 0, 0);                           // black
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear screen and the depth buffer
+
+        // enable/disable transparency and msaa depending on the settings
+        if(settings::MSAAEnabled)
+            glEnable(GL_MULTISAMPLE);
+        else
+            glDisable(GL_MULTISAMPLE);
+
+        if(settings::TransparencyEnabled)
+            glEnable(GL_BLEND);
+        else
+            glDisable(GL_BLEND);
 
         // handle cursor locking mode
         if (oldLockingMode != input::GlobalCursorLockMode)
