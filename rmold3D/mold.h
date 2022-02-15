@@ -394,6 +394,8 @@ void main()
         inline float SkyboxDistance = 25;          // distance to the skybox
         inline bool MSAAEnabled = true;            // enable msaa
         inline bool TransparencyEnabled = true;    // enable transparency
+
+        void Update(); // update settings
     };
 
     namespace time

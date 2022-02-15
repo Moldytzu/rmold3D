@@ -94,6 +94,9 @@ public:
 
         // Enable the experimental lighting
         mold::settings::LightingEnabled = true;
+
+        // Update settings
+        mold::settings::Update();
     }
 
     ~Game()

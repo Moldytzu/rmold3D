@@ -96,6 +96,9 @@ void mold::Init(uint width, uint height)
     glEnable(GL_DEPTH_TEST);                                           // depth testing
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);                 // substract alpha channel for transparency
 
+    // update settings
+    mold::settings::Update();
+
     GlobalShader.AttachSource(render::VertexShaderSource, GL_VERTEX_SHADER);     // attach vertex shader
     GlobalShader.AttachSource(render::FragmentShaderSource, GL_FRAGMENT_SHADER); // attach fragment shader
     GlobalShader.Recompile();                                                    // compile it
@@ -189,17 +192,6 @@ void mold::Run()
 
         glClearColor(0, 0, 0, 0);                           // black
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear screen and the depth buffer
-
-        // enable/disable transparency and msaa depending on the settings
-        if (settings::MSAAEnabled)
-            glEnable(GL_MULTISAMPLE);
-        else
-            glDisable(GL_MULTISAMPLE);
-
-        if (settings::TransparencyEnabled)
-            glEnable(GL_BLEND);
-        else
-            glDisable(GL_BLEND);
 
         // update window title (Rewritten mold 3D @ ?? FPS)
         if (oldFPS != (int)(1 / time::DeltaTime))
