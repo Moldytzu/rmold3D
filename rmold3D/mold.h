@@ -188,10 +188,8 @@ uniform vec3 lightColour;
 uniform bool lightingEnabled;
 uniform float lightingAmbient;
 uniform vec3 lightPosition;
-uniform vec3 lightColour;
-
-const float lightPower = 50.0;
-const float shininess = 16.0;
+uniform float lightPower;
+uniform float lightShininess;
 
 vec3 calculateLight(vec4 inputColour, vec3 position, vec3 colour, vec3 vertex, float power, float shine)
 {
@@ -211,7 +209,7 @@ void main()
    FragColor = texture(mainTexture, textureCoord) * vec4(vec3(lightingAmbient),1.0);
    if(lightingEnabled == true)
    {
-      FragColor = vec4(calculateLight(FragColor, lightPosition,lightColour,vertexPos,lightPower,shininess),1.0);
+      FragColor = vec4(calculateLight(FragColor, lightPosition,lightColour,vertexPos,lightPower,lightShininess),1.0);
    }
    if(fogEnabled == true)
    {
@@ -272,12 +270,14 @@ void main()
             {
             public:
                 Light();
+                Light(glm::vec3 pos);
                 Light(glm::vec3 pos, glm::vec3 col);
+                Light(glm::vec3 pos, glm::vec3 col, float power, float shinniness);
 
                 void Bind();
 
-                glm::vec3 Position;
-                glm::vec3 Colour;
+                glm::vec3 Position,Colour;
+                float Power,Shinniness;
             };
 
             class GameObject;
@@ -453,7 +453,7 @@ void main()
     inline Application *GlobalApplication;
     inline render::Shader GlobalShader;
     inline render::Skybox GlobalSkybox;
-    inline render::objects::Light GlobalSun = render::objects::Light(glm::vec3(1, 10, 1), glm::vec3(1));
+    inline render::objects::Light GlobalSun = render::objects::Light(glm::vec3(1, 10, 1), glm::vec3(1), 50, 100);
     inline render::objects::GameObjectsManager GlobalGameObjects;
 
     void Destroy();

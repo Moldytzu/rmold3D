@@ -21,10 +21,14 @@
 using namespace mold::render::objects;
 
 Light::Light() {}
-Light::Light(glm::vec3 pos, glm::vec3 col) : Position{pos}, Colour{col} {}
+Light::Light(glm::vec3 pos) : Position{pos}, Colour{glm::vec3(1)}, Power{1}, Shinniness{1} {}
+Light::Light(glm::vec3 pos, glm::vec3 col) : Position{pos}, Colour{col}, Power{1}, Shinniness{1} {}
+Light::Light(glm::vec3 pos, glm::vec3 col, float power, float shinniness) : Position{pos}, Colour{col}, Power{power}, Shinniness{shinniness} {}
 
 void Light::Bind()
 {
     GlobalShader.Set("lightColour",Colour);
     GlobalShader.Set("lightPosition",Position);
+    GlobalShader.Set("lightPower",Power);
+    GlobalShader.Set("lightShininess",Shinniness);
 }
