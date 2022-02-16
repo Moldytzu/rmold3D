@@ -421,7 +421,7 @@ void main()
         void HandleFog();
         void HandleErrors();
         void Render();
-        void Init(uint width,uint height);
+        void Init(uint width, uint height);
 
         void OnResize(GLFWwindow *window, int width, int height);
         void OnScroll(GLFWwindow *window, double xoffset, double yoffset);
@@ -453,6 +453,7 @@ void main()
         inline float Gamma = 1.0f;                 // gamma
         inline bool Debug = false;                 // debug engine
         inline bool DebugRenderer = false;         // debug renderer
+        inline float AspectRatio = 1.77777777777f; // aspect ratio
 
         void Update();                           // update settings
         void LoadFromFile(std::string filename); // load settings from file
@@ -520,7 +521,6 @@ void main()
     inline render::objects::GameObjectsManager GlobalGameObjects;
 
     void Destroy();
-    
     void HandleSignal(int signum);
     Application *BuildApplication();
 
