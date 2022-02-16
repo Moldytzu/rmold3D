@@ -190,6 +190,8 @@ uniform bool lightingEnabled;
 uniform float lightingAmbient;
 uniform vec3 lightPosition;
 uniform float lightPower;
+uniform float gamma;
+uniform bool gammaCorectionEnabled;
 
 vec3 calculateLight(vec4 inputColour, vec3 position, vec3 colour, vec3 vertex, float power)
 {
@@ -212,7 +214,12 @@ void main()
       FragColor = mix(fogColour, FragColor, visibility);
    }
 
-   FragColor.rgb = pow(FragColor.rgb, vec3(1.0/2.2));
+   if(gammaCorectionEnabled == true)
+   {
+      FragColor.rgb = pow(FragColor.rgb, vec3(1.0/2.2));
+   }
+
+   FragColor.rgb = FragColor.rgb * gamma;
 }
 )V0G0N";
 
@@ -400,6 +407,8 @@ void main()
         inline float SkyboxDistance = 25;          // distance to the skybox
         inline bool MSAAEnabled = true;            // enable msaa
         inline bool TransparencyEnabled = true;    // enable transparency
+        inline bool GammaCorrection = true;        // enable gamma correction
+        inline float Gamma = 1.0f;                 // gamma
 
         void Update();                           // update settings
         void LoadFromFile(std::string filename); // load settings from file

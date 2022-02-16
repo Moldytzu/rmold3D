@@ -272,6 +272,10 @@ void mold::Run()
         if (settings::LightingEnabled) // bind sun if the lighting is enabled
             GlobalSun.Bind();
 
+        // set gamma
+        GlobalShader.Set("gammaCorectionEnabled", settings::GammaCorrection);
+        GlobalShader.Set("gamma", mold::settings::Gamma);
+
         // draw game objects
         for (auto const &[name, ptr] : GlobalGameObjects.Get())
         {

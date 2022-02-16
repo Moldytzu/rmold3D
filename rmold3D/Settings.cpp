@@ -89,6 +89,10 @@ void mold::settings::LoadFromFile(std::string filename)
                     settings::MSAAEnabled = (bool)((int)std::stoi(value));
                 else if (key == "transparencyenabled")
                     settings::TransparencyEnabled = (bool)((int)std::stoi(value));
+                else if (key == "gammacorrection")
+                    settings::GammaCorrection = (bool)((int)std::stoi(value));
+                else if (key == "gamma")
+                    settings::Gamma = std::stof(value);
                 else
                     mold::log::Warn("Unknown setting " + key);
             }
