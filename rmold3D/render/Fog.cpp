@@ -20,7 +20,7 @@
 
 using namespace mold::render;
 
-const float fogDensityPerSkyboxSize = 0.09f / 25;
+const float fogDensityPerSkyboxSize = 2.5f;
 
 void mold::render::HandleFog()
 {
@@ -38,5 +38,5 @@ void mold::render::HandleFog()
     if (!settings::FogAutoDensity)
         return;
 
-    settings::FogDensity = fogDensityPerSkyboxSize * settings::SkyboxDistance; // basic equation to get fog density based on the skybox size
+    settings::FogDensity = fogDensityPerSkyboxSize / settings::SkyboxDistance; // basic equation to get fog density based on the skybox size
 }
