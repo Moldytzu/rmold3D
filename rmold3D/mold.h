@@ -197,7 +197,7 @@ vec3 calculateLight(vec4 inputColour, vec3 position, vec3 colour, vec3 vertex, f
    vec3 lightDir = position - vertex;
    float distance = pow(length(lightDir),2);
    float lambertian = max(dot(lightDir, normal), 0.0);
-   return inputColour.xyz * lambertian * colour * power / distance;
+   return inputColour.xyz * lightingAmbient * lambertian * colour * power / distance;
 }
 
 void main()
