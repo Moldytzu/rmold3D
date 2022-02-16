@@ -42,6 +42,8 @@ void mold::Destroy()
 
     glfwTerminate(); // terminate glfw
 
+    settings::SaveToFile("mold.cfg"); // save settings
+
     exit(0); // exit
 }
 
