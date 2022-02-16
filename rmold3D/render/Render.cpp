@@ -21,9 +21,34 @@
 using namespace mold::render;
 
 mold::render::Colour::Colour(uint8_t r, uint8_t g, uint8_t b) : R{r}, G{g}, B{b} {} // set RGB values individually
-mold::render::Colour::Colour(uint8_t rgb) : R{rgb}, G{rgb}, B{rgb} {} // set RGB to the same value
+mold::render::Colour::Colour(uint8_t rgb) : R{rgb}, G{rgb}, B{rgb} {}               // set RGB to the same value
 
 void mold::render::DrawTriangles(uint count)
 {
     glDrawArrays(GL_TRIANGLES, 0, count); // draw triangles
+}
+
+void mold::render::HandleErrors()
+{
+    GLenum error = glGetError();
+    switch (error)
+    {
+    case GL_INVALID_ENUM:
+        log::Error("GL_INVALID_ENUM");
+        break;
+    case GL_INVALID_VALUE:
+        log::Error("GL_INVALID_VALUE");
+        break;
+    case GL_INVALID_OPERATION:
+        log::Error("GL_INVALID_OPERATION");
+        break;
+    case GL_INVALID_FRAMEBUFFER_OPERATION:
+        log::Error("GL_INVALID_FRAMEBUFFER_OPERATION");
+        break;
+    case GL_OUT_OF_MEMORY:
+        log::Fatal("GL_OUT_OF_MEMORY");
+        break;
+    default:
+        break;
+    }
 }

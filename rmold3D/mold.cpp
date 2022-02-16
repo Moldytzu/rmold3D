@@ -309,27 +309,7 @@ void mold::Run()
         }
 
         // detect gl errors
-        GLenum error = glGetError();
-        switch(error)
-        {
-        case GL_INVALID_ENUM:
-            log::Error("GL_INVALID_ENUM");
-            break;
-        case GL_INVALID_VALUE:
-            log::Error("GL_INVALID_VALUE");
-            break;
-        case GL_INVALID_OPERATION:
-            log::Error("GL_INVALID_OPERATION");
-            break;
-        case GL_INVALID_FRAMEBUFFER_OPERATION:
-            log::Error("GL_INVALID_FRAMEBUFFER_OPERATION");
-            break;
-        case GL_OUT_OF_MEMORY:
-            log::Fatal("GL_OUT_OF_MEMORY");
-            break;
-        default:
-            break;
-        }
+        render::HandleErrors();
 
         glFlush(); // flush pipeline
 

@@ -413,6 +413,7 @@ void main()
 
         void DrawTriangles(uint count);
         void HandleFog();
+        void HandleErrors();
 
         inline uint LightIdx = 0;
     };
