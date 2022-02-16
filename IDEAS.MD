@@ -9,7 +9,7 @@
     - Renderers separated into components (Cube/Plane/Point Light renderer)
     - Mesh/.OBJ renderer (render .obj file)
     - UI elements (Text, Input and Panels using Dear ImGUI)
-    - Better logger (colours and debug logs)
+    - Better logger (debug logs)
     - Internal console (Need UI elements first)
     - Internal profiler (profiles different parts of the engine, monitors memory allocations, displays the collected data onto the screen)
     - Multiple light types (directional)

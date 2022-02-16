@@ -27,21 +27,21 @@ auto engineStartedSince = NOW;
 
 void mold::log::Info(std::string str)
 {
-    printf("[%.2f/Info] %s\n", DIFFERENCE, str.c_str());
+    printf("\033[37;1m[\033[34;1m%.2f\033[37;1m/\033[32;1mInfo\033[37;1m] %s\n", DIFFERENCE, str.c_str());
 }
 
 void mold::log::Warn(std::string str)
 {
-    printf("[%.2f/Warn] %s\n", DIFFERENCE, str.c_str());
+    printf("\033[37;1m[\033[34;1m%.2f\033[37;1m/\033[33;1mWarn\033[37;1m] %s\n", DIFFERENCE, str.c_str());
 }
 
 void mold::log::Error(std::string str)
 {
-    printf("[%.2f/Error] %s\n", DIFFERENCE, str.c_str());
+    printf("\033[37;1m[\033[34;1m%.2f\033[37;1m/\033[31;1mError\033[37;1m] %s\n", DIFFERENCE, str.c_str());
 }
 
 void mold::log::Fatal(std::string str)
 {
-    printf("[%.2f/Fatal] %s\n", DIFFERENCE, str.c_str());
+    printf("\033[37;1m[\033[34;1m%.2f\033[37;1m/\033[31;1mFatal\033[37;1m] %s\n", DIFFERENCE, str.c_str());
     Destroy();
 }
