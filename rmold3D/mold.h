@@ -416,6 +416,9 @@ void main()
         void HandleFog();
         void HandleErrors();
 
+        void OnResize(GLFWwindow *window, int width, int height);
+        void OnScroll(GLFWwindow *window, double xoffset, double yoffset);
+
         inline uint LightIdx = 0;
     };
 

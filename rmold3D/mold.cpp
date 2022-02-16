@@ -20,18 +20,6 @@
 
 using namespace mold;
 
-void handleScroll(GLFWwindow *, double, double);
-
-// glfw callbacks
-void onResize(GLFWwindow *window, int width, int height)
-{
-    GlobalEventSystem.CallEvent(EventType::Resize); // call resize event
-    settings::WindowHeight = height;                // set new window height and width
-    settings::WindowWidth = height;
-    glViewport(0, 0, width, height);                                   // set new viewport
-    glm::ortho(0.0f, (float)width, 0.0f, (float)height, 0.1f, 100.0f); // reset orthography
-}
-
 // clean up
 void mold::Destroy()
 {
@@ -87,8 +75,8 @@ void mold::Init(uint width, uint height)
     log::Info("Rendering OpenGL " + std::string((const char *)glGetString(GL_VERSION)) + " on a " + std::string((const char *)glGetString(GL_VENDOR)) + " " + std::string((const char *)glGetString(GL_RENDERER))); // display opengl information
 
     // set up glfw callbacks
-    glfwSetFramebufferSizeCallback(GlobalWindow, onResize);
-    glfwSetScrollCallback(GlobalWindow, handleScroll);
+    glfwSetFramebufferSizeCallback(GlobalWindow, render::OnResize);
+    glfwSetScrollCallback(GlobalWindow, render::OnScroll);
 
     // set up gl
     glViewport(0, 0, width, height);                                   // set viewport
@@ -114,11 +102,6 @@ void mold::Init(uint width, uint height)
 // mouse handling
 double lastX;
 double lastY;
-
-void handleScroll(GLFWwindow *window, double xoffset, double yoffset)
-{
-    input::GlobalScrollAxis = yoffset; // the scroll wheel in glfw works as a mouse where the yoffset is the cursor axis itself
-}
 
 void handleMouse()
 {
