@@ -419,6 +419,8 @@ void main()
         void DrawTriangles(uint count);
         void HandleFog();
         void HandleErrors();
+        void Render();
+        void Init(uint width,uint height);
 
         void OnResize(GLFWwindow *window, int width, int height);
         void OnScroll(GLFWwindow *window, double xoffset, double yoffset);
