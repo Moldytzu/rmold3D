@@ -32,6 +32,7 @@
 #include <fstream>
 #include <sstream>
 #include <thread>
+#include <algorithm>
 
 #define Vertex(X, Y, Z) X, Y, Z
 #define TexCoord(X, Y) X, Y
