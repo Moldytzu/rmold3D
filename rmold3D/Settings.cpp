@@ -34,6 +34,11 @@ void mold::settings::Update()
         glEnable(GL_BLEND);
     else
         glDisable(GL_BLEND);
+
+    if (settings::DebugRenderer)
+        glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
+    else
+        glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
 }
 
 void mold::settings::LoadFromFile(std::string filename)
