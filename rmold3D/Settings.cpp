@@ -109,6 +109,8 @@ void mold::settings::LoadFromFile(std::string filename)
                     settings::Debug = (bool)((int)std::stoi(value));
                 else if (key == "gamma")
                     settings::Gamma = std::stof(value);
+                else if (key == "aspectratio")
+                    settings::AspectRatio = std::stof(value);
                 else
                     mold::log::Warn("Unknown setting " + key);
             }
