@@ -37,6 +37,21 @@ mold::render::Skybox::Skybox(std::string up, std::string side, std::string down)
     Vabo = mold::render::VABO(vertices, sizeof(vertices)); // generate VBO & VAO
 }
 
+mold::render::Skybox::Skybox(render::Colour c) : upT{c}, sideT{c}, downT{c}
+{
+    float vertices[] =
+        {
+            Vertex(-0.5f, -0.5f, -0.5f), TexCoord(0.0f, 1.0f), // right up
+            Vertex(0.5f, -0.5f, -0.5f), TexCoord(1.0f, 1.0f),  // left up
+            Vertex(0.5f, -0.5f, 0.5f), TexCoord(1.0f, 0.0f),   // left down
+            Vertex(0.5f, -0.5f, 0.5f), TexCoord(1.0f, 0.0f),   // left down
+            Vertex(-0.5f, -0.5f, 0.5f), TexCoord(0.0f, 0.0f),  // right down
+            Vertex(-0.5f, -0.5f, -0.5f), TexCoord(0.0f, 1.0f), // right up
+        };
+
+    Vabo = mold::render::VABO(vertices, sizeof(vertices)); // generate VBO & VAO
+}
+
 void mold::render::Skybox::Bind()
 {
     glm::mat4 model;

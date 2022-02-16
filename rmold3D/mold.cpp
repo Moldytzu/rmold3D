@@ -102,6 +102,9 @@ void mold::Init(uint width, uint height)
     // set up sun
     mold::GlobalGameObjects.Instantiate(new mold::render::objects::Light(glm::vec3(1, 1, 1), glm::vec3(1), 50), "Sun");
 
+    // set up default skybox
+    mold::GlobalSkybox = render::Skybox(render::Colour(0));
+
     GlobalShader.AttachSource(render::VertexShaderSource, GL_VERTEX_SHADER);     // attach vertex shader
     GlobalShader.AttachSource(render::FragmentShaderSource, GL_FRAGMENT_SHADER); // attach fragment shader
     GlobalShader.Recompile();                                                    // compile it
@@ -193,8 +196,7 @@ void mold::Run()
         // call tick
         GlobalEventSystem.CallEvent(EventType::Tick);
 
-        glClearColor(0, 0, 0, 0);                           // black
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear screen and the depth buffer
+        glClear(GL_DEPTH_BUFFER_BIT); // clear the depth buffer
 
         // update window title (Rewritten mold 3D @ ?? FPS)
         if (oldFPS != (int)(1 / time::DeltaTime))

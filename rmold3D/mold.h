@@ -264,6 +264,7 @@ void main()
         public:
             Skybox();
             Skybox(std::string up, std::string side, std::string down);
+            Skybox(Colour c);
 
             void Bind();
             void Deallocate();
