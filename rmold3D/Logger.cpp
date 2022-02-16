@@ -40,6 +40,12 @@ void mold::log::Error(std::string str)
     printf("\033[37;1m[\033[34;1m%.2f\033[37;1m/\033[31;1mError\033[37;1m] %s\n", DIFFERENCE, str.c_str());
 }
 
+void mold::log::Debug(std::string str)
+{
+    if(!settings::Debug) return; // return if there isn't debug enabled
+    printf("\033[37;1m[\033[34;1m%.2f\033[37;1m/\033[31;1mDebug\033[37;1m] %s\n", DIFFERENCE, str.c_str());
+}
+
 void mold::log::Fatal(std::string str)
 {
     printf("\033[37;1m[\033[34;1m%.2f\033[37;1m/\033[31;1mFatal\033[37;1m] %s\n", DIFFERENCE, str.c_str());

@@ -22,6 +22,8 @@ using namespace mold::settings;
 
 void mold::settings::Update()
 {
+    mold::log::Debug("Updating settings");
+
     // enable/disable transparency and msaa depending on the settings
     if (settings::MSAAEnabled)
         glEnable(GL_MULTISAMPLE);
@@ -37,6 +39,8 @@ void mold::settings::Update()
 void mold::settings::LoadFromFile(std::string filename)
 {
     mold::settings::Update(); // flush default settings
+
+    mold::log::Debug("Trying to loading settings from " + filename);
 
     std::ifstream stream(filename); // create stream
 
@@ -91,6 +95,10 @@ void mold::settings::LoadFromFile(std::string filename)
                     settings::TransparencyEnabled = (bool)((int)std::stoi(value));
                 else if (key == "gammacorrection")
                     settings::GammaCorrection = (bool)((int)std::stoi(value));
+                else if (key == "debugrenderer")
+                    settings::DebugRenderer = (bool)((int)std::stoi(value));
+                else if (key == "debug")
+                    settings::Debug = (bool)((int)std::stoi(value));
                 else if (key == "gamma")
                     settings::Gamma = std::stof(value);
                 else

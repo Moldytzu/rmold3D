@@ -432,13 +432,15 @@ void main()
         inline float FogDensity = 0.09f;           // fog density
         inline glm::vec4 FogColour = glm::vec4(1); // fog colour
         inline bool FogAutoDensity = true;         // dynamically set fog density depending on the skybox distance
-        inline float LightingEnabled = false;      // experimental, don't use it!
+        inline float LightingEnabled = true;       // lighting
         inline float LightingAmbient = 0.1f;       // ambient lighting
         inline float SkyboxDistance = 25;          // distance to the skybox
         inline bool MSAAEnabled = true;            // enable msaa
         inline bool TransparencyEnabled = true;    // enable transparency
         inline bool GammaCorrection = true;        // enable gamma correction
         inline float Gamma = 1.0f;                 // gamma
+        inline bool Debug = false;                 // debug engine
+        inline bool DebugRenderer = false;         // debug renderer
 
         void Update();                           // update settings
         void LoadFromFile(std::string filename); // load settings from file
@@ -475,6 +477,7 @@ void main()
         void Warn(std::string str);
         void Error(std::string str);
         void Fatal(std::string str);
+        void Debug(std::string str);
     };
 
     class EventSystem
