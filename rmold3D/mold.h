@@ -184,31 +184,46 @@ in vec3 vertexPos;
 uniform vec4 fcolour;
 uniform vec4 fogColour;
 uniform bool fogEnabled;
+
 uniform sampler2D mainTexture;
-uniform vec3 lightColour;
+
 uniform bool lightingEnabled;
 uniform float lightingAmbient;
-uniform vec3 lightPosition;
-uniform float lightPower;
+
 uniform float gamma;
 uniform bool gammaCorectionEnabled;
 
-vec3 calculateLight(vec4 inputColour, vec3 position, vec3 colour, vec3 vertex, float power)
+struct Light  {
+   vec3 Position;
+   float Power; 
+   vec3 Colour;
+};
+
+#define LIGHTS 128
+uniform Light lights[LIGHTS];
+
+vec3 calculateLight(vec4 inputColour, Light light)
 {
    vec3 normal = normalize(vec3(mat4(1.0) * vec4(1.0,1.0,1.0, 0.0)));
-   vec3 lightDir = position - vertex;
+   vec3 lightDir = light.Position - vertexPos;
    float distance = pow(length(lightDir),2);
    float lambertian = max(dot(lightDir, normal), 0.0);
-   return inputColour.xyz * lightingAmbient * lambertian * colour * power / distance;
+   return inputColour.xyz * lightingAmbient * lambertian * light.Colour * light.Power / distance;
 }
 
 void main()
 {
    FragColor = texture(mainTexture, textureCoord) * vec4(vec3(lightingAmbient),1.0);
+   
    if(lightingEnabled == true)
    {
-      FragColor = vec4(calculateLight(FragColor, lightPosition,lightColour,vertexPos,lightPower),1.0);
+      for(int i = 0;i <LIGHTS;i++)
+      {
+          if(lights[i].Power != 0)
+            FragColor = vec4(calculateLight(FragColor, lights[i]),1.0);
+      }
    }
+
    if(fogEnabled == true)
    {
       FragColor = mix(fogColour, FragColor, visibility);
