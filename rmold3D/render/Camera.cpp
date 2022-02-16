@@ -57,7 +57,7 @@ bool mold::render::camera::InView(glm::vec3 position) // check if a position is 
     return inY && inX && inZ;
 }
 
-float oldYaw, oldPitch;
+float oldYaw, oldPitch,oldFOV,oldWidth,oldHeight;
 glm::vec3 oldDirection,oldPosition, oldFront;
 void mold::render::camera::Handle()
 {
@@ -77,12 +77,15 @@ void mold::render::camera::Handle()
     }
 
     // update view and projection
-    if (render::camera::Position != oldPosition || render::camera::Front != oldFront)
+    if (render::camera::Position != oldPosition || render::camera::Front != oldFront || settings::FOV != oldFOV || settings::WindowWidth != oldWidth || settings::WindowHeight != oldHeight)
     {
         render::camera::View = glm::lookAt(render::camera::Position, render::camera::Position + render::camera::Front, render::camera::Up);
         render::camera::Projection = glm::perspective(math::Vfov(settings::FOV, (settings::WindowWidth / settings::WindowHeight)), settings::WindowWidth / settings::WindowHeight, 0.1f, 100.0f);
 
         oldPosition = render::camera::Position; // save the values
         oldFront = render::camera::Front;
+        oldFOV = settings::FOV;
+        oldHeight = settings::WindowHeight;
+        oldWidth = settings::WindowWidth;
     }
 }
