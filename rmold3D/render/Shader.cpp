@@ -20,9 +20,7 @@
 
 using namespace mold::render;
 
-mold::render::Shader::Shader() : Shaders{new uint[0xFFFF]} // 64k shaders should be enough :)
-{
-}
+mold::render::Shader::Shader() : Shaders{new uint[0xFFFF]} {} // 64k shaders should be enough :)
 
 void mold::render::Shader::Recompile()
 {

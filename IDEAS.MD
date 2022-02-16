@@ -21,3 +21,4 @@
     - Ability to automaticaly attach gdb to the engine
     - Clean up mold.cpp
     - Multi-threading
+    - Support multiple texture formats (PNG,JPG)

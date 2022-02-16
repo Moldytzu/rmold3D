@@ -20,7 +20,7 @@
 
 using namespace mold::math;
 
-float mold::math::Vfov(float Hfov, float aspectRatio)
+float mold::math::Vfov(float Hfov, float aspectRatio) // calculate vertical fov from horizontal fov
 {
     float hfovRad = Hfov * glm::pi<float>() / 180;
     float vfovRad = 2 * glm::atan(glm::tan(hfovRad / 2) * aspectRatio);

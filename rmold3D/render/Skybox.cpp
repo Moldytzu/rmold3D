@@ -22,6 +22,8 @@ using namespace mold::render;
 
 mold::render::Skybox::Skybox() {}
 
+// this could be optimized some
+
 mold::render::Skybox::Skybox(std::string up, std::string side, std::string down) : upT{up}, sideT{side}, downT{down}
 {
     float vertices[] =

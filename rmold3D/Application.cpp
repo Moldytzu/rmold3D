@@ -20,6 +20,7 @@
 
 using namespace mold;
 
+// virtual functions that have to be overriden by the game
 void mold::Application::OnDraw() {}
 void mold::Application::OnMouseInput() {}
 void mold::Application::OnResize() {}
@@ -30,7 +31,7 @@ std::string mold::Application::Name()
     return "Game";
 }
 
-mold::Application::Application() : mold::Application::Application(800, 600) {}
+mold::Application::Application() : mold::Application::Application(800, 600) {} // default resolution is 800x600
 
 mold::Application::Application(uint width, uint height)
 {

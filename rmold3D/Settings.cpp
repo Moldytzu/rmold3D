@@ -62,12 +62,12 @@ void mold::settings::LoadFromFile(std::string filename)
         std::string key;
         if (std::getline(strm, key, '='))
         {
-            strm >> std::ws;
+            strm >> std::ws; // remove white space
             std::string value;
             if (std::getline(strm, value))
             {
                 // parse key and value
-                if (key.back() == ' ') // remove last space
+                if (key.back() == ' ') // remove last white space
                     key.pop_back();
                 for (auto &c : key)
                     c = std::tolower(c);

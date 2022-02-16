@@ -22,7 +22,7 @@ using namespace mold::render;
 
 // glfw window callbacks
 
-void mold::render::OnResize(GLFWwindow *window, int width, int height)
+void mold::render::OnResize(GLFWwindow *window, int width, int height) // it is called when the window is being resized
 {
     GlobalEventSystem.CallEvent(EventType::Resize); // call resize event
     settings::WindowHeight = height;                // set new window height and width
@@ -31,7 +31,7 @@ void mold::render::OnResize(GLFWwindow *window, int width, int height)
     glm::ortho(0.0f, (float)width, 0.0f, (float)height, 0.1f, 100.0f); // reset orthography
 }
 
-void mold::render::OnScroll(GLFWwindow *window, double xoffset, double yoffset)
+void mold::render::OnScroll(GLFWwindow *window, double xoffset, double yoffset) // it is called when the scroll wheel is used
 {
     input::GlobalScrollAxis = yoffset; // the scroll wheel in glfw works as a mouse where the yoffset is the cursor axis itself
 }

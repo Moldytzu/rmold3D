@@ -20,6 +20,7 @@
 
 using namespace mold::render::objects;
 
+// virtual functions that have to be overriden by the game
 void mold::render::objects::Component::Handle(EventType event) {}
 void mold::render::objects::Component::Tick() {}
 void mold::render::objects::Component::Start() {}

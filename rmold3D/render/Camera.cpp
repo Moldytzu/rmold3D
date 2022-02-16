@@ -49,7 +49,7 @@ void mold::render::camera::Rotate(glm::vec3 axis, float value)
         Yaw += value;
 }
 
-bool mold::render::camera::InView(glm::vec3 position)
+bool mold::render::camera::InView(glm::vec3 position) // check if a position is in view
 {
     bool inY = position.y > (Position.y - settings::SkyboxDistance) && position.y < (Position.y + settings::SkyboxDistance);
     bool inX = position.x > (Position.x - settings::SkyboxDistance) && position.x < (Position.x + settings::SkyboxDistance);

@@ -31,14 +31,14 @@ std::unordered_map<std::string, mold::render::objects::Component *> mold::render
 
 void mold::render::objects::GameObject::AttachComponent(std::string name, Component *component)
 {
-    Components.emplace(Name + " : " + name, std::move(component));
-    component->Parent = this;
+    Components.emplace(Name + " : " + name, std::move(component)); // insert the pair in the map
+    component->Parent = this; // set the parent to this
     component->Start(); // reset component
 }
 
 void mold::render::objects::GameObject::DettachComponent(std::string name)
 {
-    if (!ExistsComponent(name))
+    if (!ExistsComponent(name)) // fail if there isn't any component with that name
     {
         log::Error("Failed to dettach non-existent component");
         return;
@@ -77,7 +77,7 @@ void mold::render::objects::GameObject::HandleComponents(mold::EventType event)
 
 bool mold::render::objects::GameObject::ExistsComponent(std::string name)
 {
-    return Components.count(name);
+    return Components.count(name); // return the count of the items
 }
 
 // Default functions

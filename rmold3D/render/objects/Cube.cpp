@@ -84,5 +84,5 @@ void mold::render::objects::Cube::Draw()
 
 std::string mold::render::objects::Cube::Type()
 {
-    return "Textured Cube";
+    return "Textured Cube"; // return the custom type
 }

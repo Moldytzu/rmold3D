@@ -24,7 +24,7 @@ std::unordered_map<std::string, uint32_t> newObjects;
 
 void mold::render::objects::GameObjectsManager::Add(std::string name, GameObject *object)
 {
-    object->Name = name;
+    object->Name = name; // set the name
     GameObjects.emplace(std::move(name), std::move(object)); // build std::pair and insert it in the map
 }
 

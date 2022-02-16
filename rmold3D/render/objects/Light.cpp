@@ -27,10 +27,12 @@ Light::Light(glm::vec3 pos, glm::vec3 col, float power) : GameObject(image::Text
 
 void Light::Draw()
 {
-    std::string idx = "lights[";
+    // the shader's uniform interface looks like this lights[lightIndex].Parameter
+    std::string idx = "lights["; // lights[ + LightIndex + ]
     idx += std::to_string(render::LightIdx);
     idx += "].";
 
+    // pass the values to the shader
     GlobalShader.Set(idx + "Colour", Colour);
     GlobalShader.Set(idx + "Position", Position + glm::vec3(1));
     GlobalShader.Set(idx + "Power", Power);
@@ -43,12 +45,12 @@ std::string Light::Type()
 
 GameObject *Light::Translate(glm::vec3 offset)
 {
-    Position += offset;
+    Position += offset; // translate in the offset
     return this;
 }
 
 GameObject *Light::Move(glm::vec3 position)
 {
-    Position = position;
+    Position = position; // set the old position to the new one
     return this;
 }

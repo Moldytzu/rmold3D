@@ -30,6 +30,7 @@ void mold::render::DrawTriangles(uint count)
 
 void mold::render::HandleErrors()
 {
+    // check for opengl errors
     GLenum error = glGetError();
     switch (error)
     {
@@ -45,7 +46,7 @@ void mold::render::HandleErrors()
     case GL_INVALID_FRAMEBUFFER_OPERATION:
         log::Error("GL_INVALID_FRAMEBUFFER_OPERATION");
         break;
-    case GL_OUT_OF_MEMORY:
+    case GL_OUT_OF_MEMORY: // crash if we're out of vram
         log::Fatal("GL_OUT_OF_MEMORY");
         break;
     default:
