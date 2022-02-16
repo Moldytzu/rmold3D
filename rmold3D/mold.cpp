@@ -20,6 +20,10 @@
 
 using namespace mold;
 
+// threading
+std::thread *threads = new std::thread[0xFFFF]; // 64k threads
+uint threadsIdx = 0;
+
 // clean up
 void mold::Destroy()
 {
@@ -33,6 +37,7 @@ void mold::Destroy()
         delete ptr; // delete all components
 
     delete GlobalApplication; // deconstuct application
+    delete[] threads;         // delete threads
 
     GlobalShader.Deallocate(); // deallocate shader
     GlobalSkybox.Deallocate(); // deallocate skybox
@@ -112,8 +117,11 @@ void mold::Run()
         time::DeltaTime = currentFrame - time::LastFrame;
         time::LastFrame = currentFrame;
 
+        // reset threads index
+        threadsIdx = 0;
+
         // call tick
-        GlobalEventSystem.CallEvent(EventType::Tick);
+        threads[threadsIdx++] = std::thread(&mold::EventSystem::CallEvent, &mold::GlobalEventSystem, EventType::Tick);
 
         glClear(GL_DEPTH_BUFFER_BIT); // clear the depth buffer
 
@@ -126,13 +134,19 @@ void mold::Run()
         }
 
         // do cursor handling
-        input::HandleCursor();
+        threads[threadsIdx++] = std::thread(&mold::input::HandleCursor);
 
         // do mouse handling
-        input::HandleMouse();
+        threads[threadsIdx++] = std::thread(&mold::input::HandleMouse);
 
         // handle camera
-        render::camera::Handle();
+        threads[threadsIdx++] = std::thread(&mold::render::camera::Handle);
+
+        // wait for the threads
+        for (int i = 0; i < threadsIdx; i++)
+            threads[i].join();
+
+        // todo: move the rendering stuff in render.cpp
 
         // ensure that we use shader
         GlobalShader.Bind();

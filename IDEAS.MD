@@ -10,7 +10,7 @@
     - Mesh/.OBJ renderer (render .obj file)
     - UI elements (Text, Input and Panels using Dear ImGUI)
     - Internal console (Need UI elements first)
-    - Internal profiler (profiles different parts of the engine, monitors memory allocations, displays the collected data onto the screen)
+    - Internal profiler (profiles different parts of the engine, monitors memory allocations (also when need to destroy the engine it frees them automatically), displays the collected data onto the screen)
     - Multiple light types (directional)
     - Editor (like UE4, Unity, Hazel or Godot)
     - Ability to modify the 3D resolution (render at a lower resolution then scale up to the window's)
