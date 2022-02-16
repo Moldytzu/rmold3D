@@ -18,15 +18,6 @@
 
 #include <rmold3D/mold.h>
 
-/*remaining features to add:
-- shadow casting
-- better input system (make the fps camera more fluid and also controler input)
-- multiple rendering subsystems (vulkan support)
-- make windows & mac build
-- internal console
-- internal profiler
-*/
-
 // Player component
 class Player : public mold::render::objects::Component
 {

@@ -1,0 +1,22 @@
+# Features/ideas to add/tweak
+#
+    - Create docs
+    - Shadow casting
+    - Better input system (make the first person camera more fluid, implement controler input and also make the mouse input subsystem better)
+    - Multiple rendering subsystems (vulkan support)
+    - Make Windows & MacOS build successfuly
+    - Prefabricates (Group of components bundled into a gameobject that can be easily instantiate)
+    - Renderers separated into components (Cube/Plane/Point Light renderer)
+    - Mesh/.OBJ renderer (render .obj file)
+    - UI elements (Text, Input and Panels using Dear ImGUI)
+    - Better logger (colours and debug logs)
+    - Internal console (Need UI elements first)
+    - Internal profiler (profiles different parts of the engine, monitors memory allocations, displays the collected data onto the screen)
+    - Multiple light types (directional)
+    - Editor (like UE4, Unity, Hazel or Godot)
+    - Ability to modify the 3D resolution (render at a lower resolution then scale up to the window's)
+    - Make experience better on low end machines (Ability to set the precision in the shaders to a lower one, downscale textures, cut down on texture quality)
+    - Save settings to config file
+    - Debug OpenGL calls/rendering (ability to add debug logs in shaders , display the triangles as lines and also display errors)
+    - Catch signals (like sigsegv, sigterm, sigill, sigabrt, sigfpe etc.)
+    - Ability to automaticaly attach gdb to the engine
