@@ -33,6 +33,7 @@
 #include <sstream>
 #include <thread>
 #include <algorithm>
+#include <csignal>
 
 #define Vertex(X, Y, Z) X, Y, Z
 #define TexCoord(X, Y) X, Y
@@ -519,7 +520,8 @@ void main()
     inline render::objects::GameObjectsManager GlobalGameObjects;
 
     void Destroy();
-
+    
+    void HandleSignal(int signum);
     Application *BuildApplication();
 
     void Init(uint width, uint height);

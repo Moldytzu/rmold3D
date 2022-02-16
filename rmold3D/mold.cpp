@@ -55,6 +55,14 @@ void mold::Init(uint width, uint height)
     // set rng
     srand((uint64_t)glfwGetTime());
 
+    // set up signals
+    signal(SIGABRT,mold::HandleSignal);
+    signal(SIGFPE,mold::HandleSignal);
+    signal(SIGILL,mold::HandleSignal);
+    signal(SIGINT,mold::HandleSignal);
+    signal(SIGSEGV,mold::HandleSignal);
+    signal(SIGTERM,mold::HandleSignal);
+
     // init renderer
     mold::render::Init(width,height);
 
