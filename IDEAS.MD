@@ -3,7 +3,7 @@
     - Create docs
     - Shadow casting
     - Better input system (make the first person camera more fluid, implement controler input and also make the mouse input subsystem better)
-    - Make Windows & MacOS build successfuly
+    - Make Windows & MacOS host builds successfuly
     - Prefabricates (Group of components bundled into a gameobject that can be easily instantiate)
     - Renderers separated into components (Cube/Plane/Point Light renderer)
     - Mesh/.OBJ renderer (render .obj file)
@@ -16,7 +16,11 @@
     - Make experience better on low end machines (Ability to set the precision in the shaders to a lower one, downscale textures, cut down on texture quality)
     - Save settings to config file
     - Debug OpenGL calls/rendering (ability to add debug logs in shaders)
-    - Catch signals (like sigsegv, sigterm, sigill, sigabrt, sigfpe etc.)
     - Ability to automaticaly attach gdb to the engine
     - Clean up mold.cpp
     - Support multiple texture formats (PNG,JPG)
+    - Better component system (ability to make variables public using a std::map<std::string, std::any> named PublicVars exposed to the parent and the game)
+    - Cross-compiling for another platform from Linux (to Windows and Mac)
+    - Better transparency (the trasparency/blend that opengl provides is kinda trash, maybe I can make my own algorithm??)
+    - Ability to manipulate properties of a light object (using some helper functions as the public variables are not visible to pointers)
+    - Multiple camera views (multiple cameras that are rendering to an off-screen buffer)
