@@ -199,7 +199,7 @@ struct Light  {
    vec3 Colour;
 };
 
-#define LIGHTS 2
+#define LIGHTS 128
 uniform Light lights[LIGHTS];
 
 vec3 calculateLight(vec4 inputColour, Light light)

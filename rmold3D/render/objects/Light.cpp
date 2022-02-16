@@ -31,10 +31,6 @@ void Light::Draw()
     idx += std::to_string(render::LightIdx);
     idx += "].";
 
-    mold::log::Info(idx + "Colour = " + std::to_string(Colour.r) + ","+ std::to_string(Colour.g)+","+ std::to_string(Colour.b));
-    mold::log::Info(idx + "Position = " + std::to_string(Position.r) + ","+ std::to_string(Position.g)+","+ std::to_string(Position.b));
-    mold::log::Info(idx + "Power = " + std::to_string(Power));
-
     GlobalShader.Set(idx + "Colour", Colour);
     GlobalShader.Set(idx + "Position", Position + glm::vec3(1));
     GlobalShader.Set(idx + "Power", Power);
