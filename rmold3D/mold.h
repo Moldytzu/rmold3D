@@ -289,6 +289,8 @@ void main()
             void Rotate(glm::vec3 axis, float value);
 
             bool InView(glm::vec3 position);
+
+            void Handle();
         };
 
         namespace objects

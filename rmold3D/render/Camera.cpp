@@ -56,3 +56,33 @@ bool mold::render::camera::InView(glm::vec3 position)
     bool inZ = position.z > (Position.z - settings::SkyboxDistance) && position.z < (Position.z + settings::SkyboxDistance);
     return inY && inX && inZ;
 }
+
+float oldYaw, oldPitch;
+glm::vec3 oldDirection,oldPosition, oldFront;
+void mold::render::camera::Handle()
+{
+    // update camera front
+    if (render::camera::Yaw != oldYaw || render::camera::Pitch != oldPitch) // update only when the values change so we don't do cos and sin on every tick
+    {
+        // clamp the value of pitch
+        render::camera::Pitch = glm::clamp(render::camera::Pitch, -89.9f, 89.9f);
+
+        oldDirection.x = cos(glm::radians(render::camera::Yaw)) * cos(glm::radians(render::camera::Pitch));
+        oldDirection.y = sin(glm::radians(render::camera::Pitch));
+        oldDirection.z = sin(glm::radians(render::camera::Yaw)) * cos(glm::radians(render::camera::Pitch));
+        render::camera::Front = glm::normalize(oldDirection);
+
+        oldYaw = render::camera::Yaw; // save the values
+        oldPitch = render::camera::Pitch;
+    }
+
+    // update view and projection
+    if (render::camera::Position != oldPosition || render::camera::Front != oldFront)
+    {
+        render::camera::View = glm::lookAt(render::camera::Position, render::camera::Position + render::camera::Front, render::camera::Up);
+        render::camera::Projection = glm::perspective(math::Vfov(settings::FOV, (settings::WindowWidth / settings::WindowHeight)), settings::WindowWidth / settings::WindowHeight, 0.1f, 100.0f);
+
+        oldPosition = render::camera::Position; // save the values
+        oldFront = render::camera::Front;
+    }
+}
