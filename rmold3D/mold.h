@@ -469,6 +469,8 @@ void main()
     namespace input
     {
         bool GetKey(int key);
+        void HandleCursor();
+        void HandleMouse();
 
         inline CursorLockingMode GlobalCursorLockMode;
         inline glm::vec2 GlobalCursorAxis;

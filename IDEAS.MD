@@ -20,3 +20,4 @@
     - Catch signals (like sigsegv, sigterm, sigill, sigabrt, sigfpe etc.)
     - Ability to automaticaly attach gdb to the engine
     - Clean up mold.cpp
+    - Multi-threading
