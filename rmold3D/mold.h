@@ -199,16 +199,24 @@ struct Light  {
    vec3 Colour;
 };
 
-#define LIGHTS 128
+#define LIGHTS 2
 uniform Light lights[LIGHTS];
 
 vec3 calculateLight(vec4 inputColour, Light light)
 {
    vec3 normal = normalize(vec3(mat4(1.0) * vec4(1.0,1.0,1.0, 0.0)));
    vec3 lightDir = light.Position - vertexPos;
-   float distance = pow(length(lightDir),2);
+   float distance = length(lightDir);
+   distance = distance * distance;
    float lambertian = max(dot(lightDir, normal), 0.0);
-   return inputColour.xyz * lightingAmbient * lambertian * light.Colour * light.Power / distance;
+   float specular = 0.0;
+   if (lambertian > 0.0) {
+       vec3 viewDir = normalize(-vertexPos);
+        vec3 halfDir = normalize(lightDir + viewDir);
+        float specAngle = max(dot(halfDir, normal), 0.0);
+        specular = pow(specAngle, 256);
+    }
+   return inputColour.xyz * lambertian * light.Colour * light.Power / distance + light.Colour * specular * light.Colour * light.Power / distance;
 }
 
 void main()
@@ -402,7 +410,7 @@ void main()
                 std::unordered_map<std::string, GameObject *> GameObjects;
             };
         };
-        
+
         void DrawTriangles(uint count);
         void HandleFog();
 

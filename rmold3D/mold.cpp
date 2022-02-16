@@ -100,7 +100,7 @@ void mold::Init(uint width, uint height)
     mold::settings::LoadFromFile("mold.cfg");
 
     // set up sun
-    mold::GlobalGameObjects.Instantiate(new mold::render::objects::Light(glm::vec3(1, 10, 1), glm::vec3(1), 50), "Sun");
+    mold::GlobalGameObjects.Instantiate(new mold::render::objects::Light(glm::vec3(1, 1, 1), glm::vec3(1), 50), "Sun");
 
     GlobalShader.AttachSource(render::VertexShaderSource, GL_VERTEX_SHADER);     // attach vertex shader
     GlobalShader.AttachSource(render::FragmentShaderSource, GL_FRAGMENT_SHADER); // attach fragment shader
