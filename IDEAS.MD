@@ -3,7 +3,6 @@
     - Create docs
     - Shadow casting
     - Better input system (make the first person camera more fluid, implement controler input and also make the mouse input subsystem better)
-    - Multiple rendering subsystems (vulkan support)
     - Make Windows & MacOS build successfuly
     - Prefabricates (Group of components bundled into a gameobject that can be easily instantiate)
     - Renderers separated into components (Cube/Plane/Point Light renderer)
@@ -20,5 +19,4 @@
     - Catch signals (like sigsegv, sigterm, sigill, sigabrt, sigfpe etc.)
     - Ability to automaticaly attach gdb to the engine
     - Clean up mold.cpp
-    - Multi-threading
     - Support multiple texture formats (PNG,JPG)

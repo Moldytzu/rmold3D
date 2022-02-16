@@ -52,6 +52,9 @@ void mold::Init(uint width, uint height)
 
     log::Info("Starting Rewritten mold 3D");
 
+    // set rng
+    srand((uint64_t)glfwGetTime());
+
     // init renderer
     mold::render::Init(width,height);
 

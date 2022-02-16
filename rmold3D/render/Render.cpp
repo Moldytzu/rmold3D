@@ -62,9 +62,6 @@ void mold::render::Init(uint width,uint height)
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); // GL 3.3 Core
     glfwWindowHint(GLFW_SAMPLES, 4);                               // MSAA x4
 
-    // set rng
-    srand((uint64_t)glfwGetTime());
-
     GlobalWindow = glfwCreateWindow(width, height, "Rewritten mold 3D", NULL, NULL); // create window
     if (GlobalWindow == NULL)                                                        // exit if the window couldn't be created
         log::Fatal("Couldn't create glfw window!");
