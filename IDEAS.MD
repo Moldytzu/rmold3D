@@ -16,6 +16,6 @@
     - Ability to modify the 3D resolution (render at a lower resolution then scale up to the window's)
     - Make experience better on low end machines (Ability to set the precision in the shaders to a lower one, downscale textures, cut down on texture quality)
     - Save settings to config file
-    - Debug OpenGL calls/rendering (ability to add debug logs in shaders and also display errors)
+    - Debug OpenGL calls/rendering (ability to add debug logs in shaders)
     - Catch signals (like sigsegv, sigterm, sigill, sigabrt, sigfpe etc.)
     - Ability to automaticaly attach gdb to the engine
