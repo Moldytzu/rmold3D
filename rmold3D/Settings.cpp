@@ -39,6 +39,9 @@ void mold::settings::Update()
         glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
     else
         glPolygonMode( GL_FRONT_AND_BACK, GL_FILL );
+
+    // clamp skybox distance to not get funky results
+    settings::SkyboxDistance = glm::clamp(settings::SkyboxDistance,0.0f,100.0f);
 }
 
 void mold::settings::LoadFromFile(std::string filename)
