@@ -205,7 +205,7 @@ uniform Light lights[LIGHTS];
 vec3 calculateLight(vec4 inputColour, Light light)
 {
    vec3 normal = normalize(vec3(mat4(1.0) * vec4(1.0,1.0,1.0, 0.0)));
-   vec3 lightDir = light.Position - vertexPos;
+   vec3 lightDir = abs(light.Position - vertexPos);
    float distance = length(lightDir);
    distance = distance * distance;
    float lambertian = max(dot(lightDir, normal), 0.0);
