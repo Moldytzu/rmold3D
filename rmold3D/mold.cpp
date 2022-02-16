@@ -280,13 +280,17 @@ void mold::Run()
         // draw lights
         if (settings::LightingEnabled) // draw lights only if it's enabled
         {
+            render::LightIdx = 0; // reset light index
             for (auto const &[name, ptr] : GlobalGameObjects.Get())
             {
                 if (!ptr->Enabled)
                     continue;
 
                 if (render::camera::InView(ptr->GetPosition()) && ptr->Type() == "Point Light") // draw only lights
+                {
                     ptr->Draw();
+                    render::LightIdx++;
+                }
             }
         }
 

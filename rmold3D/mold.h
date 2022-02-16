@@ -402,8 +402,11 @@ void main()
                 std::unordered_map<std::string, GameObject *> GameObjects;
             };
         };
+        
         void DrawTriangles(uint count);
         void HandleFog();
+
+        inline uint LightIdx = 0;
     };
 
     namespace math

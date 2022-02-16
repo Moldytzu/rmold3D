@@ -95,6 +95,9 @@ public:
         // Enable the experimental lighting
         mold::settings::LightingEnabled = true;
 
+        // Instantiate a light
+        mold::GlobalGameObjects.Instantiate(new mold::render::objects::Light(glm::vec3(-1,0,-1),glm::vec3(1),10));
+
         // Update settings
         mold::settings::Update();
     }
