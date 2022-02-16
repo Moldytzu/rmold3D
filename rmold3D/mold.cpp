@@ -245,7 +245,7 @@ void mold::Run()
         if (render::camera::Position != oldPosition || render::camera::Front != oldFront)
         {
             render::camera::View = glm::lookAt(render::camera::Position, render::camera::Position + render::camera::Front, render::camera::Up);
-            render::camera::Projection = glm::perspective(glm::radians(settings::FOV), settings::WindowWidth / settings::WindowHeight, 0.1f, 100.0f);
+            render::camera::Projection = glm::perspective(math::Vfov(settings::FOV,(settings::WindowWidth / settings::WindowHeight)), settings::WindowWidth / settings::WindowHeight, 0.1f, 100.0f);
 
             oldPosition = render::camera::Position; // save the values
             oldFront = render::camera::Front;

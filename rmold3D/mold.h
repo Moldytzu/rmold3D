@@ -380,6 +380,11 @@ void main()
         void HandleFog();
     };
 
+    namespace math
+    {
+        float Vfov(float Hfov, float aspectRatio);
+    };
+
     namespace settings
     {
         inline float FOV = 90.0f;                  // field of view
