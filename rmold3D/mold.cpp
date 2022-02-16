@@ -230,7 +230,7 @@ void mold::Run()
         if (render::camera::Yaw != oldYaw || render::camera::Pitch != oldPitch) // update only when the values change so we don't do cos and sin on every tick
         {
             // clamp the value of pitch
-            render::camera::Pitch = glm::clamp(render::camera::Pitch, -89.0f, 89.0f);
+            render::camera::Pitch = glm::clamp(render::camera::Pitch, -89.9f, 89.9f);
 
             oldDirection.x = cos(glm::radians(render::camera::Yaw)) * cos(glm::radians(render::camera::Pitch));
             oldDirection.y = sin(glm::radians(render::camera::Pitch));
