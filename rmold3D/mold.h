@@ -398,7 +398,6 @@ void main()
 
         void Update();                           // update settings
         void LoadFromFile(std::string filename); // load settings from file
-        void SaveToFile(std::string filename);   // save settings to file
     };
 
     namespace time

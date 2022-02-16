@@ -97,7 +97,3 @@ void mold::settings::LoadFromFile(std::string filename)
 
     mold::settings::Update(); // flush settings
 }
-
-void mold::settings::SaveToFile(std::string filename)
-{
-}
