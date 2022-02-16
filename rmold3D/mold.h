@@ -214,7 +214,7 @@ vec3 calculateLight(vec4 inputColour, Light light)
 void main()
 {
    FragColor = texture(mainTexture, textureCoord) * vec4(vec3(lightingAmbient),1.0);
-   
+
    if(lightingEnabled == true)
    {
       for(int i = 0;i <LIGHTS;i++)
@@ -284,20 +284,6 @@ void main()
 
         namespace objects
         {
-            class Light
-            {
-            public:
-                Light();
-                Light(glm::vec3 pos);
-                Light(glm::vec3 pos, glm::vec3 col);
-                Light(glm::vec3 pos, glm::vec3 col, float power);
-
-                void Bind();
-
-                glm::vec3 Position, Colour;
-                float Power;
-            };
-
             class GameObject;
 
             class Component
@@ -319,8 +305,8 @@ void main()
                 GameObject();
                 GameObject(mold::render::image::Texture texture);
 
-                GameObject *Translate(glm::vec3 offset);         // translate position
-                GameObject *Move(glm::vec3 position);            // set position
+                virtual GameObject *Translate(glm::vec3 offset); // translate position
+                virtual GameObject *Move(glm::vec3 position);    // set position
                 GameObject *Scale(glm::vec3 scaleFactor);        // set scale factor
                 GameObject *Rotate(glm::vec3 axis, float angle); // set rotation
 
@@ -355,6 +341,24 @@ void main()
                 mold::render::image::Texture Texture;
                 mold::render::VABO Vabo;
                 float *Vertices;
+            };
+
+            class Light : public GameObject
+            {
+            public:
+                Light();
+                Light(glm::vec3 pos);
+                Light(glm::vec3 pos, glm::vec3 col);
+                Light(glm::vec3 pos, glm::vec3 col, float power);
+
+                GameObject *Translate(glm::vec3 offset); // translate position
+                GameObject *Move(glm::vec3 position);    // set position
+
+                void Draw();
+                std::string Type();
+
+                glm::vec3 Position, Colour;
+                float Power;
             };
 
             class Cube : public GameObject
@@ -485,7 +489,6 @@ void main()
     inline Application *GlobalApplication;
     inline render::Shader GlobalShader;
     inline render::Skybox GlobalSkybox;
-    inline render::objects::Light GlobalSun = render::objects::Light(glm::vec3(1, 10, 1), glm::vec3(1), 50);
     inline render::objects::GameObjectsManager GlobalGameObjects;
 
     void Destroy();

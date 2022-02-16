@@ -20,14 +20,31 @@
 
 using namespace mold::render::objects;
 
-Light::Light() {}
-Light::Light(glm::vec3 pos) : Position{pos}, Colour{glm::vec3(1)}, Power{1} {}
-Light::Light(glm::vec3 pos, glm::vec3 col) : Position{pos}, Colour{col}, Power{1} {}
-Light::Light(glm::vec3 pos, glm::vec3 col, float power) : Position{pos}, Colour{col}, Power{power} {}
+Light::Light() : GameObject(image::Texture(render::Colour(0))) {}
+Light::Light(glm::vec3 pos) : GameObject(image::Texture(render::Colour(0))), Position{pos}, Colour{glm::vec3(1)}, Power{1} {}
+Light::Light(glm::vec3 pos, glm::vec3 col) : GameObject(image::Texture(render::Colour(0))), Position{pos}, Colour{col}, Power{1} {}
+Light::Light(glm::vec3 pos, glm::vec3 col, float power) : GameObject(image::Texture(render::Colour(0))), Position{pos}, Colour{col}, Power{power} {}
 
-void Light::Bind()
+void Light::Draw()
 {
-    GlobalShader.Set("lights[0].Colour",Colour);
-    GlobalShader.Set("lights[0].Position",Position+glm::vec3(1));
-    GlobalShader.Set("lights[0].Power",Power);
+    GlobalShader.Set("lights[0].Colour", Colour);
+    GlobalShader.Set("lights[0].Position", Position + glm::vec3(1));
+    GlobalShader.Set("lights[0].Power", Power);
+}
+
+std::string Light::Type()
+{
+    return "Point Light";
+}
+
+GameObject *Light::Translate(glm::vec3 offset)
+{
+    Position += offset;
+    return this;
+}
+
+GameObject *Light::Move(glm::vec3 position)
+{
+    Position = position;
+    return this;
 }

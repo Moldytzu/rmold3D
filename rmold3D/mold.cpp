@@ -99,6 +99,9 @@ void mold::Init(uint width, uint height)
     // load settings
     mold::settings::LoadFromFile("mold.cfg");
 
+    // set up sun
+    mold::GlobalGameObjects.Instantiate(new mold::render::objects::Light(glm::vec3(1, 10, 1), glm::vec3(1), 50), "Sun");
+
     GlobalShader.AttachSource(render::VertexShaderSource, GL_VERTEX_SHADER);     // attach vertex shader
     GlobalShader.AttachSource(render::FragmentShaderSource, GL_FRAGMENT_SHADER); // attach fragment shader
     GlobalShader.Recompile();                                                    // compile it
@@ -245,7 +248,7 @@ void mold::Run()
         if (render::camera::Position != oldPosition || render::camera::Front != oldFront)
         {
             render::camera::View = glm::lookAt(render::camera::Position, render::camera::Position + render::camera::Front, render::camera::Up);
-            render::camera::Projection = glm::perspective(math::Vfov(settings::FOV,(settings::WindowWidth / settings::WindowHeight)), settings::WindowWidth / settings::WindowHeight, 0.1f, 100.0f);
+            render::camera::Projection = glm::perspective(math::Vfov(settings::FOV, (settings::WindowWidth / settings::WindowHeight)), settings::WindowWidth / settings::WindowHeight, 0.1f, 100.0f);
 
             oldPosition = render::camera::Position; // save the values
             oldFront = render::camera::Front;
@@ -269,12 +272,23 @@ void mold::Run()
 
         // set lighting parameters
         GlobalShader.Set("lightingEnabled", settings::LightingEnabled);
-        if (settings::LightingEnabled) // bind sun if the lighting is enabled
-            GlobalSun.Bind();
 
         // set gamma
         GlobalShader.Set("gammaCorectionEnabled", settings::GammaCorrection);
         GlobalShader.Set("gamma", mold::settings::Gamma);
+
+        // draw lights
+        if (settings::LightingEnabled) // draw lights only if it's enabled
+        {
+            for (auto const &[name, ptr] : GlobalGameObjects.Get())
+            {
+                if (!ptr->Enabled)
+                    continue;
+
+                if (render::camera::InView(ptr->GetPosition()) && ptr->Type() == "Point Light") // draw only lights
+                    ptr->Draw();
+            }
+        }
 
         // draw game objects
         for (auto const &[name, ptr] : GlobalGameObjects.Get())
@@ -282,7 +296,7 @@ void mold::Run()
             if (!ptr->Enabled)
                 continue;
 
-            if (render::camera::InView(ptr->GetPosition()) && ptr->Type() != "Empty") // draw if the object is in view and if it isn't an empty gameobject
+            if (render::camera::InView(ptr->GetPosition()) && ptr->Type() != "Empty" && ptr->Type() != "Point Light") // draw if the object is in view and if it isn't an empty gameobject or a light
             {
                 ptr->Bind(); // bind vabo, texture and matrices
                 ptr->Draw(); // do drawing

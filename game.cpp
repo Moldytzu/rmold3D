@@ -117,7 +117,7 @@ public:
         if (mold::input::GetKey(GLFW_KEY_F1))
             mold::input::GlobalCursorLockMode = mold::CursorLockingMode::Wrapped;
 
-        mold::GlobalSun.Position = mold::render::camera::Position;
+        mold::GlobalGameObjects.Get("Sun")->Move(mold::render::camera::Position);
     }
 
     void OnMouseInput() override
