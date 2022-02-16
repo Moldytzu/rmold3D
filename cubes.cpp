@@ -21,7 +21,7 @@
 /*
 Cubes stress test for rmold3D
 
-Started with: 
+Started with:
 - 2000 cubes: 20 FPS with stutters; 20 seconds to start up; consuming 1.4 GB RAM (mouse f-ed up)
 - 200 cubes: 55-60 FPS; 1.5 seconds to start up (mouse sped up)
 - 20 cubes: 55-60 FPS; 0.4 seconds to start up
@@ -44,31 +44,32 @@ public:
     void Tick() override
     {
         if (mold::input::GetKey(GLFW_KEY_UP))
-            mold::render::camera::Rotate(glm::vec3(0,0,1), Speed * 2 * mold::time::DeltaTime);
+            mold::render::camera::Rotate(glm::vec3(0, 0, 1), Speed * 2 * mold::time::DeltaTime);
         if (mold::input::GetKey(GLFW_KEY_DOWN))
-            mold::render::camera::Rotate(glm::vec3(0,0,-1), Speed * 2 * mold::time::DeltaTime);
+            mold::render::camera::Rotate(glm::vec3(0, 0, -1), Speed * 2 * mold::time::DeltaTime);
         if (mold::input::GetKey(GLFW_KEY_LEFT))
-            mold::render::camera::Rotate(glm::vec3(-1,0,0), Speed * 2 * mold::time::DeltaTime);
+            mold::render::camera::Rotate(glm::vec3(-1, 0, 0), Speed * 2 * mold::time::DeltaTime);
         if (mold::input::GetKey(GLFW_KEY_RIGHT))
-            mold::render::camera::Rotate(glm::vec3(1,0,0), Speed * 2 * mold::time::DeltaTime);
+            mold::render::camera::Rotate(glm::vec3(1, 0, 0), Speed * 2 * mold::time::DeltaTime);
 
         if (mold::input::GetKey('W'))
-            mold::render::camera::Translate(glm::vec3(0,0,1), Speed * mold::time::DeltaTime / 10);
+            mold::render::camera::Translate(glm::vec3(0, 0, 1), Speed * mold::time::DeltaTime / 10);
         if (mold::input::GetKey('S'))
-            mold::render::camera::Translate(glm::vec3(0,0,-1), Speed * mold::time::DeltaTime / 10);
+            mold::render::camera::Translate(glm::vec3(0, 0, -1), Speed * mold::time::DeltaTime / 10);
         if (mold::input::GetKey('A'))
-            mold::render::camera::Translate(glm::vec3(-1,0,0), Speed * mold::time::DeltaTime / 10);
+            mold::render::camera::Translate(glm::vec3(-1, 0, 0), Speed * mold::time::DeltaTime / 10);
         if (mold::input::GetKey('D'))
-            mold::render::camera::Translate(glm::vec3(1,0,0), Speed * mold::time::DeltaTime / 10);
+            mold::render::camera::Translate(glm::vec3(1, 0, 0), Speed * mold::time::DeltaTime / 10);
         if (mold::input::GetKey('I'))
-            mold::render::camera::Translate(glm::vec3(0,1,0), Speed * mold::time::DeltaTime / 10);
+            mold::render::camera::Translate(glm::vec3(0, 1, 0), Speed * mold::time::DeltaTime / 10);
         if (mold::input::GetKey('K'))
-            mold::render::camera::Translate(glm::vec3(0,-1,0), Speed * mold::time::DeltaTime / 10);
+            mold::render::camera::Translate(glm::vec3(0, -1, 0), Speed * mold::time::DeltaTime / 10);
     }
 
     void Start() override
     {
         mold::input::GlobalCursorLockMode = mold::CursorLockingMode::Wrapped; // set proper cursor locking mode
+        mold::settings::LightingEnabled = false;                              // disable lighting
     }
 
     void Handle(mold::EventType event) override
@@ -84,11 +85,11 @@ public:
 class Game : public mold::Application
 {
 public:
-    Game() : mold::Application(1024,768)
+    Game() : mold::Application(1024, 768)
     {
         mold::GlobalGameObjects.Instantiate(new mold::render::objects::Cube(mold::render::image::Texture("texture.bmp")));
 
-        //Instantiate many cubes
+        // Instantiate many cubes
         int offset = 0;
         for (int i = 1; i < CUBES; i++)
         {
@@ -96,11 +97,11 @@ public:
             mold::GlobalGameObjects.Get("Textured Cube " + std::to_string(i))->Translate(glm::vec3(offset++));
         }
 
-        //Instantiate an empty gameobject as player
+        // Instantiate an empty gameobject as player
         mold::GlobalGameObjects.Instantiate(new mold::render::objects::GameObject(mold::render::image::Texture(mold::render::Colour(0))), "Player");
         mold::GlobalGameObjects.Get("Player")->AttachComponent("PlayerController", new Player);
 
-        mold::settings::FogColour = glm::vec4(0,0,0,1); // black
+        mold::settings::FogColour = glm::vec4(0, 0, 0, 1); // black
     }
 
     ~Game()
