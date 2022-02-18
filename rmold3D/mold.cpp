@@ -57,16 +57,12 @@ void mold::Init(uint width, uint height)
     // set rng
     srand((uint64_t)glfwGetTime());
 
-    // set up signals
-    signal(SIGABRT,mold::HandleSignal);
-    signal(SIGFPE,mold::HandleSignal);
-    signal(SIGILL,mold::HandleSignal);
-    signal(SIGINT,mold::HandleSignal);
-    signal(SIGSEGV,mold::HandleSignal);
-    signal(SIGTERM,mold::HandleSignal);
+    // set up all signals
+    for (int i = SIGRTMIN; i <= SIGRTMAX; i++)
+        signal(i, mold::HandleSignal);
 
     // init renderer
-    mold::render::Init(width,height);
+    mold::render::Init(width, height);
 
     // load settings
     mold::settings::LoadFromFile("mold.cfg");
@@ -116,7 +112,8 @@ void mold::Run()
         threads.push_back(std::thread(&mold::render::camera::Handle));
 
         // wait for the threads
-        std::for_each(threads.begin(), threads.end(), [](std::thread &t){t.join();});
+        std::for_each(threads.begin(), threads.end(), [](std::thread &t)
+                      { t.join(); });
 
         // do the rendering
         render::Render();

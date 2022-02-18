@@ -97,7 +97,7 @@ void mold::render::Init(uint width,uint height)
 
 void mold::render::Render()
 {
-    glClear(GL_DEPTH_BUFFER_BIT); // clear the depth buffer
+    glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT); // clear the depth buffer and colour buffer
 
     // ensure that we use shader
     GlobalShader.Bind();
