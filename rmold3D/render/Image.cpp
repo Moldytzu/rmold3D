@@ -75,21 +75,37 @@ mold::render::image::Texture::Texture(std::string filename)
 
     // we support only bitmaps
     if (!EndsWith(filename, std::string(".bmp")))
-        log::Fatal("Unsupported texture format. Please use the 24-bit uncompressed bitmap.");
+    {
+        log::Error("Unsupported texture format. Please use the 24-bit uncompressed bitmap.");
+        *this = Texture(Colour(255)); // create white texture
+        return;
+    }
 
     std::ifstream stream(filename); // create stream
 
     if (!stream.good()) // fails if file doesn't exist
-        log::Fatal("Failed to load bitmap " + filename);
+    {
+        log::Error("Failed to load bitmap " + filename);
+        *this = Texture(Colour(255)); // create white texture
+        return;
+    }
 
     BitmapImageHeader *header = new BitmapImageHeader; // allocate memory for the header
 
     stream.read((char *)header, sizeof(BitmapImageHeader)); // read it
     if (!stream.good())                                     // fail
-        log::Fatal("Failed to read header of bitmap " + filename);
+    {
+        log::Error("Failed to read header of bitmap " + filename);
+        *this = Texture(Colour(255)); // create white texture
+        return;
+    }
 
     if (header->BPP != 24) // check bpp
-        log::Fatal("Unexpected " + std::to_string(header->BPP) + " bpp. Expected 24.");
+    {
+        log::Error("Unexpected " + std::to_string(header->BPP) + " bpp. Expected 24.");
+        *this = Texture(Colour(255)); // create white texture
+        return;
+    }
 
     Width = header->BitmapWidth;
     Height = header->BitmapHeight;
@@ -97,8 +113,14 @@ mold::render::image::Texture::Texture(std::string filename)
     PixelData = new uint8_t[header->ImageSize]; // allocate memory for the pixel data
 
     stream.read((char *)PixelData, header->ImageSize); // read it
+    #ifndef __WIN32__
     if (!stream.good())                                // fail
-        log::Fatal("Failed to read contents of bitmap " + filename);
+    {
+        log::Error("Failed to read contents of bitmap " + filename);
+        *this = Texture(Colour(255)); // create white texture
+        return;
+    }
+    #endif
 
     for (int i = 0; i < header->ImageSize; i += 3)
     {
