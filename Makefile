@@ -35,7 +35,7 @@ lib: $(OBJS)
 
 define buildGame
 	$(CPP) $(1) $(LIB) -lglfw -ldl -o game $(CFLAGS)
-	file
+	file game
 endef
 
 game: lib 

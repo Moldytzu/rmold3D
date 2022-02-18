@@ -114,7 +114,7 @@ mold::render::image::Texture::Texture(std::string filename)
 
     stream.read((char *)PixelData, header->ImageSize); // read it
     #ifndef __WIN32__
-    if (!stream.good())                                // fail
+    if (!stream.good())                                // fails on windows but not on linux
     {
         log::Error("Failed to read contents of bitmap " + filename);
         *this = Texture(Colour(255)); // create white texture
