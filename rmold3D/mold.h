@@ -430,8 +430,6 @@ void main()
         void Init(uint width, uint height);
 
         void OnResize(GLFWwindow *window, int width, int height);
-        void OnScroll(GLFWwindow *window, double xoffset, double yoffset);
-        void OnMouse(GLFWwindow* window, double xpos, double ypos);
 
         inline uint LightIdx = 0;
     };
@@ -455,12 +453,14 @@ void main()
         inline float LightingAmbient = 0.1f;       // ambient lighting
         inline float SkyboxDistance = 25;          // distance to the skybox
         inline bool MSAAEnabled = true;            // enable msaa
+        inline bool VSYNC = true;                  // vertical sync
         inline bool TransparencyEnabled = true;    // enable transparency
         inline bool GammaCorrection = true;        // enable gamma correction
         inline float Gamma = 1.0f;                 // gamma
         inline bool Debug = false;                 // debug engine
         inline bool DebugRenderer = false;         // debug renderer
         inline float AspectRatio = 1.77777777777f; // aspect ratio
+
 
         void Update();                           // update settings
         void LoadFromFile(std::string filename); // load settings from file
@@ -485,6 +485,9 @@ void main()
     {
         bool GetKey(int key);
         void HandleCursor();
+
+        void OnScroll(GLFWwindow *window, double xoffset, double yoffset);
+        void OnMouse(GLFWwindow *window, double xpos, double ypos);
 
         inline CursorLockingMode GlobalCursorLockMode;
         inline glm::vec2 GlobalCursorAxis;
@@ -517,7 +520,7 @@ void main()
         virtual void OnMouseInput();
         virtual std::string Name();
     };
-    
+
     class ThreadManager
     {
     public:

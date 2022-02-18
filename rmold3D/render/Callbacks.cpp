@@ -31,13 +31,13 @@ void mold::render::OnResize(GLFWwindow *window, int width, int height) // it is 
     glm::ortho(0.0f, (float)width, 0.0f, (float)height, 0.1f, 100.0f); // reset orthography
 }
 
-void mold::render::OnScroll(GLFWwindow *window, double xoffset, double yoffset) // it is called when the scroll wheel is used
+void mold::input::OnScroll(GLFWwindow *window, double xoffset, double yoffset) // it is called when the scroll wheel is used
 {
     input::GlobalScrollAxis = yoffset; // the scroll wheel in glfw works as a mouse where the yoffset is the cursor axis itself
 }
 
 double lastX, lastY;
-void mold::render::OnMouse(GLFWwindow *window, double xoffset, double yoffset) // it is called when the mouse is moved
+void mold::input::OnMouse(GLFWwindow *window, double xoffset, double yoffset) // it is called when the mouse is moved
 {
     // set axis data
     input::GlobalCursorAxis.x = xoffset - lastX;

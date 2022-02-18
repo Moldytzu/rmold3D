@@ -80,8 +80,8 @@ void mold::render::Init(uint width, uint height)
 
     // set up glfw callbacks
     glfwSetFramebufferSizeCallback(GlobalWindow, render::OnResize);
-    glfwSetScrollCallback(GlobalWindow, render::OnScroll);
-    glfwSetCursorPosCallback(GlobalWindow, render::OnMouse);
+    glfwSetScrollCallback(GlobalWindow, mold::input::OnScroll);
+    glfwSetCursorPosCallback(GlobalWindow, mold::input::OnMouse);
 
     // set up gl
     glViewport(0, 0, width, height);                                   // set viewport
