@@ -94,7 +94,7 @@ void mold::Run()
         if(settings::FrameLimit != 0) // 0 means unlimited
         {
             // calculate wait time
-            double waitTime = settings::FrameLimit - time::DeltaTime;
+            double waitTime = settings::FrameLimit - time::DeltaTime + 1;
             if(waitTime > 0)
                 std::this_thread::sleep_for(std::chrono::milliseconds((int)waitTime));
         }
