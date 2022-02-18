@@ -31,10 +31,15 @@
 #include <memory>
 #include <fstream>
 #include <sstream>
-#include <thread>
 #include <algorithm>
 #include <csignal>
 #include <vector>
+
+#ifdef __WIN32__
+#include "3rd-Party/mingw-std-threads-master/mingw.thread.h"
+#else
+#include <thread>
+#endif
 
 #define Vertex(X, Y, Z) X, Y, Z
 #define TexCoord(X, Y) X, Y

@@ -1,5 +1,6 @@
 engrmold3D.a
 game
+game.exe
 .vscode
 *.o
 gmon.out

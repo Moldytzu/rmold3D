@@ -1,8 +1,10 @@
 rwildcard=$(foreach d,$(wildcard $(1:=/*)),$(call rwildcard,$d,$2) $(filter $(subst *,%,$2),$d))
 reverse = $(if $(1),$(call reverse,$(wordlist 2,$(words $(1)),$(1)))) $(firstword $(1))
 
-CPP = g++
-CC = gcc
+PREFIX =
+CPP = $(PREFIX)g++
+CC = $(PREFIX)gcc
+AR = $(PREFIX)ar
 
 SRCDIR := rmold3D
 OBJDIR := obj
@@ -26,13 +28,14 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.c
 build: lib
 
 clean:
-	rm -rf $(OBJS)
+	rm -rf obj
 
 lib: $(OBJS)
 	ar -crs $(LIB) $(OBJS)
 
 define buildGame
 	$(CPP) $(1) $(LIB) -lglfw -ldl -o game $(CFLAGS)
+	file
 endef
 
 game: lib 

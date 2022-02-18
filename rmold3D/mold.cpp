@@ -54,9 +54,11 @@ void mold::Init(uint width, uint height)
     // set rng
     srand((uint64_t)glfwGetTime());
 
-    // set up all signals
+// set up all signals if we're in a posix enviroment
+#ifdef SIGRTMIN
     for (int i = SIGRTMIN; i <= SIGRTMAX; i++)
         signal(i, mold::HandleSignal);
+#endif
 
     // init renderer
     mold::render::Init(width, height);
