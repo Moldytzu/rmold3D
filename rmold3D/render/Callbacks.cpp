@@ -28,7 +28,6 @@ void mold::render::OnResize(GLFWwindow *window, int width, int height) // it is 
     settings::WindowHeight = height;      // set new window height and width
     settings::WindowWidth = height;
     glViewport(0, 0, width, height);                                   // set new viewport
-    glm::ortho(0.0f, (float)width, 0.0f, (float)height, 0.1f, 100.0f); // reset orthography
 }
 
 void mold::input::OnScroll(GLFWwindow *window, double xoffset, double yoffset) // it is called when the scroll wheel is used
