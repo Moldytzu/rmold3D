@@ -57,8 +57,8 @@ bool mold::render::camera::InView(glm::vec3 position) // check if a position is 
     return inY && inX && inZ;
 }
 
-float oldYaw, oldPitch,oldFOV,oldWidth,oldHeight;
-glm::vec3 oldDirection,oldPosition, oldFront;
+float oldYaw, oldPitch, oldFOV, oldWidth, oldHeight;
+glm::vec3 oldDirection, oldPosition, oldFront;
 void mold::render::camera::Handle()
 {
     // update camera front

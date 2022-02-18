@@ -50,7 +50,7 @@ void mold::input::HandleCursor()
     }
 }
 
-double lastX,lastY;
+double lastX, lastY;
 void mold::input::HandleMouse()
 {
     // handle mouse input

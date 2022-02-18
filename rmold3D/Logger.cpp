@@ -42,7 +42,8 @@ void mold::log::Error(std::string str)
 
 void mold::log::Debug(std::string str)
 {
-    if(!settings::Debug) return; // return if debug isn't enabled
+    if (!settings::Debug)
+        return; // return if debug isn't enabled
     printf("\033[37;1m[\033[34;1m%.2f\033[37;1m/\033[31;1mDebug\033[37;1m] %s\n", DIFFERENCE, str.c_str());
 }
 

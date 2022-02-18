@@ -54,7 +54,7 @@ void mold::render::HandleErrors()
     }
 }
 
-void mold::render::Init(uint width,uint height)
+void mold::render::Init(uint width, uint height)
 {
     glfwInit(); // initialize glfw
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);

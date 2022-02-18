@@ -34,7 +34,7 @@ void mold::render::HandleFog()
     GlobalShader.Set("fogDensity", settings::FogDensity);
     GlobalShader.Set("fogColour", settings::FogColour);
 
-    // calculate fog density 
+    // calculate fog density
     if (!settings::FogAutoDensity)
         return;
 

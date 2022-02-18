@@ -32,8 +32,8 @@ std::unordered_map<std::string, mold::render::objects::Component *> mold::render
 void mold::render::objects::GameObject::AttachComponent(std::string name, Component *component)
 {
     Components.emplace(Name + " : " + name, std::move(component)); // insert the pair in the map
-    component->Parent = this; // set the parent to this
-    component->Start(); // reset component
+    component->Parent = this;                                      // set the parent to this
+    component->Start();                                            // reset component
 }
 
 void mold::render::objects::GameObject::DettachComponent(std::string name)
