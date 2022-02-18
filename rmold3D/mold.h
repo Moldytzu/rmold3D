@@ -431,6 +431,7 @@ void main()
 
         void OnResize(GLFWwindow *window, int width, int height);
         void OnScroll(GLFWwindow *window, double xoffset, double yoffset);
+        void OnMouse(GLFWwindow* window, double xpos, double ypos);
 
         inline uint LightIdx = 0;
     };
@@ -445,7 +446,7 @@ void main()
         inline float FOV = 90.0f;                  // field of view
         inline float WindowWidth;                  // window width
         inline float WindowHeight;                 // window height
-        inline float MouseSensibility = 5.0f;      // mouse sensibility
+        inline float MouseSensibility = 1.0f;      // mouse sensibility
         inline bool FogEnabled = true;             // enable fog
         inline float FogDensity = 0.09f;           // fog density
         inline glm::vec4 FogColour = glm::vec4(1); // fog colour
@@ -478,14 +479,12 @@ void main()
         Hidden,
         Normal,
         Centred,
-        Wrapped,
     };
 
     namespace input
     {
         bool GetKey(int key);
         void HandleCursor();
-        void HandleMouse();
 
         inline CursorLockingMode GlobalCursorLockMode;
         inline glm::vec2 GlobalCursorAxis;

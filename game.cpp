@@ -50,12 +50,12 @@ public:
 
     void Start() override
     {
-        mold::input::GlobalCursorLockMode = mold::CursorLockingMode::Wrapped; // set proper cursor locking mode
+        mold::input::GlobalCursorLockMode = mold::CursorLockingMode::Locked; // set proper cursor locking mode
     }
 
     void Handle(mold::EventType event) override
     {
-        if (event == mold::EventType::Mouse && mold::input::GlobalCursorLockMode == mold::CursorLockingMode::Wrapped) // update mouse
+        if (event == mold::EventType::Mouse && mold::input::GlobalCursorLockMode == mold::CursorLockingMode::Locked) // update mouse
         {
             mold::render::camera::Yaw += mold::input::GlobalCursorAxis.x * mold::settings::MouseSensibility * mold::time::DeltaTime;
             mold::render::camera::Pitch += mold::input::GlobalCursorAxis.y * mold::settings::MouseSensibility * mold::time::DeltaTime;
@@ -106,7 +106,7 @@ public:
             mold::input::GlobalCursorLockMode = mold::CursorLockingMode::Normal;
 
         if (mold::input::GetKey(GLFW_KEY_F1))
-            mold::input::GlobalCursorLockMode = mold::CursorLockingMode::Wrapped;
+            mold::input::GlobalCursorLockMode = mold::CursorLockingMode::Locked;
 
         mold::GlobalGameObjects.Get("Light")->Move(mold::render::camera::Position);
     }

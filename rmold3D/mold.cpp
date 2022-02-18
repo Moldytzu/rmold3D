@@ -104,9 +104,6 @@ void mold::Run()
         // do cursor handling
         GlobalThreads.Add(new std::thread(&mold::input::HandleCursor));
 
-        // do mouse handling
-        GlobalThreads.Add(new std::thread(&mold::input::HandleMouse));
-
         // handle camera
         GlobalThreads.Add(new std::thread(&mold::render::camera::Handle));
 
