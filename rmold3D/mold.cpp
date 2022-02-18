@@ -28,10 +28,6 @@ void mold::Destroy()
     for (auto const &[name, ptr] : GlobalGameObjects.Get())
         delete ptr; // delete gameobject
 
-    render::objects::GameObject tmp;
-    for (auto const &[name, ptr] : tmp.Get())
-        delete ptr; // delete all components
-
     delete GlobalApplication; // deconstuct application
 
     GlobalShader.Deallocate(); // deallocate shader
