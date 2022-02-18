@@ -88,6 +88,17 @@ void mold::Run()
         time::DeltaTime = currentFrame - time::LastFrame;
         time::LastFrame = currentFrame;
 
+        // calculate FPS
+        time::FPS = (int)(1 / time::DeltaTime);
+
+        if(settings::FrameLimit != 0) // 0 means unlimited
+        {
+            // calculate wait time
+            double waitTime = settings::FrameLimit - time::DeltaTime;
+            if(waitTime > 0)
+                std::this_thread::sleep_for(std::chrono::milliseconds((int)waitTime));
+        }
+
         // reset threads
         GlobalThreads.Reset();
 
@@ -95,12 +106,11 @@ void mold::Run()
         GlobalThreads.Add(new std::thread(&Events::CallEvent, EventType::Tick));
 
         // update window title (Rewritten mold 3D @ ?? FPS)
-        int fps = (int)(1 / time::DeltaTime);
-        if (oldFPS != fps)
+        if (oldFPS != time::FPS)
         {
-            std::string wtitle = "Rewritten mold 3D @ " + std::to_string(fps) + " FPS";
+            std::string wtitle = "Rewritten mold 3D @ " + std::to_string(time::FPS) + " FPS";
             glfwSetWindowTitle(GlobalWindow, wtitle.c_str());
-            oldFPS = fps;
+            oldFPS = time::FPS;
         }
 
         // do cursor handling

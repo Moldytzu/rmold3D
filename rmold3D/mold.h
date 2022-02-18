@@ -430,7 +430,7 @@ void main()
         void Init(uint width, uint height);
 
         void OnResize(GLFWwindow *window, int width, int height);
-        void OnError(int id, const char* description);
+        void OnError(int id, const char *description);
 
         inline uint LightIdx = 0;
     };
@@ -462,6 +462,7 @@ void main()
         inline bool Debug = false;                 // debug engine
         inline bool DebugRenderer = false;         // debug renderer
         inline float AspectRatio = 1.77777777777f; // aspect ratio
+        inline float FrameLimit = 0;                 // max fps
 
         void Update();                           // update settings
         void LoadFromFile(std::string filename); // load settings from file
@@ -472,6 +473,7 @@ void main()
     {
         inline float DeltaTime;
         inline float LastFrame;
+        inline int FPS;
     };
 
     enum CursorLockingMode

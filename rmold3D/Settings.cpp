@@ -132,6 +132,8 @@ void mold::settings::LoadFromFile(std::string filename)
                     settings::Gamma = std::stof(value);
                 else if (key == "aspectratio")
                     settings::AspectRatio = std::stof(value);
+                else if (key == "framelimit")
+                    settings::FrameLimit = std::stof(value);
                 else
                     mold::log::Warn("Unknown setting " + key);
             }
@@ -174,4 +176,5 @@ void mold::settings::SaveToFile(std::string filename)
     stream << "DebugRenderer = " << settings::DebugRenderer << std::endl;
     stream << "Debug = " << settings::Debug << std::endl;
     stream << "AspectRatio = " << settings::AspectRatio << std::endl;
+    stream << "FrameLimit = " << settings::FrameLimit << std::endl;
 }
