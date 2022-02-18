@@ -46,6 +46,16 @@ void mold::settings::Update()
     else
         glfwSwapInterval(0); // no swap interval 
 
+    // switch on/off fullscreen
+    if(settings::FullScreen)
+    {
+        GLFWmonitor *monitor = glfwGetPrimaryMonitor();
+        const GLFWvidmode *mode = glfwGetVideoMode(monitor);
+        glfwSetWindowMonitor(GlobalWindow,monitor,0,0,mode->width,mode->height,mode->refreshRate);
+    }
+    else
+        glfwWindowHint(GLFW_AUTO_ICONIFY , GLFW_TRUE); // restore resolution
+
     // clamp skybox distance to not get funky results
     settings::SkyboxDistance = glm::clamp(settings::SkyboxDistance, 0.0f, 100.0f);
 }
@@ -116,6 +126,8 @@ void mold::settings::LoadFromFile(std::string filename)
                     settings::Debug = (bool)((int)std::stoi(value));
                 else if (key == "vsync")
                     settings::VSYNC = (bool)((int)std::stoi(value));
+                else if (key == "fullscreen")
+                    settings::FullScreen = (bool)((int)std::stoi(value));
                 else if (key == "gamma")
                     settings::Gamma = std::stof(value);
                 else if (key == "aspectratio")
@@ -155,6 +167,7 @@ void mold::settings::SaveToFile(std::string filename)
     stream << "SkyboxDistance = " << settings::SkyboxDistance << std::endl;
     stream << "MSAAEnabled = " << settings::MSAAEnabled << std::endl;
     stream << "VSYNC = " << settings::VSYNC << std::endl;
+    stream << "FullScreen = " << settings::FullScreen << std::endl;
     stream << "TransparencyEnabled = " << settings::TransparencyEnabled << std::endl;
     stream << "GammaCorrection = " << settings::GammaCorrection << std::endl;
     stream << "Gamma = " << settings::Gamma << std::endl;
