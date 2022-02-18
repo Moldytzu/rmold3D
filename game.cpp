@@ -61,7 +61,7 @@ public:
         // set some public variables
         Public["test"] = 534;
         Public["abc"] = std::string("ab");
-        Public["func"] = TestFunc;
+        Public["func"] = TestFunc; // expose TestFunc as func
 
         // read those
         mold::log::Info("In \"test\" there is " + std::to_string(GetAny(Public["test"],int)));
@@ -101,7 +101,7 @@ public:
         // Instantiate an empty gameobject as player
         mold::GlobalGameObjects.Instantiate(new mold::render::objects::Empty(), "Player")->AttachComponent("PlayerController", new Player)->GetComponents()["Player : PlayerController"]->Public["tds"] = 1024;
         std::unordered_map<std::string, mold::render::objects::Component *> comp = mold::GlobalGameObjects.Get("Player")->GetComponents();
-        GetAny(comp["Player : PlayerController"]->Public["func"],void(*)(mold::render::objects::Component *))(comp["Player : PlayerController"]);
+        comp["Player : PlayerController"]->CallFunc("func");
 
         // Instantiate a light
         mold::GlobalGameObjects.Instantiate(new mold::render::objects::Light(glm::vec3(-1,0,-1),glm::vec3(1),5),"Light");

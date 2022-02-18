@@ -316,6 +316,8 @@ void main()
                 virtual void Start();
                 virtual void Handle(mold::EventType event);
 
+                void CallFunc(std::string publicName);
+
                 bool Enabled = true;
                 GameObject *Parent = nullptr;
 

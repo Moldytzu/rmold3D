@@ -24,3 +24,8 @@ using namespace mold::render::objects;
 void mold::render::objects::Component::Handle(EventType event) {}
 void mold::render::objects::Component::Tick() {}
 void mold::render::objects::Component::Start() {}
+
+void mold::render::objects::Component::CallFunc(std::string publicName)
+{
+    std::any_cast<void(*)(mold::render::objects::Component *)>(Public[publicName])(this); // call the function with the public name
+}
