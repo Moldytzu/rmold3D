@@ -34,6 +34,7 @@
 #include <thread>
 #include <algorithm>
 #include <csignal>
+#include <vector>
 
 #define Vertex(X, Y, Z) X, Y, Z
 #define TexCoord(X, Y) X, Y
@@ -512,9 +513,18 @@ void main()
         virtual void OnMouseInput();
         virtual std::string Name();
     };
+    
+    class ThreadManager
+    {
+    public:
+        void Add(std::thread *t);
+        void Wait();
+        void Reset();
+    };
 
     inline GLFWwindow *GlobalWindow;
     inline Application *GlobalApplication;
+    inline ThreadManager GlobalThreads;
     inline render::Shader GlobalShader;
     inline render::Skybox GlobalSkybox;
     inline render::objects::GameObjectsManager GlobalGameObjects;

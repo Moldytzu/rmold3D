@@ -21,5 +21,4 @@
     - Better transparency (the trasparency/blend that opengl provides is kinda trash, maybe I can make my own algorithm??)
     - Ability to manipulate properties of a light object (using some helper functions as the public variables are not visible to pointers)
     - Multiple camera views (multiple cameras that are rendering to an off-screen buffer)
-    - Threading class
     - 3D audio system using OpenAL

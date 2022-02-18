@@ -20,9 +20,6 @@
 
 using namespace mold;
 
-// threading
-std::vector<std::thread> threads; // threads vector
-
 // clean up
 void mold::Destroy()
 {
@@ -87,11 +84,11 @@ void mold::Run()
         time::DeltaTime = currentFrame - time::LastFrame;
         time::LastFrame = currentFrame;
 
-        // clear threads
-        threads.clear();
+        // reset threads
+        GlobalThreads.Reset();
 
         // call tick
-        threads.push_back(std::thread(&Events::CallEvent, EventType::Tick));
+        GlobalThreads.Add(new std::thread(&Events::CallEvent, EventType::Tick));
 
         // update window title (Rewritten mold 3D @ ?? FPS)
         int fps = (int)(1 / time::DeltaTime);
@@ -103,17 +100,16 @@ void mold::Run()
         }
 
         // do cursor handling
-        threads.push_back(std::thread(&mold::input::HandleCursor));
+        GlobalThreads.Add(new std::thread(&mold::input::HandleCursor));
 
         // do mouse handling
-        threads.push_back(std::thread(&mold::input::HandleMouse));
+        GlobalThreads.Add(new std::thread(&mold::input::HandleMouse));
 
         // handle camera
-        threads.push_back(std::thread(&mold::render::camera::Handle));
+        GlobalThreads.Add(new std::thread(&mold::render::camera::Handle));
 
         // wait for the threads
-        std::for_each(threads.begin(), threads.end(), [](std::thread &t)
-                      { t.join(); });
+        GlobalThreads.Wait();
 
         // do the rendering
         render::Render();

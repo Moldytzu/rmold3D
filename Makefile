@@ -42,4 +42,4 @@ cubes: lib
 	$(call buildGame,cubes.cpp)
 
 debug:
-	gdb -q -ex "run" ./game 
+	gdb -q -ex "run" -ex "bt" ./game 
