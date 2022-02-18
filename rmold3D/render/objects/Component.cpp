@@ -29,3 +29,8 @@ void mold::render::objects::Component::CallFunc(std::string publicName)
 {
     std::any_cast<void(*)(mold::render::objects::Component *)>(Public[publicName])(this); // call the function with the public name
 }
+
+void mold::render::objects::Component::Expose(void (*fn)(mold::render::objects::Component *), std::string publicName)
+{
+    Public[publicName] = fn;
+}

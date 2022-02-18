@@ -22,7 +22,7 @@ using namespace mold::render::objects;
 
 // Components
 
-std::unordered_map<std::string, mold::render::objects::Component *> Components;
+std::unordered_map<std::string, mold::render::objects::Component *> Components; // using it for less memory fragmentation, thus giving us a better performance
 
 std::unordered_map<std::string, mold::render::objects::Component *> mold::render::objects::GameObject::Get()
 {

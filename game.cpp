@@ -61,7 +61,7 @@ public:
         // set some public variables
         Public["test"] = 534;
         Public["abc"] = std::string("ab");
-        Public["func"] = TestFunc; // expose TestFunc as func
+        Expose(TestFunc,"func"); // expose TestFunc as func
 
         // read those
         mold::log::Info("In \"test\" there is " + std::to_string(GetAny(Public["test"],int)));

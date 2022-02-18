@@ -317,6 +317,7 @@ void main()
                 virtual void Handle(mold::EventType event);
 
                 void CallFunc(std::string publicName);
+                void Expose(void (*fn)(mold::render::objects::Component *), std::string publicName);
 
                 bool Enabled = true;
                 GameObject *Parent = nullptr;

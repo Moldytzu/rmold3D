@@ -29,7 +29,7 @@ void mold::Destroy()
         delete ptr; // delete gameobject
 
     render::objects::GameObject tmp;
-    for (auto const &[name, ptr] : tmp.GetComponents())
+    for (auto const &[name, ptr] : tmp.Get())
         delete ptr; // delete all components
 
     delete GlobalApplication; // deconstuct application
