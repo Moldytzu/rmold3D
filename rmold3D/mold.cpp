@@ -76,11 +76,6 @@ void mold::Init(uint width, uint height)
 
     // set up default skybox
     mold::GlobalSkybox = render::Skybox(render::Colour(0));
-
-    GlobalShader.AttachSource(render::VertexShaderSource, GL_VERTEX_SHADER);     // attach vertex shader
-    GlobalShader.AttachSource(render::FragmentShaderSource, GL_FRAGMENT_SHADER); // attach fragment shader
-    GlobalShader.Recompile();                                                    // compile it
-    GlobalShader.Bind();
 }
 
 int oldFPS;
@@ -102,14 +97,13 @@ void mold::Run()
         // call tick
         threads.push_back(std::thread(&mold::EventSystem::CallEvent, &mold::GlobalEventSystem, EventType::Tick));
 
-        glClear(GL_DEPTH_BUFFER_BIT); // clear the depth buffer
-
         // update window title (Rewritten mold 3D @ ?? FPS)
-        if (oldFPS != (int)(1 / time::DeltaTime))
+        int fps = (int)(1 / time::DeltaTime);
+        if (oldFPS != fps)
         {
-            std::string wtitle = "Rewritten mold 3D @ " + std::to_string((int)(1 / time::DeltaTime)) + " FPS";
+            std::string wtitle = "Rewritten mold 3D @ " + std::to_string(fps) + " FPS";
             glfwSetWindowTitle(GlobalWindow, wtitle.c_str());
-            oldFPS = (int)(1 / time::DeltaTime);
+            oldFPS = fps;
         }
 
         // do cursor handling

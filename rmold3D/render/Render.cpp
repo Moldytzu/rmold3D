@@ -87,10 +87,18 @@ void mold::render::Init(uint width,uint height)
     glm::ortho(0.0f, (float)width, 0.0f, (float)height, 0.1f, 100.0f); // set orthographic projection
     glEnable(GL_DEPTH_TEST);                                           // depth testing
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);                 // substract alpha channel for transparency
+
+    // compile shader
+    GlobalShader.AttachSource(render::VertexShaderSource, GL_VERTEX_SHADER);     // attach vertex shader
+    GlobalShader.AttachSource(render::FragmentShaderSource, GL_FRAGMENT_SHADER); // attach fragment shader
+    GlobalShader.Recompile();                                                    // compile it
+    GlobalShader.Bind();
 }
 
 void mold::render::Render()
 {
+    glClear(GL_DEPTH_BUFFER_BIT); // clear the depth buffer
+
     // ensure that we use shader
     GlobalShader.Bind();
 
