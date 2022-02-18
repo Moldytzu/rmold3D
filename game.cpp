@@ -99,9 +99,8 @@ public:
         mold::GlobalSkybox = mold::render::Skybox("up.bmp","side.bmp","down.bmp");
 
         // Instantiate an empty gameobject as player
-        mold::GlobalGameObjects.Instantiate(new mold::render::objects::Empty(), "Player")->AttachComponent("PlayerController", new Player)->GetComponents()["Player : PlayerController"]->Public["tds"] = 1024;
-        std::unordered_map<std::string, mold::render::objects::Component *> comp = mold::GlobalGameObjects.Get("Player")->GetComponents();
-        comp["Player : PlayerController"]->CallFunc("func");
+        mold::GlobalGameObjects.Instantiate(new mold::render::objects::Empty(), "Player")->AttachComponent("PlayerController", new Player)->GetComponents()["PlayerController"]->Public["tds"] = 1024;
+        mold::GlobalGameObjects.Get("Player")->GetComponents()["PlayerController"]->CallFunc("func");
 
         // Instantiate a light
         mold::GlobalGameObjects.Instantiate(new mold::render::objects::Light(glm::vec3(-1,0,-1),glm::vec3(1),5),"Light");

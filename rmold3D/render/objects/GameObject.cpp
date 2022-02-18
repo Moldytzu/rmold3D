@@ -26,7 +26,15 @@ std::unordered_map<std::string, mold::render::objects::Component *> Components;
 
 std::unordered_map<std::string, mold::render::objects::Component *> mold::render::objects::GameObject::GetComponents()
 {
-    return Components;
+    std::unordered_map<std::string, mold::render::objects::Component *> tmp; // construct a map that contains only the gameobject's components
+    for (auto const &[name, ptr] : Components)
+    {
+        if(StartsWith(name,std::string(Name + " : ")))
+        {
+            tmp.emplace(name.substr(std::string(Name + " : ").length()), ptr);
+        }
+    }
+    return tmp;
 }
 
 GameObject *mold::render::objects::GameObject::AttachComponent(std::string name, Component *component)
@@ -79,7 +87,7 @@ void mold::render::objects::GameObject::HandleComponents(mold::EventType event)
 
 bool mold::render::objects::GameObject::ExistsComponent(std::string name)
 {
-    return Components.count(name); // return the count of the items
+    return Components.count(Name + " : " + name); // return the count of the items
 }
 
 // Default functions
