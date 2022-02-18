@@ -346,12 +346,13 @@ void main()
                 void Bind();                                                  // bind everything
                 glm::vec3 GetPosition();                                      // get position
 
-                GameObject *AttachComponent(std::string name, Component *component);                 // attach component
-                GameObject *DettachComponent(std::string name);                                      // dettach component
-                bool ExistsComponent(std::string name);                                              // check if component exists
-                void TickComponents();                                                               // tick every component
-                void HandleComponents(mold::EventType event);                                        // forward events to every component
-                std::unordered_map<std::string, mold::render::objects::Component *> GetComponents(); // get components attached
+                GameObject *AttachComponent(std::string name, Component *component);       // attach component
+                GameObject *DettachComponent(std::string name);                            // dettach component
+                bool ExistsComponent(std::string name);                                    // check if component exists
+                void TickComponents();                                                     // tick every component
+                void HandleComponents(mold::EventType event);                              // forward events to every component
+                std::unordered_map<std::string, mold::render::objects::Component *> Get(); // get components attached
+                mold::render::objects::Component *Get(std::string name);                   // get component with the name
 
                 virtual void Draw();
                 virtual std::string Type();

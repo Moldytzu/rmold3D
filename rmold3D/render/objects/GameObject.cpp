@@ -24,17 +24,28 @@ using namespace mold::render::objects;
 
 std::unordered_map<std::string, mold::render::objects::Component *> Components;
 
-std::unordered_map<std::string, mold::render::objects::Component *> mold::render::objects::GameObject::GetComponents()
+std::unordered_map<std::string, mold::render::objects::Component *> mold::render::objects::GameObject::Get()
 {
     std::unordered_map<std::string, mold::render::objects::Component *> tmp; // construct a map that contains only the gameobject's components
     for (auto const &[name, ptr] : Components)
     {
-        if(StartsWith(name,std::string(Name + " : ")))
+        if(StartsWith(name,std::string(Name + " : "))) // the object's components have the name in this format: "<Name> : <Component>"
         {
-            tmp.emplace(name.substr(std::string(Name + " : ").length()), ptr);
+            tmp.emplace(name.substr(std::string(Name + " : ").length()), ptr); // get only the component name
         }
     }
     return tmp;
+}
+
+mold::render::objects::Component *mold::render::objects::GameObject::Get(std::string name)
+{
+    if(!Get().count(name)) // fail if you can't find the name
+    {
+        mold::log::Error("Couldn't find " + name);
+        return nullptr;
+    }
+
+    return Get()[name];
 }
 
 GameObject *mold::render::objects::GameObject::AttachComponent(std::string name, Component *component)
