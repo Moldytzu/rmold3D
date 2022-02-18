@@ -34,6 +34,7 @@
 #include <algorithm>
 #include <csignal>
 #include <vector>
+#include <any>
 
 #ifdef __WIN32__
 #include "3rd-Party/mingw-std-threads-master/mingw.thread.h"
@@ -53,6 +54,8 @@ typedef unsigned int uint;
 
 #define EndsWith(str, suffix) (str.size() >= suffix.size() && 0 == str.compare(str.size() - suffix.size(), suffix.size(), suffix))
 #define StartsWith(str, prefix) (str.size() >= prefix.size() && 0 == str.compare(0, prefix.size(), prefix))
+
+#define GetAny(any, type) std::any_cast<type>(any)
 
 namespace mold
 {
@@ -315,6 +318,8 @@ void main()
 
                 bool Enabled = true;
                 GameObject *Parent = nullptr;
+
+                std::unordered_map<std::string, std::any> Public;
             };
 
             class GameObject
@@ -339,8 +344,8 @@ void main()
                 void Bind();                                                  // bind everything
                 glm::vec3 GetPosition();                                      // get position
 
-                void AttachComponent(std::string name, Component *component);                        // attach component
-                void DettachComponent(std::string name);                                             // dettach component
+                GameObject *AttachComponent(std::string name, Component *component);                 // attach component
+                GameObject *DettachComponent(std::string name);                                      // dettach component
                 bool ExistsComponent(std::string name);                                              // check if component exists
                 void TickComponents();                                                               // tick every component
                 void HandleComponents(mold::EventType event);                                        // forward events to every component
@@ -462,7 +467,7 @@ void main()
         inline bool Debug = false;                 // debug engine
         inline bool DebugRenderer = false;         // debug renderer
         inline float AspectRatio = 1.77777777777f; // aspect ratio
-        inline float FrameLimit = 0;                 // max fps
+        inline float FrameLimit = 0;               // max fps
 
         void Update();                           // update settings
         void LoadFromFile(std::string filename); // load settings from file

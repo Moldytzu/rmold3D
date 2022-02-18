@@ -29,22 +29,24 @@ std::unordered_map<std::string, mold::render::objects::Component *> mold::render
     return Components;
 }
 
-void mold::render::objects::GameObject::AttachComponent(std::string name, Component *component)
+GameObject *mold::render::objects::GameObject::AttachComponent(std::string name, Component *component)
 {
     Components.emplace(Name + " : " + name, std::move(component)); // insert the pair in the map
     component->Parent = this;                                      // set the parent to this
     component->Start();                                            // reset component
+    return this;                                                   // chain
 }
 
-void mold::render::objects::GameObject::DettachComponent(std::string name)
+GameObject *mold::render::objects::GameObject::DettachComponent(std::string name)
 {
     if (!ExistsComponent(name)) // fail if there isn't any component with that name
     {
         log::Error("Failed to dettach non-existent component");
-        return;
+        return this;
     }
 
     Components.erase(name); // erase component from the map
+    return this;            // chain
 }
 
 void mold::render::objects::GameObject::TickComponents()

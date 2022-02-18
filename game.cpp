@@ -23,6 +23,12 @@ class Player : public mold::render::objects::Component
 {
 public:
     float Speed = 25.0f; // adjust accordingly
+
+    static void TestFunc(mold::render::objects::Component *self)
+    {
+        mold::log::Info("Hello from test func; \"tds\" is equals to " + std::to_string(GetAny(self->Public["tds"],int)));
+    }
+
     void Tick() override
     {
         if (mold::input::GetKey(GLFW_KEY_UP))
@@ -51,6 +57,15 @@ public:
     void Start() override
     {
         mold::input::GlobalCursorLockMode = mold::CursorLockingMode::Locked; // set proper cursor locking mode
+        
+        // set some public variables
+        Public["test"] = 534;
+        Public["abc"] = std::string("ab");
+        Public["func"] = TestFunc;
+
+        // read those
+        mold::log::Info("In \"test\" there is " + std::to_string(GetAny(Public["test"],int)));
+        mold::log::Info("In \"abc\" there is " + GetAny(Public["abc"],std::string));
     }
 
     void Handle(mold::EventType event) override
@@ -84,7 +99,9 @@ public:
         mold::GlobalSkybox = mold::render::Skybox("up.bmp","side.bmp","down.bmp");
 
         // Instantiate an empty gameobject as player
-        mold::GlobalGameObjects.Instantiate(new mold::render::objects::Empty(), "Player")->AttachComponent("PlayerController", new Player);
+        mold::GlobalGameObjects.Instantiate(new mold::render::objects::Empty(), "Player")->AttachComponent("PlayerController", new Player)->GetComponents()["Player : PlayerController"]->Public["tds"] = 1024;
+        std::unordered_map<std::string, mold::render::objects::Component *> comp = mold::GlobalGameObjects.Get("Player")->GetComponents();
+        GetAny(comp["Player : PlayerController"]->Public["func"],void(*)(mold::render::objects::Component *))(comp["Player : PlayerController"]);
 
         // Instantiate a light
         mold::GlobalGameObjects.Instantiate(new mold::render::objects::Light(glm::vec3(-1,0,-1),glm::vec3(1),5),"Light");
