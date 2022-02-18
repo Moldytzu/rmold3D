@@ -98,7 +98,7 @@ void mold::input::HandleMouse()
 
     // call event if we've got changes
     if ((input::GlobalCursorAxis.x != 0 && input::GlobalCursorAxis.y != 0) || input::GlobalScrollAxis != 0)
-        GlobalEventSystem.CallEvent(EventType::Mouse);
+        Events::CallEvent(EventType::Mouse);
 
     // update last values
     lastX = xpos;

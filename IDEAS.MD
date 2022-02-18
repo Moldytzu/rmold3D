@@ -15,7 +15,6 @@
     - Ability to modify the 3D resolution (render at a lower resolution then scale up to the window's)
     - Make experience better on low end machines (Ability to set the precision in the shaders to a lower one, downscale textures, cut down on texture quality)
     - Debug OpenGL calls/rendering (ability to add debug logs in shaders)
-    - Clean up mold.cpp
     - Support multiple texture formats (PNG,JPG)
     - Better component system (ability to make variables public using a std::map<std::string, std::any> named PublicVars exposed to the parent and the game)
     - Cross-compiling for another platform from Linux (to Windows and Mac)

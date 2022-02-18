@@ -496,9 +496,8 @@ void main()
         void Debug(std::string str);
     };
 
-    class EventSystem
+    namespace Events
     {
-    public:
         void CallEvent(EventType type);
     };
 
@@ -515,7 +514,6 @@ void main()
     };
 
     inline GLFWwindow *GlobalWindow;
-    inline EventSystem GlobalEventSystem;
     inline Application *GlobalApplication;
     inline render::Shader GlobalShader;
     inline render::Skybox GlobalSkybox;

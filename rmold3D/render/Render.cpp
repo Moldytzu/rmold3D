@@ -107,7 +107,7 @@ void mold::render::Render()
     GlobalShader.Set("projection", render::camera::Projection);
 
     // draw stuff
-    GlobalEventSystem.CallEvent(EventType::Redraw);
+    Events::CallEvent(EventType::Redraw);
 
     // draw skybox
     GlobalSkybox.Bind();

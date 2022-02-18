@@ -20,7 +20,7 @@
 
 using namespace mold;
 
-void EventSystem::CallEvent(EventType type)
+void Events::CallEvent(EventType type)
 {
     for (auto const &[name, ptr] : GlobalGameObjects.Get())
     {

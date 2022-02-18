@@ -26,7 +26,7 @@ std::vector<std::thread> threads; // threads vector
 // clean up
 void mold::Destroy()
 {
-    GlobalEventSystem.CallEvent(EventType::Exit); // call exit event
+    Events::CallEvent(EventType::Exit); // call exit event
 
     for (auto const &[name, ptr] : GlobalGameObjects.Get())
         delete ptr; // delete gameobject
@@ -91,7 +91,7 @@ void mold::Run()
         threads.clear();
 
         // call tick
-        threads.push_back(std::thread(&mold::EventSystem::CallEvent, &mold::GlobalEventSystem, EventType::Tick));
+        threads.push_back(std::thread(&Events::CallEvent, EventType::Tick));
 
         // update window title (Rewritten mold 3D @ ?? FPS)
         int fps = (int)(1 / time::DeltaTime);
