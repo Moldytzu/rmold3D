@@ -58,7 +58,7 @@ void mold::render::Init(uint width, uint height)
 {
     glfwInit(); // initialize glfw
 
-    log::Info("glfw " + glfwGetVersionString());
+    log::Info("glfw " + std::string(glfwGetVersionString()));
 
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
