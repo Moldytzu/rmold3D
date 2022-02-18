@@ -30,6 +30,11 @@ void mold::render::OnResize(GLFWwindow *window, int width, int height) // it is 
     glViewport(0, 0, width, height);                                   // set new viewport
 }
 
+void mold::render::OnError(int id, const char* description)
+{
+    mold::log::Error(std::to_string(id) + " -> " + std::string(description));
+}
+
 void mold::input::OnScroll(GLFWwindow *window, double xoffset, double yoffset) // it is called when the scroll wheel is used
 {
     input::GlobalScrollAxis = yoffset; // the scroll wheel in glfw works as a mouse where the yoffset is the cursor axis itself

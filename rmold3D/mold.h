@@ -430,6 +430,7 @@ void main()
         void Init(uint width, uint height);
 
         void OnResize(GLFWwindow *window, int width, int height);
+        void OnError(int id, const char* description);
 
         inline uint LightIdx = 0;
     };

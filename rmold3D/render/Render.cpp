@@ -56,6 +56,7 @@ void mold::render::HandleErrors()
 
 void mold::render::Init(uint width, uint height)
 {
+    glfwSetErrorCallback(&mold::render::OnError);
     glfwInit(); // initialize glfw
 
     log::Info("glfw " + std::string(glfwGetVersionString()));
