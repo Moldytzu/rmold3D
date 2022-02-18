@@ -37,6 +37,8 @@ void mold::Destroy()
     GlobalShader.Deallocate(); // deallocate shader
     GlobalSkybox.Deallocate(); // deallocate skybox
 
+    glfwDestroyWindow(GlobalWindow); // destroy window
+
     glfwTerminate(); // terminate glfw
 
     settings::SaveToFile("mold.cfg"); // save settings
