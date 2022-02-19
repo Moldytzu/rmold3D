@@ -17,6 +17,9 @@
 make -fplatform/Linux game -j$(nproc)
 ```
 
+# Cross-compiling
+## Important! Make sure you clean the obj folder by running ```make clean``` before cross-compiling for another platform
+
 ### Cross-compiling for Windows64 from Debian/Ubuntu using mingw-w64
 ```
 sudo apt install mingw-w64* # install cross-compiler
