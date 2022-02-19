@@ -1,7 +1,7 @@
 rwildcard=$(foreach d,$(wildcard $(1:=/*)),$(call rwildcard,$d,$2) $(filter $(subst *,%,$2),$d))
 reverse = $(if $(1),$(call reverse,$(wordlist 2,$(words $(1)),$(1)))) $(firstword $(1))
 
-PREFIX = x86_64-w64-mingw32-
+PREFIX = i686-w64-mingw32-
 CPP = $(PREFIX)g++-win32
 CC = $(PREFIX)gcc-win32
 AR = $(PREFIX)ar-win32
@@ -34,7 +34,7 @@ lib: $(OBJS)
 	ar -crs $(LIB) $(OBJS)
 
 define buildGame
-	$(CPP) $(1) $(LIB) rmold3D/3rd-Party/libglfw3.a -lgdi32 -o game.exe $(CFLAGS)
+	$(CPP) $(1) $(LIB) rmold3D/3rd-Party/win32-libglfw3.a -lgdi32 -o game.exe $(CFLAGS)
 	file game.exe
 endef
 

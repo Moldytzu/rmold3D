@@ -16,7 +16,7 @@
     - Make experience better on low end machines (Ability to set the precision in the shaders to a lower one, downscale textures, cut down on texture quality)
     - Debug OpenGL calls/rendering (ability to add debug logs in shaders)
     - Support multiple texture formats (PNG,JPG)
-    - Cross-compiling for another platform from Linux (to Windows and Mac)
+    - Cross-compiling for another platform from Linux (Mac)
     - Better transparency (the trasparency/blend that opengl provides is kinda trash, maybe I can make my own algorithm??)
     - Ability to manipulate properties of a light object (using some helper functions as the public variables are not visible to pointers)
     - Multiple camera views (multiple cameras that are rendering to an off-screen buffer)
