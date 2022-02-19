@@ -349,13 +349,13 @@ void main()
                 void Bind();                                                  // bind everything
                 glm::vec3 GetPosition();                                      // get position
 
-                GameObject *AttachComponent(std::string name, Component *component);       // attach component
-                GameObject *DettachComponent(std::string name);                            // dettach component
-                bool ExistsComponent(std::string name);                                    // check if component exists
-                void TickComponents();                                                     // tick every component
-                void HandleComponents(mold::EventType event);                              // forward events to every component
-                std::unordered_map<std::string, mold::render::objects::Component *> Get(); // get components attached
-                mold::render::objects::Component *Get(std::string name);                   // get component with the name
+                GameObject *AttachComponent(std::string name, Component *component);          // attach component
+                GameObject *DettachComponent(std::string name);                               // dettach component
+                bool ExistsComponent(std::string name);                                       // check if component exists
+                void TickComponents();                                                        // tick every component
+                void HandleComponents(mold::EventType event);                                 // forward events to every component
+                std::unordered_map<std::string, mold::render::objects::Component *> Get();    // get components attached
+                mold::render::objects::Component *Get(std::string name);                      // get component with the name
                 std::unordered_map<std::string, mold::render::objects::Component *> GetRaw(); // get components attached to everything
 
                 virtual void Draw();
@@ -445,6 +445,14 @@ void main()
         void OnError(int id, const char *description);
 
         inline uint LightIdx = 0;
+    };
+
+    namespace memory
+    {
+        inline size_t Allocated = 0;
+        inline bool Track = false;
+
+        void Free(); // free every piece of allocated memory
     };
 
     namespace math
