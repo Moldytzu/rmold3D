@@ -30,6 +30,7 @@ void mold::Destroy()
 
     delete GlobalApplication; // deconstuct application
 
+    GlobalThreads.Reset(); // deallocate threads
     GlobalShader.Deallocate(); // deallocate shader
     GlobalSkybox.Deallocate(); // deallocate skybox
 
