@@ -20,7 +20,14 @@
 
 using namespace mold::render::image;
 
+std::unordered_map<std::string, mold::render::image::Texture> db; // database to store the filenames with their coresponding texture data
+
 mold::render::image::Texture::Texture() {}
+
+std::unordered_map<std::string, mold::render::image::Texture> mold::render::image::Texture::GetDB() // get database
+{
+    return db;
+}
 
 void mold::render::image::Texture::Bind()
 {
@@ -61,8 +68,6 @@ mold::render::image::Texture::Texture(mold::render::Colour colour)
 
     CreateIndex(); // generate index
 }
-
-std::unordered_map<std::string, mold::render::image::Texture> db; // database to store the filenames with their coresponding texture data
 
 mold::render::image::Texture::Texture(std::string filename)
 {

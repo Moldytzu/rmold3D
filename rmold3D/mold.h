@@ -89,6 +89,8 @@ namespace mold
                 void Bind();
                 void Deallocate();
 
+                std::unordered_map<std::string, mold::render::image::Texture> GetDB(); // get database of textures
+
                 uint32_t Size;
                 uint32_t Width;
                 uint32_t Height;
