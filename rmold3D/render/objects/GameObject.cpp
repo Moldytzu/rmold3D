@@ -37,6 +37,11 @@ std::unordered_map<std::string, mold::render::objects::Component *> mold::render
     return tmp;
 }
 
+std::unordered_map<std::string, mold::render::objects::Component *> mold::render::objects::GameObject::GetRaw()
+{
+    return Components; // get all components
+}
+
 mold::render::objects::Component *mold::render::objects::GameObject::Get(std::string name)
 {
     if(!Get().count(name)) // fail if you can't find the name

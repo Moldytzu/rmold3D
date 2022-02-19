@@ -354,6 +354,7 @@ void main()
                 void HandleComponents(mold::EventType event);                              // forward events to every component
                 std::unordered_map<std::string, mold::render::objects::Component *> Get(); // get components attached
                 mold::render::objects::Component *Get(std::string name);                   // get component with the name
+                std::unordered_map<std::string, mold::render::objects::Component *> GetRaw(); // get components attached to everything
 
                 virtual void Draw();
                 virtual std::string Type();
