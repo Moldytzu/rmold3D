@@ -14,7 +14,7 @@ CFLAGS = -I $(shell pwd)/ -I $(shell pwd)/rmold3D -I $(shell pwd)/rmold3D/3rd-Pa
 SRC = $(call rwildcard,$(SRCDIR),*.cpp)  
 OBJS = $(patsubst $(SRCDIR)/%.cpp, $(OBJDIR)/%.o, $(SRC))
 
-LIB = engrmold3D.a
+LIB = ./bin/engrmold3D.a
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.cpp
 	@ mkdir -p $(@D)
@@ -34,8 +34,8 @@ lib: $(OBJS)
 	ar -crs $(LIB) $(OBJS)
 
 define buildGame
-	$(CPP) $(1) $(LIB) -lglfw -ldl -lpthread -o game $(CFLAGS)
-	file game
+	$(CPP) $(1) $(LIB) -lglfw -ldl -lpthread -o ./bin/game $(CFLAGS)
+	file ./bin/game
 endef
 
 game: lib 
@@ -45,4 +45,7 @@ cubes: lib
 	$(call buildGame,cubes.cpp)
 
 debug:
-	gdb -q -ex "run" -ex "bt" ./game 
+	gdb -q -ex "run" -ex "bt" ./bin/game 
+
+memory:
+	cd ./bin/ && valgrind --leak-check=full --log-file="./valgrind.out" ./game

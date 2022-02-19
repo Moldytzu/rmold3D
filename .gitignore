@@ -1,8 +1,9 @@
-engrmold3D.a
-game
-game.exe
+bin/engrmold3D.a
+bin/game
+bin/game.exe
+bin/gmon.out
+bin/gprof.out
+bin/mold.cfg
+bin/valgrind.out
 .vscode
 *.o
-gmon.out
-gprof.out
-mold.cfg

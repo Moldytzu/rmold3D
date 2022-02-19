@@ -24,12 +24,12 @@ make -fplatform/Linux game -j$(nproc)
 ```
 sudo apt install mingw-w64* # install cross-compiler
 sudo cp -r /usr/include/GLFW /usr/x86_64-w64-mingw32/include/ # make sure that glfw's headers are ready
-make -fplatform/Win64 game -j$(nproc)
+make PLATFORM=Win64 game
 ```
 
 ### Cross-compiling for Windows32 from Debian/Ubuntu using mingw-w64
 ```
 sudo apt install mingw-w64* # install cross-compiler
 sudo cp -r /usr/include/GLFW /usr/i686-w64-mingw32/include/ # make sure that glfw's headers are ready
-make -fplatform/Win32 game -j$(nproc)
+make PLATFORM=Win32 game
 ```
