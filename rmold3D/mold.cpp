@@ -76,7 +76,6 @@ void mold::Init(uint width, uint height)
     mold::GlobalSkybox = render::Skybox(render::Colour(0));
 }
 
-int oldFPS;
 void mold::Run()
 {
     log::Info("Running " + GlobalApplication->Name());
@@ -107,12 +106,8 @@ void mold::Run()
         GlobalThreads.Add(new std::thread(&Events::CallEvent, EventType::Tick));
 
         // update window title (Rewritten mold 3D @ ?? FPS)
-        if (oldFPS != time::FPS)
-        {
-            std::string wtitle = "Rewritten mold 3D @ " + std::to_string(time::FPS) + " FPS";
-            glfwSetWindowTitle(GlobalWindow, wtitle.c_str());
-            oldFPS = time::FPS;
-        }
+        std::string wtitle = "Rewritten mold 3D @ " + std::to_string(time::FPS) + " FPS";
+        glfwSetWindowTitle(GlobalWindow, wtitle.c_str());
 
         // do cursor handling
         GlobalThreads.Add(new std::thread(&mold::input::HandleCursor));

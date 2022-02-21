@@ -22,3 +22,4 @@
     - Multiple camera views (multiple cameras that are rendering to an off-screen buffer)
     - 3D/2D audio system using OpenAL
     - Physics (gravity and coliders)
+    - Easy way to add more settings (a settings manager class that stores all settings, with customizable settings)
