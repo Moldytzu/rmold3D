@@ -1,6 +1,7 @@
 bin/engrmold3D.a
-bin/game
-bin/game.exe
+bin/game*
+bin/game32*
+bin/game64*
 bin/gmon.out
 bin/gprof.out
 bin/mold.cfg

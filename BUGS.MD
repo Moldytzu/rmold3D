@@ -1,3 +1,3 @@
 # Known bugs
 #
-    - No known bugs
+    - Full-screen game crashes on Windows
