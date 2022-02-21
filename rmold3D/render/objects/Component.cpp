@@ -27,7 +27,7 @@ void mold::render::objects::Component::Start() {}
 
 void mold::render::objects::Component::CallFunc(std::string publicName)
 {
-    if(!Public.count(publicName))
+    if(!Public.count(publicName)) // if there isn't any function with that name just fail
     {
         mold::log::Error("Couldn't find function " + publicName);
         return;

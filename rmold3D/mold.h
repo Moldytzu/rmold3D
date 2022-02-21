@@ -455,6 +455,11 @@ void main()
         void Free(); // free every piece of allocated memory
     };
 
+    namespace profiler
+    {
+        inline size_t glVertices = 0;
+    };
+
     namespace math
     {
         float Vfov(float Hfov, float aspectRatio);

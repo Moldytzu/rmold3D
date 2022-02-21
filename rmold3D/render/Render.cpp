@@ -25,6 +25,7 @@ mold::render::Colour::Colour(uint8_t rgb) : R{rgb}, G{rgb}, B{rgb} {}           
 
 void mold::render::DrawTriangles(uint count)
 {
+    profiler::glVertices += count;        // add the vertices count to the global count
     glDrawArrays(GL_TRIANGLES, 0, count); // draw triangles
 }
 
@@ -103,6 +104,8 @@ void mold::render::Init(uint width, uint height)
 
 void mold::render::Render()
 {
+    profiler::glVertices = 0; // reset vertices count
+
     glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT); // clear the depth buffer and colour buffer
 
     // ensure that we use shader
