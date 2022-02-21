@@ -27,6 +27,11 @@ void mold::render::objects::Component::Start() {}
 
 void mold::render::objects::Component::CallFunc(std::string publicName)
 {
+    if(!Public.count(publicName))
+    {
+        mold::log::Error("Couldn't find function " + publicName);
+        return;
+    }
     std::any_cast<void(*)(mold::render::objects::Component *)>(Public[publicName])(this); // call the function with the public name
 }
 
