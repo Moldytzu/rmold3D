@@ -13,7 +13,7 @@
     - Multiple light types (directional)
     - Editor (like UE4, Unity, Hazel or Godot)
     - Ability to modify the 3D resolution (render at a lower resolution then scale up to the window's)
-    - Make experience better on low end machines (Ability to set the precision in the shaders to a lower one, downscale textures, cut down on texture quality)
+    - Make experience better on low end machines (downscale textures, cut down on texture quality)
     - Debug OpenGL calls/rendering (ability to add debug logs in shaders)
     - Support multiple texture formats (PNG,JPG)
     - Cross-compiling for another platform from Linux (Mac)
