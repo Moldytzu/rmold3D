@@ -61,11 +61,6 @@ float InputManager::Get(std::string mapping) // get axis (0.0f - 1.0f)
         return (float)glfwGetKey(GlobalWindow, key);
 }
 
-bool mold::input::GetKey(int key)
-{
-    return glfwGetKey(GlobalWindow, key); // wrap glfwGetKey
-}
-
 void mold::input::HandleCursor()
 {
     switch (input::GlobalCursorLockMode)

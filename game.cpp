@@ -97,7 +97,7 @@ public:
         mold::GlobalGameObjects.Instantiate(new mold::render::objects::Light(glm::vec3(-1,0,-1),glm::vec3(1),5),"Light");
 
         // Set up mappings
-        mold::GlobalInputManager.Map("Up",GLFW_KEY_W)->Map("Down",GLFW_KEY_S)->Map("Left",GLFW_KEY_A)->Map("Right",GLFW_KEY_D)->Map("UpA",GLFW_KEY_UP)->Map("DownA",GLFW_KEY_DOWN)->Map("LeftA",GLFW_KEY_LEFT)->Map("RightA",GLFW_KEY_RIGHT)->Map("Ascend",GLFW_KEY_I)->Map("Descend",GLFW_KEY_K);
+        mold::GlobalInputManager.Map("Up",GLFW_KEY_W)->Map("Down",GLFW_KEY_S)->Map("Left",GLFW_KEY_A)->Map("Right",GLFW_KEY_D)->Map("UpA",GLFW_KEY_UP)->Map("DownA",GLFW_KEY_DOWN)->Map("LeftA",GLFW_KEY_LEFT)->Map("RightA",GLFW_KEY_RIGHT)->Map("Ascend",GLFW_KEY_I)->Map("Descend",GLFW_KEY_K)->Map("Esc",GLFW_KEY_ESCAPE)->Map("F1",GLFW_KEY_F1);
     }
 
     ~Game()
@@ -112,10 +112,10 @@ public:
 
     void Tick() override
     {
-        if (mold::input::GetKey(GLFW_KEY_ESCAPE))
+        if (mold::GlobalInputManager.Get("Esc"))
             mold::input::GlobalCursorLockMode = mold::CursorLockingMode::Normal;
 
-        if (mold::input::GetKey(GLFW_KEY_F1))
+        if (mold::GlobalInputManager.Get("F1"))
             mold::input::GlobalCursorLockMode = mold::CursorLockingMode::Locked;
 
         mold::GlobalGameObjects.Get("Light")->Move(mold::render::camera::Position);

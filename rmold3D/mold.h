@@ -527,9 +527,7 @@ void main()
             std::unordered_map<std::string, int> Mappings;
         };
 
-        bool GetKey(int key);
         void HandleCursor();
-
         void OnScroll(GLFWwindow *window, double xoffset, double yoffset);
         void OnMouse(GLFWwindow *window, double xpos, double ypos);
 
