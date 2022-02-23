@@ -517,6 +517,16 @@ void main()
 
     namespace input
     {
+        class InputManager
+        {
+        public:
+            void Map(std::string mapping, uint key);
+            void UnMap(std::string mapping);
+            float Get(std::string mapping);
+        private:
+            std::unordered_map<std::string, uint> Mappings;
+        };
+        
         bool GetKey(int key);
         void HandleCursor();
 

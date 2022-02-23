@@ -2,7 +2,7 @@
 #
     - Create docs
     - Shadow casting
-    - Better input system (implement controler input)
+    - Better input system (implement controler input, key mapping by giving aliases)
     - Make Windows & MacOS host builds successfuly
     - Prefabricates (Group of components bundled into a gameobject that can be easily instantiate)
     - Renderers separated into components (Cube/Plane/Point Light renderer)
