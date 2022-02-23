@@ -61,6 +61,27 @@ float InputManager::Get(std::string mapping) // get axis (0.0f - 1.0f)
         return (float)glfwGetKey(GlobalWindow, key);
 }
 
+InputManager::InputManager()
+{
+    // set all mappings for common keys
+    Map("Space",32)->Map("'",39)->Map(",",44)->Map("-",45)->Map(".",46)-> \
+    Map("/",47)->Map("0",48)->Map("1",49)->Map("2",50)->Map("3",51)-> \
+    Map("4",52)->Map("5",53)->Map("6",54)->Map("7",55)->Map("8",56)-> \
+    Map("9",57)->Map(";",59)->Map("=",61)->Map("A",65)->Map("B",66)-> \
+    Map("C",67)->Map("D",68)->Map("E",69)->Map("F",70)->Map("G",71)-> \
+    Map("H",72)->Map("I",73)->Map("J",74)->Map("K",75)->Map("L",76)-> \
+    Map("M",77)->Map("N",78)->Map("O",79)->Map("P",80)->Map("Q",81)-> \
+    Map("R",82)->Map("S",83)->Map("T",84)->Map("U",85)->Map("V",86)-> \
+    Map("W",87)->Map("X",88)->Map("Y",89)->Map("Z",90)->Map("[",91)-> \
+    Map("\\",92)->Map("]",93)->Map("`",96)->Map("Escape",256)->Map("Enter",257)-> \
+    Map("Tab",258)->Map("Backspace",259)->Map("Insert",260)->Map("Delete",261)->Map("Right",262)-> \
+    Map("Left",263)->Map("Down",264)->Map("Up",265)->Map("PgUp",266)->Map("PgDown",267)-> \
+    Map("Home",268)->Map("End",269)->Map("CapsLock",280)->Map("ScrollLock",281)->Map("NumLock",282)-> \
+    Map("PrintScreen",283)->Map("Pause",284)->Map("F1",290)->Map("F2",291)->Map("F3",292)-> \
+    Map("F4",293)->Map("F5",294)->Map("F6",295)->Map("F7",296)->Map("F8",297)-> \
+    Map("F9",298)->Map("F10",299)->Map("F11",300)->Map("F12",301);
+}
+
 void mold::input::HandleCursor()
 {
     switch (input::GlobalCursorLockMode)

@@ -43,27 +43,18 @@ public:
     float Speed = 25.0f; // adjust accordingly
     void Tick() override
     {
-        if (mold::input::GetKey(GLFW_KEY_UP))
-            mold::render::camera::Rotate(glm::vec3(0, 0, 1), Speed * 2 * mold::time::DeltaTime);
-        if (mold::input::GetKey(GLFW_KEY_DOWN))
-            mold::render::camera::Rotate(glm::vec3(0, 0, -1), Speed * 2 * mold::time::DeltaTime);
-        if (mold::input::GetKey(GLFW_KEY_LEFT))
-            mold::render::camera::Rotate(glm::vec3(-1, 0, 0), Speed * 2 * mold::time::DeltaTime);
-        if (mold::input::GetKey(GLFW_KEY_RIGHT))
-            mold::render::camera::Rotate(glm::vec3(1, 0, 0), Speed * 2 * mold::time::DeltaTime);
+        mold::render::camera::Rotate(glm::vec3(0, 0, 1), mold::GlobalInputManager.Get("Up") * Speed * 2 * mold::time::DeltaTime);
+        mold::render::camera::Rotate(glm::vec3(0, 0, -1), mold::GlobalInputManager.Get("Down") * Speed * 2 * mold::time::DeltaTime);
+        mold::render::camera::Rotate(glm::vec3(-1, 0, 0), mold::GlobalInputManager.Get("Left") * Speed * 2 * mold::time::DeltaTime);
+        mold::render::camera::Rotate(glm::vec3(1, 0, 0), mold::GlobalInputManager.Get("Right") * Speed * 2 * mold::time::DeltaTime);
 
-        if (mold::input::GetKey('W'))
-            mold::render::camera::Translate(glm::vec3(0, 0, 1), Speed * mold::time::DeltaTime / 10);
-        if (mold::input::GetKey('S'))
-            mold::render::camera::Translate(glm::vec3(0, 0, -1), Speed * mold::time::DeltaTime / 10);
-        if (mold::input::GetKey('A'))
-            mold::render::camera::Translate(glm::vec3(-1, 0, 0), Speed * mold::time::DeltaTime / 10);
-        if (mold::input::GetKey('D'))
-            mold::render::camera::Translate(glm::vec3(1, 0, 0), Speed * mold::time::DeltaTime / 10);
-        if (mold::input::GetKey('I'))
-            mold::render::camera::Translate(glm::vec3(0, 1, 0), Speed * mold::time::DeltaTime / 10);
-        if (mold::input::GetKey('K'))
-            mold::render::camera::Translate(glm::vec3(0, -1, 0), Speed * mold::time::DeltaTime / 10);
+        mold::render::camera::Translate(glm::vec3(0, 0, 1), mold::GlobalInputManager.Get("W") * Speed * mold::time::DeltaTime / 10);
+        mold::render::camera::Translate(glm::vec3(0, 0, -1), mold::GlobalInputManager.Get("S") * Speed * mold::time::DeltaTime / 10);
+        mold::render::camera::Translate(glm::vec3(-1, 0, 0), mold::GlobalInputManager.Get("A") * Speed * mold::time::DeltaTime / 10);
+        mold::render::camera::Translate(glm::vec3(1, 0, 0), mold::GlobalInputManager.Get("D") * Speed * mold::time::DeltaTime / 10);
+
+        mold::render::camera::Translate(glm::vec3(0, 1, 0), mold::GlobalInputManager.Get("I") * Speed * mold::time::DeltaTime / 10);
+        mold::render::camera::Translate(glm::vec3(0, -1, 0), mold::GlobalInputManager.Get("K") * Speed * mold::time::DeltaTime / 10);
     }
 
     void Start() override
@@ -116,10 +107,10 @@ public:
 
     void Tick() override
     {
-        if (mold::input::GetKey(GLFW_KEY_ESCAPE))
+        if (mold::GlobalInputManager.Get("Escape"))
             mold::input::GlobalCursorLockMode = mold::CursorLockingMode::Normal;
 
-        if (mold::input::GetKey(GLFW_KEY_F1))
+        if (mold::GlobalInputManager.Get("F1"))
             mold::input::GlobalCursorLockMode = mold::CursorLockingMode::Locked;
     }
 

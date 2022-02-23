@@ -520,6 +520,7 @@ void main()
         class InputManager
         {
         public:
+            InputManager();
             InputManager *Map(std::string mapping, int key);
             InputManager *UnMap(std::string mapping);
             float Get(std::string mapping);
