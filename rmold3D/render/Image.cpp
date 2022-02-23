@@ -18,6 +18,13 @@
 
 #include "../mold.h"
 
+#ifdef _WIN32
+#include <windows.h> //GetModuleFileNameW
+#else
+#include <limits.h>
+#include <unistd.h> //readlink
+#endif
+
 using namespace mold::render::image;
 
 std::unordered_map<std::string, mold::render::image::Texture> db; // database to store the filenames with their coresponding texture data
@@ -90,9 +97,29 @@ mold::render::image::Texture::Texture(std::string filename)
 
     if (!stream.good()) // fails if file doesn't exist
     {
-        log::Error("Failed to load bitmap " + filename);
-        *this = Texture(Colour(255)); // create white texture
-        return;
+        // try to append the program's path
+        log::Error("Failed to load bitmap " + filename + " Trying to append the current directory");
+
+#ifdef __WIN32__
+        wchar_t path[MAX_PATH] = {0};
+        GetModuleFileNameW(NULL, path, MAX_PATH);
+        std::string execPath = std::string(path);
+#else
+        char result[PATH_MAX];
+        ssize_t count = readlink("/proc/self/exe", result, PATH_MAX);
+        std::string execPath = std::string(result, (count > 0) ? count : 0);
+#endif
+
+        execPath = execPath.substr(0,execPath.find_last_of("/\\")); // get only the directory
+
+        stream = std::ifstream(execPath + "/" + filename);
+        log::Info(execPath);
+        if (!stream.good())
+        {
+            log::Error("Nevermind...");
+            *this = Texture(Colour(255)); // create white texture
+            return;
+        }
     }
 
     BitmapImageHeader *header = new BitmapImageHeader; // allocate memory for the header
@@ -118,14 +145,14 @@ mold::render::image::Texture::Texture(std::string filename)
     PixelData = new uint8_t[header->ImageSize]; // allocate memory for the pixel data
 
     stream.read((char *)PixelData, header->ImageSize); // read it
-    #ifndef __WIN32__
-    if (!stream.good())                                // fails on windows but not on linux
+#ifndef __WIN32__
+    if (!stream.good()) // fails on windows but not on linux
     {
         log::Error("Failed to read contents of bitmap " + filename);
         *this = Texture(Colour(255)); // create white texture
         return;
     }
-    #endif
+#endif
 
     for (int i = 0; i < header->ImageSize; i += 3)
     {
