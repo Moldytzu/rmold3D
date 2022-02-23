@@ -520,13 +520,13 @@ void main()
         class InputManager
         {
         public:
-            void Map(std::string mapping, uint key);
-            void UnMap(std::string mapping);
+            InputManager *Map(std::string mapping, int key);
+            InputManager *UnMap(std::string mapping);
             float Get(std::string mapping);
         private:
-            std::unordered_map<std::string, uint> Mappings;
+            std::unordered_map<std::string, int> Mappings;
         };
-        
+
         bool GetKey(int key);
         void HandleCursor();
 
@@ -576,6 +576,7 @@ void main()
     inline GLFWwindow *GlobalWindow;
     inline Application *GlobalApplication;
     inline ThreadManager GlobalThreads;
+    inline input::InputManager GlobalInputManager;
     inline render::Shader GlobalShader;
     inline render::Skybox GlobalSkybox;
     inline render::objects::GameObjectsManager GlobalGameObjects;

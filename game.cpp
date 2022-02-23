@@ -52,6 +52,8 @@ public:
             mold::render::camera::Translate(glm::vec3(0, 1, 0), Speed * mold::time::DeltaTime / 10);
         if (mold::input::GetKey('K'))
             mold::render::camera::Translate(glm::vec3(0, -1, 0), Speed * mold::time::DeltaTime / 10);
+
+        mold::log::Info(std::to_string(mold::GlobalInputManager.Get("Up")));
     }
 
     void Start() override
@@ -104,6 +106,9 @@ public:
 
         // Instantiate a light
         mold::GlobalGameObjects.Instantiate(new mold::render::objects::Light(glm::vec3(-1,0,-1),glm::vec3(1),5),"Light");
+
+        // Set up mappings
+        mold::GlobalInputManager.Map("Up",GLFW_KEY_W)->Map("Down",GLFW_KEY_S)->Map("Left",GLFW_KEY_A)->Map("Right",GLFW_KEY_D);
     }
 
     ~Game()
