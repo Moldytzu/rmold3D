@@ -98,8 +98,6 @@ mold::render::image::Texture::Texture(std::string filename)
     if (!stream.good()) // fails if file doesn't exist
     {
         // try to append the program's path
-        log::Error("Failed to load bitmap " + filename + " Trying to append the current directory");
-
 #ifdef __WIN32__
         wchar_t path[MAX_PATH] = {0};
         GetModuleFileNameW(NULL, path, MAX_PATH);
@@ -113,10 +111,9 @@ mold::render::image::Texture::Texture(std::string filename)
         execPath = execPath.substr(0,execPath.find_last_of("/\\")); // get only the directory
 
         stream = std::ifstream(execPath + "/" + filename);
-        log::Info(execPath);
         if (!stream.good())
         {
-            log::Error("Nevermind...");
+            log::Error("Failed to load bitmap " + filename);
             *this = Texture(Colour(255)); // create white texture
             return;
         }
