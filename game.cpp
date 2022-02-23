@@ -31,29 +31,18 @@ public:
 
     void Tick() override
     {
-        if (mold::input::GetKey(GLFW_KEY_UP))
-            mold::render::camera::Rotate(glm::vec3(0, 0, 1), Speed * 2 * mold::time::DeltaTime);
-        if (mold::input::GetKey(GLFW_KEY_DOWN))
-            mold::render::camera::Rotate(glm::vec3(0, 0, -1), Speed * 2 * mold::time::DeltaTime);
-        if (mold::input::GetKey(GLFW_KEY_LEFT))
-            mold::render::camera::Rotate(glm::vec3(-1, 0, 0), Speed * 2 * mold::time::DeltaTime);
-        if (mold::input::GetKey(GLFW_KEY_RIGHT))
-            mold::render::camera::Rotate(glm::vec3(1, 0, 0), Speed * 2 * mold::time::DeltaTime);
+        mold::render::camera::Rotate(glm::vec3(0, 0, 1), mold::GlobalInputManager.Get("UpA") * Speed * 2 * mold::time::DeltaTime);
+        mold::render::camera::Rotate(glm::vec3(0, 0, -1), mold::GlobalInputManager.Get("DownA") * Speed * 2 * mold::time::DeltaTime);
+        mold::render::camera::Rotate(glm::vec3(-1, 0, 0), mold::GlobalInputManager.Get("LeftA") * Speed * 2 * mold::time::DeltaTime);
+        mold::render::camera::Rotate(glm::vec3(1, 0, 0), mold::GlobalInputManager.Get("RightA") * Speed * 2 * mold::time::DeltaTime);
 
-        if (mold::input::GetKey('W'))
-            mold::render::camera::Translate(glm::vec3(0, 0, 1), Speed * mold::time::DeltaTime / 10);
-        if (mold::input::GetKey('S'))
-            mold::render::camera::Translate(glm::vec3(0, 0, -1), Speed * mold::time::DeltaTime / 10);
-        if (mold::input::GetKey('A'))
-            mold::render::camera::Translate(glm::vec3(-1, 0, 0), Speed * mold::time::DeltaTime / 10);
-        if (mold::input::GetKey('D'))
-            mold::render::camera::Translate(glm::vec3(1, 0, 0), Speed * mold::time::DeltaTime / 10);
-        if (mold::input::GetKey('I'))
-            mold::render::camera::Translate(glm::vec3(0, 1, 0), Speed * mold::time::DeltaTime / 10);
-        if (mold::input::GetKey('K'))
-            mold::render::camera::Translate(glm::vec3(0, -1, 0), Speed * mold::time::DeltaTime / 10);
+        mold::render::camera::Translate(glm::vec3(0, 0, 1), mold::GlobalInputManager.Get("Up") * Speed * mold::time::DeltaTime / 10);
+        mold::render::camera::Translate(glm::vec3(0, 0, -1), mold::GlobalInputManager.Get("Down") * Speed * mold::time::DeltaTime / 10);
+        mold::render::camera::Translate(glm::vec3(-1, 0, 0), mold::GlobalInputManager.Get("Left") * Speed * mold::time::DeltaTime / 10);
+        mold::render::camera::Translate(glm::vec3(1, 0, 0), mold::GlobalInputManager.Get("Right") * Speed * mold::time::DeltaTime / 10);
 
-        mold::log::Info(std::to_string(mold::GlobalInputManager.Get("Up")));
+        mold::render::camera::Translate(glm::vec3(0, 1, 0), mold::GlobalInputManager.Get("Ascend") * Speed * mold::time::DeltaTime / 10);
+        mold::render::camera::Translate(glm::vec3(0, -1, 0), mold::GlobalInputManager.Get("Descend") * Speed * mold::time::DeltaTime / 10);
     }
 
     void Start() override
@@ -108,7 +97,7 @@ public:
         mold::GlobalGameObjects.Instantiate(new mold::render::objects::Light(glm::vec3(-1,0,-1),glm::vec3(1),5),"Light");
 
         // Set up mappings
-        mold::GlobalInputManager.Map("Up",GLFW_KEY_W)->Map("Down",GLFW_KEY_S)->Map("Left",GLFW_KEY_A)->Map("Right",GLFW_KEY_D);
+        mold::GlobalInputManager.Map("Up",GLFW_KEY_W)->Map("Down",GLFW_KEY_S)->Map("Left",GLFW_KEY_A)->Map("Right",GLFW_KEY_D)->Map("UpA",GLFW_KEY_UP)->Map("DownA",GLFW_KEY_DOWN)->Map("LeftA",GLFW_KEY_LEFT)->Map("RightA",GLFW_KEY_RIGHT)->Map("Ascend",GLFW_KEY_I)->Map("Descend",GLFW_KEY_K);
     }
 
     ~Game()
