@@ -34,28 +34,3 @@ void mold::render::OnError(int id, const char* description)
 {
     mold::log::Error(std::to_string(id) + " -> " + std::string(description));
 }
-
-void mold::input::OnScroll(GLFWwindow *window, double xoffset, double yoffset) // it is called when the scroll wheel is used
-{
-    input::GlobalScrollAxis = yoffset; // the scroll wheel in glfw works as a mouse where the yoffset is the cursor axis itself
-}
-
-double lastX, lastY;
-void mold::input::OnMouse(GLFWwindow *window, double xoffset, double yoffset) // it is called when the mouse is moved
-{
-    // set axis data
-    input::GlobalCursorAxis.x = xoffset - lastX;
-    input::GlobalCursorAxis.y = lastY - yoffset;
-
-    input::GlobalCursorPos.x = xoffset;
-    input::GlobalCursorPos.y = yoffset;
-
-    // call event if we've got changes
-    if ((input::GlobalCursorAxis.x != 0 && input::GlobalCursorAxis.y != 0) || input::GlobalScrollAxis != 0)
-        Events::CallEvent(EventType::Mouse);
-
-    // update last values
-    lastX = xoffset;
-    lastY = yoffset;
-    input::GlobalScrollAxis = 0; // reset scroll value
-}

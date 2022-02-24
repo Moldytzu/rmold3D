@@ -533,9 +533,6 @@ void main()
         void OnMouse(GLFWwindow *window, double xpos, double ypos);
 
         inline CursorLockingMode GlobalCursorLockMode;
-        inline glm::vec2 GlobalCursorAxis;
-        inline glm::vec2 GlobalCursorPos;
-        inline float GlobalScrollAxis;
     };
 
     namespace log

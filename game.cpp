@@ -120,7 +120,7 @@ public:
 
     void OnMouseInput() override
     {
-        mold::settings::FOV -= mold::input::GlobalScrollAxis;
+        mold::settings::FOV -= mold::GlobalInputManager.Get("Scroll");
     }
 
     std::string Name() override

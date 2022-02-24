@@ -20,6 +20,9 @@
 
 using namespace mold::input;
 
+glm::vec2 cursorAxis;
+float scrollAxis;
+
 InputManager *InputManager::Map(std::string mapping, int key)
 {
     if(!Mappings.count(mapping)) // if there isn't any item then insert it
@@ -58,11 +61,11 @@ float InputManager::Get(std::string mapping) // get axis (0.0f - 1.0f)
         switch(key)
         {
         case 1:
-            return mold::input::GlobalCursorAxis.x;
+            return cursorAxis.x;
         case 2:
-            return mold::input::GlobalCursorAxis.y;
+            return cursorAxis.y;
         case 3:
-            return mold::input::GlobalScrollAxis;
+            return scrollAxis;
         default:
             return 0.0f; // just return 0
         }
@@ -112,4 +115,26 @@ void mold::input::HandleCursor()
         glfwSetInputMode(GlobalWindow, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
         break;
     }
+}
+
+void mold::input::OnScroll(GLFWwindow *window, double xoffset, double yoffset) // it is called when the scroll wheel is used
+{
+    scrollAxis = yoffset; // the scroll wheel in glfw works as a mouse where the yoffset is the cursor axis itself
+}
+
+double lastX, lastY;
+void mold::input::OnMouse(GLFWwindow *window, double xoffset, double yoffset) // it is called when the mouse is moved
+{
+    // set axis data
+    cursorAxis.x = xoffset - lastX;
+    cursorAxis.y = lastY - yoffset;
+
+    // call event if we've got changes
+    if ((cursorAxis.x != 0 && cursorAxis.y != 0) || scrollAxis != 0)
+        Events::CallEvent(EventType::Mouse);
+
+    // update last values
+    lastX = xoffset;
+    lastY = yoffset;
+    scrollAxis = 0; // reset scroll value
 }
