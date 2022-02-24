@@ -63,8 +63,8 @@ public:
     {
         if (event == mold::EventType::Mouse && mold::input::GlobalCursorLockMode == mold::CursorLockingMode::Locked) // update mouse
         {
-            mold::render::camera::Yaw += mold::input::GlobalCursorAxis.x * mold::settings::MouseSensibility * mold::time::DeltaTime;
-            mold::render::camera::Pitch += mold::input::GlobalCursorAxis.y * mold::settings::MouseSensibility * mold::time::DeltaTime;
+            mold::render::camera::Yaw += mold::GlobalInputManager.Get("Horizontal") * mold::settings::MouseSensibility * mold::time::DeltaTime;
+            mold::render::camera::Pitch += mold::GlobalInputManager.Get("Vertical") * mold::settings::MouseSensibility * mold::time::DeltaTime;
         }
     }
 };
@@ -109,7 +109,7 @@ public:
 
     void Tick() override
     {
-        if (mold::GlobalInputManager.Get("Esc"))
+        if (mold::GlobalInputManager.Get("Escape"))
             mold::input::GlobalCursorLockMode = mold::CursorLockingMode::Normal;
 
         if (mold::GlobalInputManager.Get("F1"))

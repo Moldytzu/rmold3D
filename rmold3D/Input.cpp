@@ -55,7 +55,17 @@ float InputManager::Get(std::string mapping) // get axis (0.0f - 1.0f)
 
     if (key < 32) // 0-31 are reserved for future use (like joystick, mouse etc.)
     {
-        return 0.0f; // just return 0 for now
+        switch(key)
+        {
+        case 1:
+            return mold::input::GlobalCursorAxis.x;
+        case 2:
+            return mold::input::GlobalCursorAxis.y;
+        case 3:
+            return mold::input::GlobalScrollAxis;
+        default:
+            return 0.0f; // just return 0
+        }
     }
     else // the rest are glfw keys so we just call glfwGetKey
         return (float)glfwGetKey(GlobalWindow, key);
@@ -80,6 +90,8 @@ InputManager::InputManager()
     Map("PrintScreen",283)->Map("Pause",284)->Map("F1",290)->Map("F2",291)->Map("F3",292)-> \
     Map("F4",293)->Map("F5",294)->Map("F6",295)->Map("F7",296)->Map("F8",297)-> \
     Map("F9",298)->Map("F10",299)->Map("F11",300)->Map("F12",301);
+
+    Map("Horizontal",1)->Map("Vertical",2)->Map("Scroll",3); // mouse axis
 }
 
 void mold::input::HandleCursor()
