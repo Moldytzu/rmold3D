@@ -333,6 +333,14 @@ void main()
                 std::unordered_map<std::string, std::any> Public;
             };
 
+            class CubeRenderer : public Component
+            {
+            public:
+                mold::render::VABO Vabo;
+                void Start();
+                void Handle(mold::EventType event);
+            };
+
             class GameObject
             {
             public:

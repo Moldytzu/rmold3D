@@ -16,7 +16,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-#include "../../mold.h"
+#include "../../../mold.h"
 
 using namespace mold::render::objects;
 
