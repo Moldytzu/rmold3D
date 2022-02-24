@@ -20,10 +20,10 @@
 
 using namespace mold::render::objects;
 
-Light::Light() : GameObject(image::Texture(render::Colour(0))) {}
-Light::Light(glm::vec3 pos) : GameObject(image::Texture(render::Colour(0))), Position{pos}, Colour{glm::vec3(1)}, Power{1} {}
-Light::Light(glm::vec3 pos, glm::vec3 col) : GameObject(image::Texture(render::Colour(0))), Position{pos}, Colour{col}, Power{1} {}
-Light::Light(glm::vec3 pos, glm::vec3 col, float power) : GameObject(image::Texture(render::Colour(0))), Position{pos}, Colour{col}, Power{power} {}
+Light::Light() : GameObjectBase(image::Texture(render::Colour(0))) {}
+Light::Light(glm::vec3 pos) : GameObjectBase(image::Texture(render::Colour(0))), Position{pos}, Colour{glm::vec3(1)}, Power{1} {}
+Light::Light(glm::vec3 pos, glm::vec3 col) : GameObjectBase(image::Texture(render::Colour(0))), Position{pos}, Colour{col}, Power{1} {}
+Light::Light(glm::vec3 pos, glm::vec3 col, float power) : GameObjectBase(image::Texture(render::Colour(0))), Position{pos}, Colour{col}, Power{power} {}
 
 void Light::Draw()
 {
@@ -43,13 +43,13 @@ std::string Light::Type()
     return "Point Light";
 }
 
-GameObject *Light::Translate(glm::vec3 offset)
+GameObjectBase *Light::Translate(glm::vec3 offset)
 {
     Position += offset; // translate in the offset
     return this;
 }
 
-GameObject *Light::Move(glm::vec3 position)
+GameObjectBase *Light::Move(glm::vec3 position)
 {
     Position = position; // set the old position to the new one
     return this;

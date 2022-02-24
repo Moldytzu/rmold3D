@@ -315,7 +315,7 @@ void main()
 
         namespace objects
         {
-            class GameObject;
+            class GameObjectBase;
 
             class Component
             {
@@ -328,7 +328,7 @@ void main()
                 void Expose(void (*fn)(mold::render::objects::Component *), std::string publicName);
 
                 bool Enabled = true;
-                GameObject *Parent = nullptr;
+                GameObjectBase *Parent = nullptr;
 
                 std::unordered_map<std::string, std::any> Public;
             };
@@ -341,30 +341,30 @@ void main()
                 void Handle(mold::EventType event);
             };
 
-            class GameObject
+            class GameObjectBase
             {
             public:
-                ~GameObject();
+                ~GameObjectBase();
 
-                GameObject();
-                GameObject(mold::render::image::Texture texture);
+                GameObjectBase();
+                GameObjectBase(mold::render::image::Texture texture);
 
-                virtual GameObject *Translate(glm::vec3 offset); // translate position
-                virtual GameObject *Move(glm::vec3 position);    // set position
-                GameObject *Scale(glm::vec3 scaleFactor);        // set scale factor
-                GameObject *Rotate(glm::vec3 axis, float angle); // set rotation
+                virtual GameObjectBase *Translate(glm::vec3 offset); // translate position
+                virtual GameObjectBase *Move(glm::vec3 position);    // set position
+                GameObjectBase *Scale(glm::vec3 scaleFactor);        // set scale factor
+                GameObjectBase *Rotate(glm::vec3 axis, float angle); // set rotation
 
-                GameObject *Translate(float x, float y, float z);           // translate position
-                GameObject *Move(float x, float y, float z);                // set position
-                GameObject *Scale(float x, float y, float z);               // set scale factor
-                GameObject *Rotate(float x, float y, float z, float angle); // set rotation
+                GameObjectBase *Translate(float x, float y, float z);           // translate position
+                GameObjectBase *Move(float x, float y, float z);                // set position
+                GameObjectBase *Scale(float x, float y, float z);               // set scale factor
+                GameObjectBase *Rotate(float x, float y, float z, float angle); // set rotation
 
                 void ReplaceTexture(mold::render::image::Texture newTexture); // replace the texture with a new one
                 void Bind();                                                  // bind everything
                 glm::vec3 GetPosition();                                      // get position
 
-                GameObject *AttachComponent(std::string name, Component *component);          // attach component
-                GameObject *DettachComponent(std::string name);                               // dettach component
+                GameObjectBase *AttachComponent(std::string name, Component *component);          // attach component
+                GameObjectBase *DettachComponent(std::string name);                               // dettach component
                 bool ExistsComponent(std::string name);                                       // check if component exists
                 void TickComponents();                                                        // tick every component
                 void HandleComponents(mold::EventType event);                                 // forward events to every component
@@ -389,7 +389,7 @@ void main()
                 float *Vertices;
             };
 
-            class Light : public GameObject
+            class Light : public GameObjectBase
             {
             public:
                 Light();
@@ -397,8 +397,8 @@ void main()
                 Light(glm::vec3 pos, glm::vec3 col);
                 Light(glm::vec3 pos, glm::vec3 col, float power);
 
-                GameObject *Translate(glm::vec3 offset); // translate position
-                GameObject *Move(glm::vec3 position);    // set position
+                GameObjectBase *Translate(glm::vec3 offset); // translate position
+                GameObjectBase *Move(glm::vec3 position);    // set position
 
                 void Draw();
                 std::string Type();
@@ -407,7 +407,7 @@ void main()
                 float Power;
             };
 
-            class Cube : public GameObject
+            class Cube : public GameObjectBase
             {
             public:
                 Cube();
@@ -417,7 +417,7 @@ void main()
                 std::string Type();
             };
 
-            class Plane : public GameObject
+            class Plane : public GameObjectBase
             {
             public:
                 Plane();
@@ -427,7 +427,7 @@ void main()
                 std::string Type();
             };
 
-            class Empty : public GameObject
+            class Empty : public GameObjectBase
             {
             public:
                 Empty();
@@ -436,16 +436,16 @@ void main()
             class GameObjectsManager
             {
             public:
-                GameObject *Instantiate(GameObject *object);
-                GameObject *Instantiate(GameObject *object, std::string name);
+                GameObjectBase *Instantiate(GameObjectBase *object);
+                GameObjectBase *Instantiate(GameObjectBase *object, std::string name);
                 void Remove(std::string name);
                 bool Exists(std::string name);
-                GameObject *Get(std::string name);
-                std::unordered_map<std::string, GameObject *> Get();
+                GameObjectBase *Get(std::string name);
+                std::unordered_map<std::string, GameObjectBase *> Get();
 
             private:
-                void Add(std::string name, GameObject *object);
-                std::unordered_map<std::string, GameObject *> GameObjects;
+                void Add(std::string name, GameObjectBase *object);
+                std::unordered_map<std::string, GameObjectBase *> GameObjects;
             };
         };
 

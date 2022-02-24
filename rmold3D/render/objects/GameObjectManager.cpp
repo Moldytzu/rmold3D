@@ -22,18 +22,18 @@ using namespace mold::render::objects;
 
 std::unordered_map<std::string, uint32_t> newObjects;
 
-void mold::render::objects::GameObjectsManager::Add(std::string name, GameObject *object)
+void mold::render::objects::GameObjectsManager::Add(std::string name, GameObjectBase *object)
 {
     object->Name = name;                                     // set the name
     GameObjects.emplace(std::move(name), std::move(object)); // build std::pair and insert it in the map
 }
 
-mold::render::objects::GameObject *mold::render::objects::GameObjectsManager::Instantiate(GameObject *object)
+mold::render::objects::GameObjectBase *mold::render::objects::GameObjectsManager::Instantiate(GameObjectBase *object)
 {
     return Instantiate(object, object->Type()); // instantiate with the object's type as name
 }
 
-mold::render::objects::GameObject *mold::render::objects::GameObjectsManager::Instantiate(GameObject *object, std::string name)
+mold::render::objects::GameObjectBase *mold::render::objects::GameObjectsManager::Instantiate(GameObjectBase *object, std::string name)
 {
     std::string tname = name; // create a string based on the object's type
 
@@ -63,7 +63,7 @@ void mold::render::objects::GameObjectsManager::Remove(std::string name)
     GameObjects.erase(name); // erase name if it exists
 }
 
-mold::render::objects::GameObject *mold::render::objects::GameObjectsManager::Get(std::string name)
+mold::render::objects::GameObjectBase *mold::render::objects::GameObjectsManager::Get(std::string name)
 {
     if (!Exists(name))
     {
@@ -74,7 +74,7 @@ mold::render::objects::GameObject *mold::render::objects::GameObjectsManager::Ge
     return GameObjects[name]; // get if exists
 }
 
-std::unordered_map<std::string, mold::render::objects::GameObject *> mold::render::objects::GameObjectsManager::Get()
+std::unordered_map<std::string, mold::render::objects::GameObjectBase *> mold::render::objects::GameObjectsManager::Get()
 {
     return GameObjects; // return map
 }

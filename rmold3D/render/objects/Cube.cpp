@@ -22,7 +22,7 @@ using namespace mold::render::objects;
 
 mold::render::objects::Cube::Cube() {}
 
-mold::render::objects::Cube::Cube(image::Texture texture) : GameObject(texture)
+mold::render::objects::Cube::Cube(image::Texture texture) : GameObjectBase(texture)
 {
     float vertices[] =
         {

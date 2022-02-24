@@ -22,7 +22,7 @@ using namespace mold::render::objects;
 
 mold::render::objects::Plane::Plane() {}
 
-mold::render::objects::Plane::Plane(image::Texture texture) : GameObject(texture)
+mold::render::objects::Plane::Plane(image::Texture texture) : GameObjectBase(texture)
 {
     float vertices[] =
         {

@@ -24,7 +24,7 @@ using namespace mold::render::objects;
 
 std::unordered_map<std::string, mold::render::objects::Component *> Components; // using it for less memory fragmentation, thus giving us a better performance
 
-std::unordered_map<std::string, mold::render::objects::Component *> mold::render::objects::GameObject::Get()
+std::unordered_map<std::string, mold::render::objects::Component *> mold::render::objects::GameObjectBase::Get()
 {
     std::unordered_map<std::string, mold::render::objects::Component *> tmp; // construct a map that contains only the gameobject's components
     for (auto const &[name, ptr] : Components)
@@ -37,12 +37,12 @@ std::unordered_map<std::string, mold::render::objects::Component *> mold::render
     return tmp;
 }
 
-std::unordered_map<std::string, mold::render::objects::Component *> mold::render::objects::GameObject::GetRaw()
+std::unordered_map<std::string, mold::render::objects::Component *> mold::render::objects::GameObjectBase::GetRaw()
 {
     return Components; // get all components
 }
 
-mold::render::objects::Component *mold::render::objects::GameObject::Get(std::string name)
+mold::render::objects::Component *mold::render::objects::GameObjectBase::Get(std::string name)
 {
     if(!Get().count(name)) // fail if you can't find the name
     {
@@ -53,7 +53,7 @@ mold::render::objects::Component *mold::render::objects::GameObject::Get(std::st
     return Get()[name];
 }
 
-GameObject *mold::render::objects::GameObject::AttachComponent(std::string name, Component *component)
+GameObjectBase *mold::render::objects::GameObjectBase::AttachComponent(std::string name, Component *component)
 {
     Components.emplace(Name + " : " + name, std::move(component)); // insert the pair in the map
     component->Parent = this;                                      // set the parent to this
@@ -61,7 +61,7 @@ GameObject *mold::render::objects::GameObject::AttachComponent(std::string name,
     return this;                                                   // chain
 }
 
-GameObject *mold::render::objects::GameObject::DettachComponent(std::string name)
+GameObjectBase *mold::render::objects::GameObjectBase::DettachComponent(std::string name)
 {
     if (!ExistsComponent(name)) // fail if there isn't any component with that name
     {
@@ -73,7 +73,7 @@ GameObject *mold::render::objects::GameObject::DettachComponent(std::string name
     return this;            // chain
 }
 
-void mold::render::objects::GameObject::TickComponents()
+void mold::render::objects::GameObjectBase::TickComponents()
 {
     if (Components.size() == 0)
         return; // no components to tick
@@ -87,7 +87,7 @@ void mold::render::objects::GameObject::TickComponents()
     }
 }
 
-void mold::render::objects::GameObject::HandleComponents(mold::EventType event)
+void mold::render::objects::GameObjectBase::HandleComponents(mold::EventType event)
 {
     if (Components.size() == 0)
         return; // no components to handle
@@ -101,22 +101,22 @@ void mold::render::objects::GameObject::HandleComponents(mold::EventType event)
     }
 }
 
-bool mold::render::objects::GameObject::ExistsComponent(std::string name)
+bool mold::render::objects::GameObjectBase::ExistsComponent(std::string name)
 {
     return Components.count(Name + " : " + name); // return the count of the items
 }
 
 // Default functions
 
-void mold::render::objects::GameObject::Draw() {}
+void mold::render::objects::GameObjectBase::Draw() {}
 
 // Constructors and distructors
 
-mold::render::objects::GameObject::GameObject() {}
+mold::render::objects::GameObjectBase::GameObjectBase() {}
 
-mold::render::objects::GameObject::GameObject(mold::render::image::Texture texture) : Texture{texture}, Enabled{true} {} // set texture and enable the object
+mold::render::objects::GameObjectBase::GameObjectBase(mold::render::image::Texture texture) : Texture{texture}, Enabled{true} {} // set texture and enable the object
 
-mold::render::objects::GameObject::~GameObject()
+mold::render::objects::GameObjectBase::~GameObjectBase()
 {
     Texture.Deallocate(); // deallocate texture and vabo
     Vabo.Deallocate();
@@ -124,60 +124,60 @@ mold::render::objects::GameObject::~GameObject()
 
 // Positioning
 
-mold::render::objects::GameObject *mold::render::objects::GameObject::Translate(glm::vec3 offset)
+mold::render::objects::GameObjectBase *mold::render::objects::GameObjectBase::Translate(glm::vec3 offset)
 {
     PositionMatrix = glm::translate(PositionMatrix, offset); // translate matrix
     return this;                                             // to chain instructions
 }
 
-mold::render::objects::GameObject *mold::render::objects::GameObject::Move(glm::vec3 position)
+mold::render::objects::GameObjectBase *mold::render::objects::GameObjectBase::Move(glm::vec3 position)
 {
     PositionMatrix = glm::translate(glm::mat4(1.0f), position); // move matrix by translating a new one to the desired position
     return this;                                                // to chain instructions
 }
 
-mold::render::objects::GameObject *mold::render::objects::GameObject::Scale(glm::vec3 scaleFactor)
+mold::render::objects::GameObjectBase *mold::render::objects::GameObjectBase::Scale(glm::vec3 scaleFactor)
 {
     PositionMatrix = glm::scale(PositionMatrix, scaleFactor); // scale matrix
     return this;                                              // to chain instructions
 }
 
-mold::render::objects::GameObject *mold::render::objects::GameObject::Rotate(glm::vec3 axis, float angle)
+mold::render::objects::GameObjectBase *mold::render::objects::GameObjectBase::Rotate(glm::vec3 axis, float angle)
 {
     PositionMatrix = glm::rotate(PositionMatrix, glm::radians(angle), glm::normalize(axis)); // rotate matrix
     return this;                                                                             // to chain instructions
 }
 
-glm::vec3 mold::render::objects::GameObject::GetPosition()
+glm::vec3 mold::render::objects::GameObjectBase::GetPosition()
 {
     return PositionMatrix[3]; // position is stored on the 3rd axis (is this the correct term?)
 }
 
 // Wrapped
 
-mold::render::objects::GameObject *mold::render::objects::GameObject::Translate(float x, float y, float z)
+mold::render::objects::GameObjectBase *mold::render::objects::GameObjectBase::Translate(float x, float y, float z)
 {
     return Translate(glm::vec3(x, y, z)); // to chain instructions
 }
 
-mold::render::objects::GameObject *mold::render::objects::GameObject::Move(float x, float y, float z)
+mold::render::objects::GameObjectBase *mold::render::objects::GameObjectBase::Move(float x, float y, float z)
 {
     return Move(glm::vec3(x, y, z)); // to chain instructions
 }
 
-mold::render::objects::GameObject *mold::render::objects::GameObject::Scale(float x, float y, float z)
+mold::render::objects::GameObjectBase *mold::render::objects::GameObjectBase::Scale(float x, float y, float z)
 {
     return Scale(glm::vec3(x, y, z)); // to chain instructions
 }
 
-mold::render::objects::GameObject *mold::render::objects::GameObject::Rotate(float x, float y, float z, float angle)
+mold::render::objects::GameObjectBase *mold::render::objects::GameObjectBase::Rotate(float x, float y, float z, float angle)
 {
     return Rotate(glm::vec3(x, y, z), angle); // to chain instructions
 }
 
 // Texturing
 
-void mold::render::objects::GameObject::ReplaceTexture(mold::render::image::Texture newTexture)
+void mold::render::objects::GameObjectBase::ReplaceTexture(mold::render::image::Texture newTexture)
 {
     Texture.Deallocate(); // deallocate so we don't create memory leaks or smth
     Texture = newTexture; // replace the old texture
@@ -185,7 +185,7 @@ void mold::render::objects::GameObject::ReplaceTexture(mold::render::image::Text
 
 // Run-time
 
-void mold::render::objects::GameObject::Bind()
+void mold::render::objects::GameObjectBase::Bind()
 {
     Vabo.Bind();                                                       // bind vao & vbo
     Texture.Bind();                                                    // bind texture
@@ -193,7 +193,7 @@ void mold::render::objects::GameObject::Bind()
     GlobalShader.Set("fcolour", glm::vec4(1.0f, 1.0f, 1.0f, Opacity)); // pass colour information needed for transparency
 }
 
-std::string mold::render::objects::GameObject::Type()
+std::string mold::render::objects::GameObjectBase::Type()
 {
     return "Empty"; // empty game object
 }

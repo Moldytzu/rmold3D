@@ -28,7 +28,7 @@ void mold::Destroy()
     for (auto const &[name, ptr] : GlobalGameObjects.Get())
         delete ptr; // delete gameobject
 
-    render::objects::GameObject g;
+    render::objects::GameObjectBase g;
     for (auto const &[name, ptr] : g.GetRaw())
         delete ptr; // delete all components
 
