@@ -98,7 +98,7 @@ namespace mold
 
             private:
                 void CreateIndex();
-                uint TextureIndex;
+                uint TextureIndex = 0;
             };
 
             struct BitmapImageHeader // https://en.wikipedia.org/wiki/BMP_file_format
@@ -338,7 +338,15 @@ void main()
             public:
                 mold::render::VABO Vabo;
                 void Start();
-                void Handle(mold::EventType event);
+                void Tick();
+            };
+
+            class PlaneRenderer : public Component
+            {
+            public:
+                mold::render::VABO Vabo;
+                void Start();
+                void Tick();
             };
 
             class GameObjectBase
@@ -347,7 +355,6 @@ void main()
                 ~GameObjectBase();
 
                 GameObjectBase();
-                GameObjectBase(mold::render::image::Texture texture);
 
                 virtual GameObjectBase *Translate(glm::vec3 offset); // translate position
                 virtual GameObjectBase *Move(glm::vec3 position);    // set position
@@ -359,7 +366,6 @@ void main()
                 GameObjectBase *Scale(float x, float y, float z);               // set scale factor
                 GameObjectBase *Rotate(float x, float y, float z, float angle); // set rotation
 
-                void ReplaceTexture(mold::render::image::Texture newTexture); // replace the texture with a new one
                 void Bind();                                                  // bind everything
                 glm::vec3 GetPosition();                                      // get position
 
@@ -382,11 +388,6 @@ void main()
                 float Opacity = 1.0f;
 
                 std::string Name;
-
-            protected:
-                mold::render::image::Texture Texture;
-                mold::render::VABO Vabo;
-                float *Vertices;
             };
 
             class Light : public GameObjectBase
@@ -405,26 +406,6 @@ void main()
 
                 glm::vec3 Position, Colour;
                 float Power;
-            };
-
-            class Cube : public GameObjectBase
-            {
-            public:
-                Cube();
-                Cube(mold::render::image::Texture texture);
-
-                void Draw();
-                std::string Type();
-            };
-
-            class Plane : public GameObjectBase
-            {
-            public:
-                Plane();
-                Plane(mold::render::image::Texture texture);
-
-                void Draw();
-                std::string Type();
             };
 
             class Empty : public GameObjectBase

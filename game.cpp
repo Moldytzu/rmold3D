@@ -75,15 +75,15 @@ public:
     Game() : mold::Application(1280, 720) // 720p
     {
         // ground
-        mold::GlobalGameObjects.Instantiate(new mold::render::objects::Plane(mold::render::image::Texture(mold::render::Colour(255, 0, 255))))->Scale(7.5f, 1.0f, 7.5f);
+        mold::GlobalGameObjects.Instantiate(new mold::render::objects::Empty())->Scale(7.5f, 1.0f, 7.5f)->AttachComponent("Renderer",new mold::render::objects::PlaneRenderer)->Get("Renderer")->Public["Texture"] = mold::render::image::Texture(mold::render::Colour(255, 0, 255)); // scale then attach plane renderer
 
         // textured cube with face
-        mold::GlobalGameObjects.Instantiate(new mold::render::objects::Cube(mold::render::image::Texture("texture.bmp")), "Simple Cube")->Move(0, 1.0f, -1.0f)->Translate(0, 1.0f, -1.0f)->Scale(2.0f, 1.0f, 1.0f)->Rotate(glm::vec3(1), 75)->Opacity = 0.5f;
+        mold::GlobalGameObjects.Instantiate(new mold::render::objects::Empty(), "Simple Cube")->Move(0, 1.0f, -1.0f)->Translate(0, 1.0f, -1.0f)->Scale(2.0f, 1.0f, 1.0f)->Rotate(glm::vec3(1), 75)->AttachComponent("Renderer",new mold::render::objects::CubeRenderer)->Get("Renderer")->Public["Texture"] = mold::render::image::Texture("texture.bmp");
 
         // Instantiate some cubes
-        mold::GlobalGameObjects.Instantiate(new mold::render::objects::Cube(mold::render::image::Texture(mold::render::Colour(255, 0, 0))))->Move(1.0f, 1.0f, 2.0f);
-        mold::GlobalGameObjects.Instantiate(new mold::render::objects::Cube(mold::render::image::Texture(mold::render::Colour(0, 255, 0))))->Move(-1.0f, 0.5f, -2.0f);
-        mold::GlobalGameObjects.Instantiate(new mold::render::objects::Cube(mold::render::image::Texture(mold::render::Colour(0, 0, 255))))->Move(1.0f, 0.0f, 2.0f);
+        mold::GlobalGameObjects.Instantiate(new mold::render::objects::Empty())->Move(1.0f, 1.0f, 2.0f)->AttachComponent("Renderer",new mold::render::objects::CubeRenderer)->Get("Renderer")->Public["Texture"] = mold::render::image::Texture(mold::render::Colour(255, 0, 0));
+        mold::GlobalGameObjects.Instantiate(new mold::render::objects::Empty())->Move(-1.0f, 0.5f, -2.0f)->AttachComponent("Renderer",new mold::render::objects::CubeRenderer)->Get("Renderer")->Public["Texture"] = mold::render::image::Texture(mold::render::Colour(0, 255, 0));
+        mold::GlobalGameObjects.Instantiate(new mold::render::objects::Empty())->Move(-2.0f, 0.5f, -2.0f)->AttachComponent("Renderer",new mold::render::objects::CubeRenderer)->Get("Renderer")->Public["Texture"] = mold::render::image::Texture(mold::render::Colour(0, 0, 255));
 
         // Set up skybox
         mold::GlobalSkybox = mold::render::Skybox("up.bmp","side.bmp","down.bmp");

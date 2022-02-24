@@ -16,14 +16,14 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-#include "../../mold.h"
+#include "../../../mold.h"
 
 using namespace mold::render::objects;
 
-mold::render::objects::Plane::Plane() {}
-
-mold::render::objects::Plane::Plane(image::Texture texture) : GameObjectBase(texture)
+void PlaneRenderer::Start()
 {
+    Public["Texture"] = mold::render::image::Texture(mold::render::Colour(255));
+
     float vertices[] =
         {
             Vertex(-0.5f, -0.5f, -0.5f), TexCoord(0.0f, 1.0f), // right up
@@ -37,12 +37,11 @@ mold::render::objects::Plane::Plane(image::Texture texture) : GameObjectBase(tex
     Vabo = mold::render::VABO(vertices, sizeof(vertices)); // generate VBO & VAO
 }
 
-void mold::render::objects::Plane::Draw()
+void PlaneRenderer::Tick()
 {
-    DrawTriangles(6); // draw 6 triangles
-}
+        Parent->Bind();                                                 // bind matrices
+        Vabo.Bind();                                                    // bind vertex info
+        GetAny(Public["Texture"], mold::render::image::Texture).Bind(); // bind texture
+        mold::render::DrawTriangles(36);                                // draw 36 triangles
 
-std::string mold::render::objects::Plane::Type()
-{
-    return "Textured Plane";
 }

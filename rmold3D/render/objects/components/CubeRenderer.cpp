@@ -114,13 +114,10 @@ void CubeRenderer::Start()
     Vabo = mold::render::VABO(vertices, sizeof(vertices)); // generate VBO & VAO
 }
 
-void CubeRenderer::Handle(mold::EventType event)
+void CubeRenderer::Tick()
 {
-    if (event == mold::EventType::Redraw) // redraw event
-    {
-        Parent->Bind();                                                 // bind matrices
-        Vabo.Bind();                                                    // bind vertex info
-        GetAny(Public["Texture"], mold::render::image::Texture).Bind(); // bind texture
-        mold::render::DrawTriangles(36);                                // draw 36 triangles
-    }
+    Parent->Bind();                                                 // bind matrices
+    Vabo.Bind();                                                    // bind vertex info
+    GetAny(Public["Texture"], mold::render::image::Texture).Bind(); // bind texture
+    mold::render::DrawTriangles(36);                                // draw 36 triangles
 }

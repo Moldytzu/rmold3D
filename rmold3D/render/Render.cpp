@@ -151,19 +151,13 @@ void mold::render::Render()
     // draw game objects
     for (auto const &[name, ptr] : GlobalGameObjects.Get())
     {
-        if (!ptr->Enabled)
-            continue;
+        //if (!ptr->Enabled)
+        //    continue;
 
-        if (render::camera::InView(ptr->GetPosition()) && ptr->Type() != "Empty" && ptr->Type() != "Point Light") // draw if the object is in view and if it isn't an empty gameobject or a light
-        {
-            ptr->Bind(); // bind vabo, texture and matrices
-            ptr->Draw(); // do drawing
-        }
         ptr->TickComponents(); // tick it's components
     }
 
-    // detect gl errors
-    render::HandleErrors();
+    render::HandleErrors(); // detect gl errors
 
     glFlush(); // flush pipeline
 

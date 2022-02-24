@@ -20,10 +20,10 @@
 
 using namespace mold::render::objects;
 
-Light::Light() : GameObjectBase(image::Texture(render::Colour(0))) {}
-Light::Light(glm::vec3 pos) : GameObjectBase(image::Texture(render::Colour(0))), Position{pos}, Colour{glm::vec3(1)}, Power{1} {}
-Light::Light(glm::vec3 pos, glm::vec3 col) : GameObjectBase(image::Texture(render::Colour(0))), Position{pos}, Colour{col}, Power{1} {}
-Light::Light(glm::vec3 pos, glm::vec3 col, float power) : GameObjectBase(image::Texture(render::Colour(0))), Position{pos}, Colour{col}, Power{power} {}
+Light::Light() : GameObjectBase() {}
+Light::Light(glm::vec3 pos) : GameObjectBase(), Position{pos}, Colour{glm::vec3(1)}, Power{1} {}
+Light::Light(glm::vec3 pos, glm::vec3 col) : GameObjectBase(), Position{pos}, Colour{col}, Power{1} {}
+Light::Light(glm::vec3 pos, glm::vec3 col, float power) : GameObjectBase(), Position{pos}, Colour{col}, Power{power} {}
 
 void Light::Draw()
 {

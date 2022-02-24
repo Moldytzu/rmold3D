@@ -20,4 +20,4 @@
 
 using namespace mold::render::objects;
 
-mold::render::objects::Empty::Empty() : GameObjectBase(image::Texture(Colour(0))) {} // wrap the ugly constructor of gameobject
+mold::render::objects::Empty::Empty() : GameObjectBase() {} // wrap the gameobject base

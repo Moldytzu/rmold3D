@@ -112,15 +112,9 @@ void mold::render::objects::GameObjectBase::Draw() {}
 
 // Constructors and distructors
 
-mold::render::objects::GameObjectBase::GameObjectBase() {}
+mold::render::objects::GameObjectBase::GameObjectBase() : Enabled{true} {} // enable the gameobject 
 
-mold::render::objects::GameObjectBase::GameObjectBase(mold::render::image::Texture texture) : Texture{texture}, Enabled{true} {} // set texture and enable the object
-
-mold::render::objects::GameObjectBase::~GameObjectBase()
-{
-    Texture.Deallocate(); // deallocate texture and vabo
-    Vabo.Deallocate();
-}
+mold::render::objects::GameObjectBase::~GameObjectBase() {} // do nothing
 
 // Positioning
 
@@ -175,20 +169,10 @@ mold::render::objects::GameObjectBase *mold::render::objects::GameObjectBase::Ro
     return Rotate(glm::vec3(x, y, z), angle); // to chain instructions
 }
 
-// Texturing
-
-void mold::render::objects::GameObjectBase::ReplaceTexture(mold::render::image::Texture newTexture)
-{
-    Texture.Deallocate(); // deallocate so we don't create memory leaks or smth
-    Texture = newTexture; // replace the old texture
-}
-
 // Run-time
 
 void mold::render::objects::GameObjectBase::Bind()
 {
-    Vabo.Bind();                                                       // bind vao & vbo
-    Texture.Bind();                                                    // bind texture
     GlobalShader.Set("model", PositionMatrix);                         // give the shader our position matrix
     GlobalShader.Set("fcolour", glm::vec4(1.0f, 1.0f, 1.0f, Opacity)); // pass colour information needed for transparency
 }
