@@ -18,6 +18,81 @@
 
 #include <rmold3D/mold.h>
 
+// Test Cube Renderer component
+class CubeRenderer : public mold::render::objects::Component
+{
+public:
+    mold::render::VABO Vabo;
+
+    void Start() override
+    {
+        Public["Texture"] = mold::render::image::Texture(mold::render::Colour(255));
+
+        float vertices[] =
+        {
+            // back face
+            Vertex(-0.5f, -0.5f, -0.5f), TexCoord(0.0f, 0.0f), // right up
+            Vertex(0.5f, -0.5f, -0.5f), TexCoord(1.0f, 0.0f),  // left up
+            Vertex(0.5f, 0.5f, -0.5f), TexCoord(1.0f, 1.0f),   // left down
+            Vertex(0.5f, 0.5f, -0.5f), TexCoord(1.0f, 1.0f),   // left down
+            Vertex(-0.5f, 0.5f, -0.5f), TexCoord(0.0f, 1.0f),  // right down
+            Vertex(-0.5f, -0.5f, -0.5f), TexCoord(0.0f, 0.0f), // right up
+
+            // front face
+            Vertex(-0.5f, -0.5f, 0.5f), TexCoord(0.0f, 0.0f), // right up
+            Vertex(0.5f, -0.5f, 0.5f), TexCoord(1.0f, 0.0f),  // left up
+            Vertex(0.5f, 0.5f, 0.5f), TexCoord(1.0f, 1.0f),   // left down
+            Vertex(0.5f, 0.5f, 0.5f), TexCoord(1.0f, 1.0f),   // left down
+            Vertex(-0.5f, 0.5f, 0.5f), TexCoord(0.0f, 1.0f),  // right down
+            Vertex(-0.5f, -0.5f, 0.5f), TexCoord(0.0f, 0.0f), // right up
+
+            // left face
+            Vertex(-0.5f, 0.5f, 0.5f), TexCoord(1.0f, 1.0f),   // right up
+            Vertex(-0.5f, 0.5f, -0.5f), TexCoord(0.0f, 1.0f),  // left up
+            Vertex(-0.5f, -0.5f, -0.5f), TexCoord(0.0f, 0.0f), // left down
+            Vertex(-0.5f, -0.5f, -0.5f), TexCoord(0.0f, 0.0f), // left down
+            Vertex(-0.5f, -0.5f, 0.5f), TexCoord(1.0f, 0.0f),  // right down
+            Vertex(-0.5f, 0.5f, 0.5f), TexCoord(1.0f, 1.0f),   // right up
+
+            // right face
+            Vertex(0.5f, 0.5f, 0.5f), TexCoord(1.0f, 1.0f),   // right up
+            Vertex(0.5f, 0.5f, -0.5f), TexCoord(0.0f, 1.0f),  // left up
+            Vertex(0.5f, -0.5f, -0.5f), TexCoord(0.0f, 0.0f), // left down
+            Vertex(0.5f, -0.5f, -0.5f), TexCoord(0.0f, 0.0f), // left down
+            Vertex(0.5f, -0.5f, 0.5f), TexCoord(1.0f, 0.0f),  // right down
+            Vertex(0.5f, 0.5f, 0.5f), TexCoord(1.0f, 1.0f),   // right up
+
+            // bottom face
+            Vertex(-0.5f, -0.5f, -0.5f), TexCoord(0.0f, 1.0f), // right up
+            Vertex(0.5f, -0.5f, -0.5f), TexCoord(1.0f, 1.0f),  // left up
+            Vertex(0.5f, -0.5f, 0.5f), TexCoord(1.0f, 0.0f),   // left down
+            Vertex(0.5f, -0.5f, 0.5f), TexCoord(1.0f, 0.0f),   // left down
+            Vertex(-0.5f, -0.5f, 0.5f), TexCoord(0.0f, 0.0f),  // right down
+            Vertex(-0.5f, -0.5f, -0.5f), TexCoord(0.0f, 1.0f), // right up
+
+            // up face
+            Vertex(-0.5f, 0.5f, -0.5f), TexCoord(0.0f, 1.0f),  // right up
+            Vertex(0.5f, 0.5f, -0.5f), TexCoord(1.0f, 1.0f),   // left up
+            Vertex(0.5f, 0.5f, 0.5f), TexCoord(1.0f, 0.0f),    // left down
+            Vertex(0.5f, 0.5f, 0.5f), TexCoord(1.0f, 0.0f),    // left down
+            Vertex(-0.5f, 0.5f, 0.5f), TexCoord(0.0f, 0.0f),   // right down
+            Vertex(-0.5f, 0.5f, -0.5f), TexCoord(0.0f, 1.0f),}; // right up
+
+        Vabo = mold::render::VABO(vertices, sizeof(vertices)); // generate VBO & VAO
+    }
+
+    void Handle(mold::EventType event) override
+    {
+        if(event == mold::EventType::Redraw) // redraw event
+        {
+            Parent->Bind();                                                // bind matrices
+            Vabo.Bind();                                                   // bind vertex info
+            GetAny(Public["Texture"],mold::render::image::Texture).Bind(); // bind texture
+            mold::render::DrawTriangles(36);                               // draw 36 triangles
+        }
+    }
+};
+
 // Player component
 class Player : public mold::render::objects::Component
 {
@@ -92,6 +167,9 @@ public:
         // Instantiate an empty gameobject as player
         mold::GlobalGameObjects.Instantiate(new mold::render::objects::Empty(), "Player")->AttachComponent("PlayerController", new Player)->Get("PlayerController")->Public["tds"] = 1024;
         mold::GlobalGameObjects.Get("Player")->Get("PlayerController")->CallFunc("func");
+
+        // Test
+        mold::GlobalGameObjects.Instantiate(new mold::render::objects::Empty(), "Test")->AttachComponent("CubeRenderer", new CubeRenderer);
 
         // Instantiate a light
         mold::GlobalGameObjects.Instantiate(new mold::render::objects::Light(glm::vec3(-1,0,-1),glm::vec3(1),5),"Light");

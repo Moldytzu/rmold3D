@@ -296,7 +296,7 @@ void main()
 
         namespace camera
         {
-            inline glm::vec3 Position = glm::vec3(0.0f, 0.0f, 3.0f);
+            inline glm::vec3 Position = glm::vec3(0.0f, 0.0f, 0.0f);
             inline glm::vec3 Front = glm::vec3(0.0f, 0.0f, -1.0f);
             inline glm::vec3 Up = glm::vec3(0.0f, 1.0f, 0.0f);
             inline float Yaw = -90.0f; //-90.0f left, 0 front, 90.0f right
