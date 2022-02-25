@@ -366,11 +366,11 @@ void main()
                 GameObjectBase *Scale(float x, float y, float z);               // set scale factor
                 GameObjectBase *Rotate(float x, float y, float z, float angle); // set rotation
 
-                void Bind();                                                  // bind everything
-                glm::vec3 GetPosition();                                      // get position
+                void Bind();             // bind everything
+                glm::vec3 GetPosition(); // get position
 
-                GameObjectBase *AttachComponent(std::string name, Component *component);          // attach component
-                GameObjectBase *DettachComponent(std::string name);                               // dettach component
+                GameObjectBase *AttachComponent(std::string name, Component *component);      // attach component
+                GameObjectBase *DettachComponent(std::string name);                           // dettach component
                 bool ExistsComponent(std::string name);                                       // check if component exists
                 void TickComponents();                                                        // tick every component
                 void HandleComponents(mold::EventType event);                                 // forward events to every component
@@ -394,6 +394,18 @@ void main()
             {
             public:
                 virtual void Start();
+            };
+
+            class Cube : public Prefab
+            {
+            public:
+                void Start();
+            };
+
+            class Plane : public Prefab
+            {
+            public:
+                void Start();
             };
 
             class Light : public GameObjectBase
@@ -521,6 +533,7 @@ void main()
             InputManager *Map(std::string mapping, int key);
             InputManager *UnMap(std::string mapping);
             float Get(std::string mapping);
+
         private:
             std::unordered_map<std::string, int> Mappings;
         };
