@@ -46,6 +46,25 @@ mold::render::objects::GameObjectBase *mold::render::objects::GameObjectsManager
     return object; // chain
 }
 
+mold::render::objects::GameObjectBase *mold::render::objects::GameObjectsManager::Instantiate(Prefab *object)
+{
+    return Instantiate(object, object->Type()); // instantiate with the object's type as name
+}
+
+mold::render::objects::GameObjectBase *mold::render::objects::GameObjectsManager::Instantiate(Prefab *object, std::string name)
+{
+    std::string tname = name; // create a string based on the object's type
+
+    if (newObjects[name] > 0)
+        tname += " " + std::to_string(newObjects[name]); // append the object's no' if there are more then 1 object of that type
+
+    Add(tname, object); // add our new object to our map/database with the other game objects
+    object->Start();    // call start
+    newObjects[name]++; // increment the no' of instantiated objects with that type
+
+    return object; // chain
+}
+
 bool mold::render::objects::GameObjectsManager::Exists(std::string name)
 {
     // check if map contains the game object's name

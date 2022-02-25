@@ -148,11 +148,13 @@ void mold::render::Render()
         }
     }
 
-    // draw game objects
+    // call tick
+    Events::CallEvent(EventType::Tick);
+
     for (auto const &[name, ptr] : GlobalGameObjects.Get())
     {
-        //if (!ptr->Enabled)
-        //    continue;
+        // if (!ptr->Enabled)
+        //     continue;
 
         ptr->TickComponents(); // tick it's components
     }

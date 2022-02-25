@@ -101,7 +101,8 @@ mold::render::image::Texture::Texture(std::string filename)
 #ifdef __WIN32__
         wchar_t path[MAX_PATH] = {0};
         GetModuleFileNameW(NULL, path, MAX_PATH);
-        std::string execPath = std::string(path);
+        std::wstring ws(path);
+        std::string execPath = std::string(ws.begin(), ws.end());
 #else
         char result[PATH_MAX];
         ssize_t count = readlink("/proc/self/exe", result, PATH_MAX);

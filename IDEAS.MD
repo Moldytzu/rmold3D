@@ -4,7 +4,6 @@
     - Shadow casting
     - Better input system (implement controler input)
     - Make Windows & MacOS host builds successfuly
-    - Prefabricates (Group of components bundled into a gameobject that can be easily instantiate)
     - Renderers separated into components (Point Light renderer)
     - Mesh/.OBJ renderer (render .obj file)
     - UI elements (Text, Input and Panels using Dear ImGUI)

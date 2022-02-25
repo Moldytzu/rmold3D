@@ -102,9 +102,6 @@ void mold::Run()
         // reset threads
         GlobalThreads.Reset();
 
-        // call tick
-        GlobalThreads.Add(new std::thread(&Events::CallEvent, EventType::Tick));
-
         // update window title (Rewritten mold 3D @ ?? FPS)
         std::string wtitle = "Rewritten mold 3D @ " + std::to_string(time::FPS) + " FPS";
         glfwSetWindowTitle(GlobalWindow, wtitle.c_str());

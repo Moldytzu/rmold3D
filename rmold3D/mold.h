@@ -146,7 +146,7 @@ namespace mold
 
         private:
             uint Program = 0xdeadbeef;
-            uint *Shaders;
+            uint *Shaders = nullptr;
             uint ShadersIndex = 0;
         };
 
@@ -390,6 +390,12 @@ void main()
                 std::string Name;
             };
 
+            class Prefab : public GameObjectBase
+            {
+            public:
+                virtual void Start();
+            };
+
             class Light : public GameObjectBase
             {
             public:
@@ -405,7 +411,7 @@ void main()
                 std::string Type();
 
                 glm::vec3 Position, Colour;
-                float Power;
+                float Power = 0;
             };
 
             class Empty : public GameObjectBase
@@ -419,6 +425,8 @@ void main()
             public:
                 GameObjectBase *Instantiate(GameObjectBase *object);
                 GameObjectBase *Instantiate(GameObjectBase *object, std::string name);
+                GameObjectBase *Instantiate(Prefab *object);
+                GameObjectBase *Instantiate(Prefab *object, std::string name);
                 void Remove(std::string name);
                 bool Exists(std::string name);
                 GameObjectBase *Get(std::string name);
@@ -491,9 +499,9 @@ void main()
 
     namespace time
     {
-        inline float DeltaTime;
-        inline float LastFrame;
-        inline int FPS;
+        inline float DeltaTime = 0;
+        inline float LastFrame = 0;
+        inline int FPS = 0;
     };
 
     enum CursorLockingMode
@@ -521,7 +529,7 @@ void main()
         void OnScroll(GLFWwindow *window, double xoffset, double yoffset);
         void OnMouse(GLFWwindow *window, double xpos, double ypos);
 
-        inline CursorLockingMode GlobalCursorLockMode;
+        inline CursorLockingMode GlobalCursorLockMode = CursorLockingMode::Normal;
     };
 
     namespace log
@@ -558,8 +566,8 @@ void main()
         void Reset();
     };
 
-    inline GLFWwindow *GlobalWindow;
-    inline Application *GlobalApplication;
+    inline GLFWwindow *GlobalWindow = nullptr;
+    inline Application *GlobalApplication = nullptr;
     inline ThreadManager GlobalThreads;
     inline input::InputManager GlobalInputManager;
     inline render::Shader GlobalShader;
