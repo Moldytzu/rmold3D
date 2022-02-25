@@ -1,51 +1,14 @@
-rwildcard=$(foreach d,$(wildcard $(1:=/*)),$(call rwildcard,$d,$2) $(filter $(subst *,%,$2),$d))
-reverse = $(if $(1),$(call reverse,$(wordlist 2,$(words $(1)),$(1)))) $(firstword $(1))
+include ./platform/default
 
 PREFIX =
-CPP = $(PREFIX)g++
-CC = $(PREFIX)gcc
-AR = $(PREFIX)ar
-
-SRCDIR := rmold3D
-OBJDIR := obj
-
-CFLAGS = -I $(shell pwd)/ -I $(shell pwd)/rmold3D -I $(shell pwd)/rmold3D/3rd-Party/glm -O2 -g -std=c++17 -Wno-volatile -Werror
-
-SRC = $(call rwildcard,$(SRCDIR),*.cpp)  
-OBJS = $(patsubst $(SRCDIR)/%.cpp, $(OBJDIR)/%.o, $(SRC))
-
-LIB = ./bin/engrmold3D.a
-
-$(OBJDIR)/%.o: $(SRCDIR)/%.cpp
-	@ mkdir -p $(@D)
-	$(CPP) $(CFLAGS) -c $^ -o $@
-
-$(OBJDIR)/%.o: $(SRCDIR)/%.c
-	@ mkdir -p $(@D)
-	$(CC) $(CFLAGS) -c $^ -o $@
-
-.PHONY: build
-build: lib
-
-clean:
-	rm -rf obj
-
-lib: $(OBJS)
-	ar -crs $(LIB) $(OBJS)
 
 define buildGame
-	$(CPP) $(1) $(LIB) -lglfw -ldl -lpthread -o ./bin/game $(CFLAGS)
-	file ./bin/game
+	$(CPP) $(1) $(LIB) -lglfw -ldl -lpthread -o $(BINDIR)/game $(CFLAGS)
+	file $(BINDIR)/game
 endef
 
-game: lib 
-	$(call buildGame,game.cpp)
-
-cubes: lib 
-	$(call buildGame,cubes.cpp)
-
 debug:
-	gdb -q -ex "run" -ex "bt" ./bin/game 
+	gdb -q -ex "run" -ex "bt" $(BINDIR)/game 
 
 memory:
-	cd ./bin/ && valgrind --leak-check=full --log-file="./valgrind.out" ./game
+	cd $(BINDIR) && valgrind --leak-check=full --log-file="./valgrind.out" ./game

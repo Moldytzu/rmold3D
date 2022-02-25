@@ -1,48 +1,10 @@
-rwildcard=$(foreach d,$(wildcard $(1:=/*)),$(call rwildcard,$d,$2) $(filter $(subst *,%,$2),$d))
-reverse = $(if $(1),$(call reverse,$(wordlist 2,$(words $(1)),$(1)))) $(firstword $(1))
+include ./platform/default
 
 PREFIX = x86_64-w64-mingw32-
-CPP = $(PREFIX)g++-win32
-CC = $(PREFIX)gcc-win32
-AR = $(PREFIX)ar-win32
 
-SRCDIR := rmold3D
-OBJDIR := obj
-
-CFLAGS = -I $(shell pwd)/ -I $(shell pwd)/rmold3D -I $(shell pwd)/rmold3D/3rd-Party/glm -O2 -g -std=c++17 -Wno-volatile -Werror -static
-
-SRC = $(call rwildcard,$(SRCDIR),*.cpp)  
-OBJS = $(patsubst $(SRCDIR)/%.cpp, $(OBJDIR)/%.o, $(SRC))
-
-LIB = ./bin/engrmold3D.a
-
-$(OBJDIR)/%.o: $(SRCDIR)/%.cpp
-	@ mkdir -p $(@D)
-	$(CPP) $(CFLAGS) -c $^ -o $@
-
-$(OBJDIR)/%.o: $(SRCDIR)/%.c
-	@ mkdir -p $(@D)
-	$(CC) $(CFLAGS) -c $^ -o $@
-
-.PHONY: build
-build: lib
-
-clean:
-	rm -rf obj
-
-lib: $(OBJS)
-	ar -crs $(LIB) $(OBJS)
+CFLAGS += -static
 
 define buildGame
-	$(CPP) $(1) $(LIB) rmold3D/3rd-Party/win64-libglfw3.a -lgdi32 -o ./bin/game64.exe $(CFLAGS)
-	file ./bin/game64.exe
+	$(CPP) $(1) $(LIB) $(SRCDIR)/3rd-Party/win64-libglfw3.a -lgdi32 -o $(BINDIR)/game64.exe $(CFLAGS)
+	file $(BINDIR)/game64.exe
 endef
-
-game: lib 
-	$(call buildGame,game.cpp)
-
-cubes: lib 
-	$(call buildGame,cubes.cpp)
-
-debug:
-	gdb -q -ex "run" -ex "bt" ./bin/game 
