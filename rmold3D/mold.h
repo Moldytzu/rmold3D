@@ -153,9 +153,6 @@ namespace mold
         inline std::string VertexShaderSource = R"V0G0N(
 #version 330 core
 
-precision lowp float;
-precision lowp int;
-
 layout (location = 0) in vec3 vertexPosition;
 layout (location = 1) in vec2 textureCoordornate;
                                                 
@@ -191,9 +188,6 @@ void main()
 
         inline std::string FragmentShaderSource = R"V0G0N(
 #version 330 core
-
-precision lowp float;
-precision lowp int;
 
 out vec4 FragColor;
 
