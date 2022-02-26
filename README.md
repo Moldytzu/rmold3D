@@ -14,7 +14,7 @@
 
 ### On Linux based operating systems
 ```
-make -fplatform/Linux game -j$(nproc)
+make game
 ```
 
 # Cross-compiling
