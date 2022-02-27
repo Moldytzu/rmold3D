@@ -9,7 +9,7 @@ CPP = $(PREFIX)g++
 CC = $(PREFIX)gcc
 AR = $(PREFIX)ar
 
-CFLAGS = -I $(shell pwd)/ -I $(shell pwd)/rmold3D -I $(shell pwd)/rmold3D/3rd-Party/glm -O2 -g -std=c++17 -Wno-volatile -Werror
+CFLAGS = -I $(shell pwd)/ -I $(shell pwd)/rmold3D -I $(shell pwd)/rmold3D/3rd-Party/glm -I $(shell pwd)/rmold3D/3rd-Party/glad/include/ -O2 -g -std=c++17 -Wno-volatile -Werror
 
 SRC = $(call rwildcard,$(SRCDIR),*.cpp)  
 OBJS = $(patsubst $(SRCDIR)/%.cpp, $(OBJDIR)/%.o, $(SRC))

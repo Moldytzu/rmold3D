@@ -12,6 +12,11 @@
     
 # Building the example and the engine
 
+### Installing dependencies on Debian/Ubuntu/Mint based operating systems
+```
+sudo apt install build-essential libglfw3-dev -y
+```
+
 ### On Linux based operating systems
 ```
 make game
