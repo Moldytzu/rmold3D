@@ -55,7 +55,7 @@ typedef unsigned int uint;
 #define EndsWith(str, suffix) (str.size() >= suffix.size() && 0 == str.compare(str.size() - suffix.size(), suffix.size(), suffix))
 #define StartsWith(str, prefix) (str.size() >= prefix.size() && 0 == str.compare(0, prefix.size(), prefix))
 
-#define GetAny(any, type) std::any_cast<type>(any)
+#define GetAny(any, type) ((type)std::any_cast<type>(any))
 
 namespace mold
 {
@@ -380,7 +380,6 @@ void main()
                 mold::render::objects::Component *Get(std::string name);                      // get component with the name
                 std::unordered_map<std::string, mold::render::objects::Component *> GetRaw(); // get components attached to everything
 
-                virtual void Draw();
                 virtual std::string Type();
 
                 glm::mat4 PositionMatrix = glm::mat4(1.0f);
@@ -405,6 +404,12 @@ void main()
             };
 
             class Plane : public Prefab
+            {
+            public:
+                void Start();
+            };
+
+            class PointLight : public Prefab
             {
             public:
                 void Start();

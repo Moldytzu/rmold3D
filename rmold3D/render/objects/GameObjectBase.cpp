@@ -102,10 +102,6 @@ bool mold::render::objects::GameObjectBase::ExistsComponent(std::string name)
     return Components.count(Name + " : " + name); // return the count of the items
 }
 
-// Default functions
-
-void mold::render::objects::GameObjectBase::Draw() {}
-
 // Constructors and distructors
 
 mold::render::objects::GameObjectBase::GameObjectBase() : Enabled{true} {} // enable the gameobject 

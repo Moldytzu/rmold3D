@@ -20,25 +20,7 @@
 
 using namespace mold::render::objects;
 
-void PointLightRenderer::Start()
+void PointLight::Start()
 {
-    Public["Colour"] = glm::vec3(1);
-    Public["Power"] = 1.0f;
-}
-
-void PointLightRenderer::Handle(mold::EventType event)
-{
-    if(event != mold::EventType::LightTick) return; // we handle only light ticks
-    
-    // the shader's uniform interface looks like this lights[lightIndex].Parameter
-    std::string idx = "lights["; // lights[ + LightIndex + ]
-    idx += std::to_string(render::LightIdx);
-    idx += "].";
-
-    // pass the values to the shader
-    GlobalShader.Set(idx + "Colour", GetAny(Public["Colour"],glm::vec3));
-    GlobalShader.Set(idx + "Position", Parent->GetPosition() + glm::vec3(1));
-    GlobalShader.Set(idx + "Power", GetAny(Public["Power"],float));
-    
-    render::LightIdx++; // increase light index
+    AttachComponent("Renderer", new mold::render::objects::PointLightRenderer); // attach renderer
 }

@@ -70,7 +70,8 @@ void mold::Init(uint width, uint height)
     mold::settings::LoadFromFile("mold.cfg");
 
     // set up sun
-    mold::GlobalGameObjects.Instantiate(new mold::render::objects::Light(glm::vec3(1, 1, 1), glm::vec3(1), 50), "Sun");
+    mold::GlobalGameObjects.Instantiate(new mold::render::objects::PointLight(), "Sun")->Get("Renderer")->Public["Power"] = 50.0f;
+    mold::GlobalGameObjects.Get("Sun")->Move(glm::vec3(1)); // 1,1,1
 
     // set up default skybox
     mold::GlobalSkybox = render::Skybox(render::Colour(0));
