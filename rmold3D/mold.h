@@ -66,6 +66,7 @@ namespace mold
         Resize,
         Exit,
         Mouse,
+        LightTick,
     };
 
     namespace render
@@ -341,6 +342,13 @@ void main()
                 mold::render::VABO Vabo;
                 void Start();
                 void Tick();
+            };
+
+            class PointLightRenderer : public Component
+            {
+            public:
+                void Start();
+                void Handle(mold::EventType event);
             };
 
             class GameObjectBase

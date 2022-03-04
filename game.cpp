@@ -96,7 +96,8 @@ public:
         mold::GlobalGameObjects.Instantiate(new mold::render::objects::Cube(), "Test");
 
         // Instantiate a light
-        mold::GlobalGameObjects.Instantiate(new mold::render::objects::Light(glm::vec3(-1,0,-1),glm::vec3(1),5),"Light");
+        //mold::GlobalGameObjects.Instantiate(new mold::render::objects::Light(glm::vec3(-1,0,-1),glm::vec3(1),5),"Light");
+        mold::GlobalGameObjects.Instantiate(new mold::render::objects::Empty(), "Light")->AttachComponent("Renderer",new mold::render::objects::PointLightRenderer);
     }
 
     ~Game()
