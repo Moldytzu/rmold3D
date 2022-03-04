@@ -39,9 +39,9 @@ void PlaneRenderer::Start()
 
 void PlaneRenderer::Tick()
 {
-        Parent->Bind();                                                 // bind matrices
-        Vabo.Bind();                                                    // bind vertex info
-        GetAny(Public["Texture"], mold::render::image::Texture).Bind(); // bind texture
-        mold::render::DrawTriangles(36);                                // draw 36 triangles
-
+    if(!camera::InView(Parent->GetPosition())) return;              // if it's not in view just return
+    Parent->Bind();                                                 // bind matrices
+    Vabo.Bind();                                                    // bind vertex info
+    GetAny(Public["Texture"], mold::render::image::Texture).Bind(); // bind texture
+    mold::render::DrawTriangles(36);                                // draw 36 triangles
 }

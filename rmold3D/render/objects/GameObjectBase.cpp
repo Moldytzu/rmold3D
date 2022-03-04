@@ -75,8 +75,6 @@ GameObjectBase *mold::render::objects::GameObjectBase::DettachComponent(std::str
 
 void mold::render::objects::GameObjectBase::TickComponents()
 {
-    if (Components.size() == 0)
-        return; // no components to tick
     for (auto const &[name, ptr] : Components)
     {
         // don't tick disabled components
@@ -89,8 +87,6 @@ void mold::render::objects::GameObjectBase::TickComponents()
 
 void mold::render::objects::GameObjectBase::HandleComponents(mold::EventType event)
 {
-    if (Components.size() == 0)
-        return; // no components to handle
     for (auto const &[name, ptr] : Components)
     {
         // don't pass events to disabled components
