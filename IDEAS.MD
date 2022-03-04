@@ -1,10 +1,9 @@
 # Features/ideas to add/tweak
 #
-    - Create docs
+    - Create docs (with .md and github.io)
     - Shadow casting
     - Better input system (implement controler input)
     - Make Windows & MacOS host builds successfuly
-    - Renderers separated into components (Point Light renderer)
     - Mesh/.OBJ renderer (render .obj file)
     - UI elements (Text, Input and Panels using Dear ImGUI)
     - Internal console (Need UI elements first)
@@ -22,3 +21,7 @@
     - 3D/2D audio system using OpenAL
     - Physics (gravity and coliders)
     - Easy way to add more settings (a settings manager class that stores all settings, with customizable settings)
+    - Particle System
+    - Clean up the namespaces
+    - Eliminate Opacity from gameobjectbase and move it into the renderers
+    - Using a base renderer
