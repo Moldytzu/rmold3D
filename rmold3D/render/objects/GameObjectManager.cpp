@@ -87,7 +87,7 @@ mold::render::objects::GameObjectBase *mold::render::objects::GameObjectsManager
     if (!Exists(name))
     {
         log::Warn("Can't get inexistent game object " + name);
-        return nullptr;
+        return new mold::render::objects::Empty(); // return an empty object
     }
 
     return GameObjects[name]; // get if exists

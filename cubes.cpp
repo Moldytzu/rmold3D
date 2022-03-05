@@ -67,8 +67,8 @@ public:
     {
         if (event == mold::EventType::Mouse && mold::input::GlobalCursorLockMode == mold::CursorLockingMode::Locked) // update mouse
         {
-            mold::render::camera::Yaw += mold::GlobalInputManager.Get("Horizontal") * mold::settings::MouseSensibility * mold::time::DeltaTime;
-            mold::render::camera::Pitch += mold::GlobalInputManager.Get("Vertical") * mold::settings::MouseSensibility * mold::time::DeltaTime;
+            mold::render::camera::Yaw += mold::GlobalInputManager.Get("Horizontal");
+            mold::render::camera::Pitch += mold::GlobalInputManager.Get("Vertical");
         }
     }
 };
@@ -78,19 +78,18 @@ class Game : public mold::Application
 public:
     Game() : mold::Application(1024, 768)
     {
-        mold::GlobalGameObjects.Instantiate(new mold::render::objects::Cube(mold::render::image::Texture("texture.bmp")));
+        mold::GlobalGameObjects.Instantiate(new mold::render::objects::Cube(), "Textured Cube")->Get("Renderer")->Public["Texture"] = mold::render::image::Texture("texture.bmp");
 
         // Instantiate many cubes
         int offset = 0;
         for (int i = 1; i < CUBES; i++)
         {
-            mold::GlobalGameObjects.Instantiate(new mold::render::objects::Cube(mold::render::image::Texture("texture.bmp")));
+            mold::GlobalGameObjects.Instantiate(new mold::render::objects::Cube(), "Textured Cube")->Get("Renderer")->Public["Texture"] = mold::render::image::Texture("texture.bmp");
             mold::GlobalGameObjects.Get("Textured Cube " + std::to_string(i))->Translate(glm::vec3(offset++));
         }
 
         // Instantiate an empty gameobject as player
-        mold::GlobalGameObjects.Instantiate(new mold::render::objects::GameObject(mold::render::image::Texture(mold::render::Colour(0))), "Player");
-        mold::GlobalGameObjects.Get("Player")->AttachComponent("PlayerController", new Player);
+        mold::GlobalGameObjects.Instantiate(new mold::render::objects::Empty(), "Player")->AttachComponent("PlayerController", new Player);
 
         mold::settings::FogColour = glm::vec4(0, 0, 0, 1); // black
     }
