@@ -56,8 +56,14 @@ void mold::settings::Update()
     else
         glfwWindowHint(GLFW_AUTO_ICONIFY , GLFW_TRUE); // restore resolution
 
-    // clamp skybox distance to not get funky results
+    // clamp values so we don't get funky results
     settings::SkyboxDistance = glm::clamp(settings::SkyboxDistance, 0.0f, 100.0f);
+    settings::AspectRatio = glm::clamp(settings::AspectRatio, 0.1f,5.0f);
+    settings::Gamma = glm::clamp(settings::Gamma,0.01f,10.0f);
+    settings::LightingAmbient = glm::clamp(settings::LightingAmbient,0.01f,10.0f);
+    settings::FogDensity = glm::clamp(settings::FogDensity,0.01f,1.0f);
+    settings::FOV = glm::clamp(settings::FOV,30.0f,120.0f);
+    settings::MouseSensibility = glm::clamp(settings::MouseSensibility,0.1f,100.0f);
 }
 
 void mold::settings::LoadFromFile(std::string filename)
