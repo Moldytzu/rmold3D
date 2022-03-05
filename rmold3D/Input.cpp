@@ -131,7 +131,7 @@ void mold::input::OnMouse(GLFWwindow *window, double xoffset, double yoffset) //
 
     // call event if we've got changes
     if ((cursorAxis.x != 0 && cursorAxis.y != 0) || scrollAxis != 0)
-        Events::CallEvent(EventType::Mouse);
+        events::CallEvent(EventType::Mouse);
 
     // update last values
     lastX = xoffset;

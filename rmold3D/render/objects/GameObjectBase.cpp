@@ -29,7 +29,7 @@ std::unordered_map<std::string, mold::render::objects::Component *> mold::render
     std::unordered_map<std::string, mold::render::objects::Component *> tmp; // construct a map that contains only the gameobject's components
     for (auto const &[name, ptr] : Components)
     {
-        if(StartsWith(name,std::string(Name + " : "))) // the object's components have the name in this format: "<Name> : <Component>"
+        if(mold::helpers::StartsWith(name,std::string(Name + " : "))) // the object's components have the name in this format: "<Name> : <Component>"
         {
             tmp.emplace(name.substr(std::string(Name + " : ").length()), ptr); // get only the component name
         }
@@ -78,7 +78,7 @@ void mold::render::objects::GameObjectBase::TickComponents()
     for (auto const &[name, ptr] : Components)
     {
         // don't tick disabled components
-        if (ptr->Enabled && StartsWith(name, (Name + std::string(" :"))))
+        if (ptr->Enabled && mold::helpers::StartsWith(name, (Name + std::string(" :"))))
         {
             ptr->Tick(); // tick it
         }
@@ -90,7 +90,7 @@ void mold::render::objects::GameObjectBase::HandleComponents(mold::EventType eve
     for (auto const &[name, ptr] : Components)
     {
         // don't pass events to disabled components
-        if (ptr->Enabled && StartsWith(name, (Name + std::string(" :"))))
+        if (ptr->Enabled && mold::helpers::StartsWith(name, (Name + std::string(" :"))))
         {
             ptr->Handle(event); // pass event
         }

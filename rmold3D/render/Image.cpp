@@ -86,7 +86,7 @@ mold::render::image::Texture::Texture(std::string filename)
     }
 
     // we support only bitmaps
-    if (!EndsWith(filename, std::string(".bmp")))
+    if (!mold::helpers::EndsWith(filename, std::string(".bmp")))
     {
         log::Error("Unsupported texture format. Please use the 24-bit uncompressed bitmap.");
         *this = Texture(Colour(255)); // create white texture
@@ -144,7 +144,7 @@ mold::render::image::Texture::Texture(std::string filename)
 
     stream.read((char *)PixelData, header->ImageSize); // read it
 #ifndef __WIN32__
-    if (!stream.good()) // fails on windows but not on linux
+    if (!stream.good()) // fails on windows but not on posix
     {
         log::Error("Failed to read contents of bitmap " + filename);
         *this = Texture(Colour(255)); // create white texture

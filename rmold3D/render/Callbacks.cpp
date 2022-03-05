@@ -24,7 +24,7 @@ using namespace mold::render;
 
 void mold::render::OnResize(GLFWwindow *window, int width, int height) // it is called when the window is being resized
 {
-    Events::CallEvent(EventType::Resize); // call resize event
+    events::CallEvent(EventType::Resize); // call resize event
     settings::WindowHeight = height;      // set new window height and width
     settings::WindowWidth = height;
     glViewport(0, 0, width, height);                                   // set new viewport

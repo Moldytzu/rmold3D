@@ -23,7 +23,7 @@ using namespace mold;
 // clean up
 void mold::Destroy()
 {
-    Events::CallEvent(EventType::Exit); // call exit event
+    events::CallEvent(EventType::Exit); // call exit event
 
     for (auto const &[name, ptr] : GlobalGameObjects.Get())
         delete ptr; // delete gameobject

@@ -49,11 +49,8 @@
 typedef unsigned int uint;
 
 #if __cplusplus < 201703L
-#error rmold3D deppends on C++17 features to work. You either don't have them enabled or your compiler doesn't support them.
+#error rmold3D deppends on C++17 features to work. You either don't have them enabled or your compiler doesn't support them. Aborting compilation.
 #endif
-
-#define EndsWith(str, suffix) (str.size() >= suffix.size() && 0 == str.compare(str.size() - suffix.size(), suffix.size(), suffix))
-#define StartsWith(str, prefix) (str.size() >= prefix.size() && 0 == str.compare(0, prefix.size(), prefix))
 
 #define GetAny(any, type) ((type)std::any_cast<type>(any))
 
@@ -209,9 +206,9 @@ uniform float gamma;
 uniform bool gammaCorectionEnabled;
 
 struct Light  {
-   vec3 Position;
-   float Power; 
-   vec3 Colour;
+    vec3 Position;
+    float Power; 
+    vec3 Colour;
 };
 
 #define LIGHTS 128
@@ -219,45 +216,46 @@ uniform Light lights[LIGHTS];
 
 vec3 calculateLight(vec4 inputColour, Light light)
 {
-   vec3 normal = normalize(vec3(mat4(1.0) * vec4(1.0,1.0,1.0, 0.0)));
-   vec3 lightDir = abs(light.Position - vertexPos);
-   float distance = length(lightDir);
-   distance = distance * distance;
-   float lambertian = max(dot(lightDir, normal), 0.0);
-   float specular = 0.0;
-   if (lambertian > 0.0) {
-       vec3 viewDir = normalize(-vertexPos);
+    vec3 normal = normalize(vec3(mat4(1.0) * vec4(1.0,1.0,1.0, 0.0)));
+    vec3 lightDir = abs(light.Position - vertexPos);
+    float distance = length(lightDir);
+    distance = distance * distance;
+    float lambertian = max(dot(lightDir, normal), 0.0);
+    float specular = 0.0;
+    if (lambertian > 0.0)
+    {
+        vec3 viewDir = normalize(-vertexPos);
         vec3 halfDir = normalize(lightDir + viewDir);
         float specAngle = max(dot(halfDir, normal), 0.0);
-        specular = pow(specAngle, 256);
+        specular = pow(specAngle, 1024);
     }
-   return inputColour.xyz * lambertian * light.Colour * light.Power / distance + light.Colour * specular * light.Colour * light.Power / distance;
+    return inputColour.xyz * lambertian * light.Colour * light.Power / distance + light.Colour * specular * light.Colour * light.Power / distance;
 }
 
 void main()
 {
-   FragColor = texture(mainTexture, textureCoord) * vec4(vec3(lightingAmbient),1.0);
+    FragColor = texture(mainTexture, textureCoord) * vec4(vec3(lightingAmbient),1.0);
 
-   if(lightingEnabled == true)
-   {
-      for(int i = 0;i <LIGHTS;i++)
-      {
-          if(lights[i].Power != 0)
-            FragColor = vec4(calculateLight(FragColor, lights[i]),1.0);
-      }
-   }
+    if(lightingEnabled == true)
+    {
+        for(int i = 0;i <LIGHTS;i++)
+        {
+            if(lights[i].Power != 0)
+                FragColor = vec4(calculateLight(FragColor, lights[i]),1.0);
+        }
+    }
 
-   if(fogEnabled == true)
-   {
-      FragColor = mix(fogColour, FragColor, visibility);
-   }
+    if(fogEnabled == true)
+    {
+        FragColor = mix(fogColour, FragColor, visibility);
+    }
 
-   if(gammaCorectionEnabled == true)
-   {
-      FragColor.rgb = pow(FragColor.rgb, vec3(1.0/2.2));
-   }
+    if(gammaCorectionEnabled == true)
+    {
+        FragColor.rgb = pow(FragColor.rgb, vec3(1.0/2.2));
+    }
 
-   FragColor.rgb = FragColor.rgb * gamma;
+    FragColor.rgb = FragColor.rgb * gamma;
 }
 )V0G0N";
 
@@ -492,7 +490,7 @@ void main()
         inline float FOV = 90.0f;                  // field of view
         inline float WindowWidth;                  // window width
         inline float WindowHeight;                 // window height
-        inline float MouseSensibility = 1.0f;      // mouse sensibility
+        inline float MouseSensibility = 100.0f;      // mouse sensibility
         inline bool FogEnabled = true;             // enable fog
         inline float FogDensity = 0.09f;           // fog density
         inline glm::vec4 FogColour = glm::vec4(1); // fog colour
@@ -561,9 +559,15 @@ void main()
         void Debug(std::string str);
     };
 
-    namespace Events
+    namespace events
     {
         void CallEvent(EventType type);
+    };
+
+    namespace helpers
+    {
+        bool EndsWith(std::string str, std::string suffix);
+        bool StartsWith(std::string str, std::string prefix);
     };
 
     class Application

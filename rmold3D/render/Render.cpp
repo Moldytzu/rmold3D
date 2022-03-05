@@ -116,7 +116,7 @@ void mold::render::Render()
     GlobalShader.Set("projection", render::camera::Projection);
 
     // draw stuff
-    Events::CallEvent(EventType::Redraw);
+    events::CallEvent(EventType::Redraw);
 
     // draw skybox
     GlobalSkybox.Bind();
@@ -135,11 +135,11 @@ void mold::render::Render()
     if (settings::LightingEnabled) // draw lights only if it's enabled
     {
         render::LightIdx = 0;                    // reset light index
-        Events::CallEvent(EventType::LightTick); // tick light
+        events::CallEvent(EventType::LightTick); // tick light
     }
 
     // call tick
-    Events::CallEvent(EventType::Tick);
+    events::CallEvent(EventType::Tick);
 
     for (auto const &[name, ptr] : GlobalGameObjects.Get())
     {
