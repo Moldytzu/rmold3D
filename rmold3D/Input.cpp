@@ -61,9 +61,9 @@ float InputManager::Get(std::string mapping) // get axis (0.0f - 1.0f)
         switch(key)
         {
         case 1:
-            return cursorAxis.x;
+            return cursorAxis.x * mold::settings::MouseSensibility * mold::time::DeltaTime;
         case 2:
-            return cursorAxis.y;
+            return cursorAxis.y * mold::settings::MouseSensibility * mold::time::DeltaTime;
         case 3:
             return scrollAxis;
         default:

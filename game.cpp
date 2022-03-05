@@ -63,8 +63,8 @@ public:
     {
         if (event == mold::EventType::Mouse && mold::input::GlobalCursorLockMode == mold::CursorLockingMode::Locked) // update mouse
         {
-            mold::render::camera::Yaw += mold::GlobalInputManager.Get("Horizontal") * mold::settings::MouseSensibility * mold::time::DeltaTime;
-            mold::render::camera::Pitch += mold::GlobalInputManager.Get("Vertical") * mold::settings::MouseSensibility * mold::time::DeltaTime;
+            mold::render::camera::Yaw += mold::GlobalInputManager.Get("Horizontal");
+            mold::render::camera::Pitch += mold::GlobalInputManager.Get("Vertical");
         }
     }
 };
